@@ -39,5 +39,5 @@ module "ec2" {
   volume_size            = 50
   data_volume_size       = 50
   tags-factory           = module.tags-factory.tags
-  private_hosted_zone_id = module.aws_route53_zone.outputs.private_zone_id.zone_id
+  private_hosted_zone_id = module.aws_route53_zone.private_zone_id.zone_id
 }
