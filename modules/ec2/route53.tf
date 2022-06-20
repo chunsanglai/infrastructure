@@ -1,7 +1,9 @@
-resource "aws_route53_record" "public-record" {
-  zone_id = aws_route53_zone.public.zone_id
-  name    = module.ec2_instance.id
+resource "aws_route53_record" "private_record" {
+  count   = var.private_hosted_zone_id == "" ? 0 : 1
+  zone_id = var.private_hosted_zone_id
+  name    = var.name
   type    = "A"
-  ttl     = "300"
-  records = [aws_instance.ec2_instance.public_ip]
+  ttl     = "60"
+
+  records = module.ec2_instance.private_ip
 }

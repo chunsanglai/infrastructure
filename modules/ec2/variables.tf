@@ -69,3 +69,7 @@ variable "private_ip" {
   default     = null
   description = "Private IP address to associate with the instance in a VPC"
 }
+variable "private_hosted_zone_id" {
+  type    = string
+  default = ""
+}
