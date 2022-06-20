@@ -40,7 +40,7 @@ module "ec2-1ste" {
   data_volume_size         = 50
   tags-factory             = module.tags-factory.tags
   private_hosted_zone_id   = module.aws_route53_zone.private_zone_id
-  internal_security_groups = [module.ec2-2e.internal_security_group]
+  internal_security_groups = [""]
 }
 module "ec2-2e" {
   source                   = "./modules/ec2"
@@ -58,6 +58,6 @@ module "ec2-2e" {
   data_volume_size         = 50
   tags-factory             = module.tags-factory.tags
   private_hosted_zone_id   = module.aws_route53_zone.private_zone_id
-  internal_security_groups = [module.ec2-1ste.internal_security_group]
+  internal_security_groups = [""]
 }
 
