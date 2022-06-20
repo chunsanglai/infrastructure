@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket                      = "terraform-state-chun"
+    bucket                      = "terraform-state-chunsang"
     region                      = "eu-central-1"
     dynamodb_table              = "terraform-state-lock"
     skip_metadata_api_check     = true
