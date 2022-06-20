@@ -6,8 +6,8 @@ module "vpc" {
 
   azs                       = var.azs 
   public_subnets            = var.public_subnets
-  # public_subnet_tags        = var.public_subnet_tags
-  # public_route_table_tags   = var.public_subnet_tags
+  public_subnet_tags        = var.public_subnet_tags
+  public_route_table_tags   = var.public_subnet_tags
   private_subnets           = var.private_subnets
   private_subnet_tags       = var.private_subnet_tags
   private_route_table_tags  = var.private_subnet_tags
