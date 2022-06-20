@@ -73,7 +73,3 @@ variable "private_hosted_zone_id" {
   type    = string
   default = ""
 }
-variable "dns_cname" {
-  type    = string
-  default = ""
-}
