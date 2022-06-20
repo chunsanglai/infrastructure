@@ -59,7 +59,7 @@ resource "aws_security_group" "internal_security_group" {
       from_port        = 0
       to_port          = 0
       protocol         = "tcp"
-      security_groups  = [var.security_groups]
+      security_groups  = var.security_groups
     }
 }
 #Data Volume
