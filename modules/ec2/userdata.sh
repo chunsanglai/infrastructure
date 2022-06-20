@@ -24,6 +24,6 @@ dpkg -i amazon-ssm-agent.deb
 
 # Install AWS CLI package
 LogMessage "Installing AWS CLI package"
-yum install awscli -y
+apt install awscli -y
 
 echo 'Done initialization'

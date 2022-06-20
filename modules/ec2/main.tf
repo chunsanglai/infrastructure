@@ -26,6 +26,7 @@ module "ec2_instance" {
   root_block_device           = [{ volume_type = var.volume_type, volume_size = var.volume_size, encrypted = true, kms_key_id  = aws_kms_key.this.arn}] # Default is gp3
   tags                        = var.tags-factory
   private_ip                  = var.private_ip
+  user_data_replace_on_change = false
 }
 resource "aws_security_group" "security_group" {
   name        = join("-", [var.name, "security-group"])
