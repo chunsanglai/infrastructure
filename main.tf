@@ -24,7 +24,7 @@ module "vpc" {
 module "ec2" {
   source            = "./modules/ec2"
   aws_region        = var.aws_region
-  name              = "ec2-deploy-ushiihadasda"
+  name              = "ec2-deploy-fxzxcasd"
   ami               = "ami-0a5b5c0ea66ec560d"
   vpc_id            = module.vpc.vpc_id
   instance_type     = "t2.micro"
