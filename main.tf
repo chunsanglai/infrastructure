@@ -1,5 +1,6 @@
-resource "aws_route53_zone" "public" {
-  name = "chun1.lai"
+module "aws_route53_zone" {
+  source = "./modules/route53"
+  domain_name = "chunsang.lai"
 }
 module "tags-factory" {
   source = "./modules/tags-factory"
