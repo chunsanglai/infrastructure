@@ -1,0 +1,53 @@
+name: "Terraform"
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+permissions:
+      id-token: write
+      contents: read    # This is required for actions/checkout
+
+jobs:
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          role-to-assume: arn:aws:iam::989427353090:role/github-actions-Role-6CV21X9JYB3R
+          aws-region: eu-central-1
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.2.2
+
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check -diff
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        #if: github.event_name == 'pull_request'
+        run: terraform plan -no-color -input=false
+        continue-on-error: true    
+
+      - name: Terraform Apply
+        id : apply
+        #if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
