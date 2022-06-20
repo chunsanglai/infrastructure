@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "public" {
-  name = "chun.lai"
+  name = "chun1.lai"
 }
 module "tags-factory" {
   source = "./modules/tags-factory"
