@@ -22,8 +22,8 @@ sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
 -a fetch-config \
 -m ec2 \
 -c ssm:${ssm_cloudwatch_config} -s
-systemctl enable amazon-cloudwatch-agent.service
-service amazon-cloudwatch-agent start
+sudo systemctl enable amazon-cloudwatch-agent.service
+sudo service amazon-cloudwatch-agent start
 
 # Install AWS CLI package
 LogMessage "Installing AWS CLI package"
