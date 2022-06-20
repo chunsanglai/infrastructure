@@ -50,6 +50,21 @@ resource "aws_security_group" "security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+resource "aws_security_group_rule" "example" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 65535
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.security_group.id
+}
+resource "aws_security_group_rule" "allow_all" {
+  type              = "egress"
+  to_port           = 0
+  protocol          = "-1"
+  from_port         = 0
+  security_group_id = aws_security_group.security_group.id
+}
 #Data Volume
 resource "aws_volume_attachment" "this" {
   device_name = "/dev/sdh"

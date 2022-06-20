@@ -19,7 +19,7 @@
           "used_percent"
         ],
         "resources": [
-          "/"
+          "*"
         ],
         "drop_device": true
       }
