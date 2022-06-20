@@ -3,5 +3,15 @@ variable "aws_region" {
   default     = "eu-central-1"
 }
 
-variable "domain_name" {
+variable "public_zone_name" {
+}
+variable "vpc_id" {
+}
+
+variable "private_zone_name" {
+}
+
+variable "authorized_vpcs" {
+  type    = list(string)
+  default = []
 }
