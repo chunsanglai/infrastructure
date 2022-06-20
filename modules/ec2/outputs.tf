@@ -9,5 +9,5 @@ output "security_group" {
   value = aws_security_group.security_group[0].id
 }
 output "internal_security_group" {
-  value = aws_security_group.internal_security_group[0].id
+  value = aws_security_group.internal_security_group.id
 }
