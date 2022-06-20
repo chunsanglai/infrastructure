@@ -24,7 +24,7 @@ module "vpc" {
   traffic_type            = "ALL"
   tags-factory            = module.tags-factory.tags
 }
-module "ec2" {
+module "ec2-1ste" {
   source                   = "./modules/ec2"
   aws_region               = var.aws_region
   name                     = "ec2-deploy-eerte"
@@ -58,6 +58,6 @@ module "ec2-2e" {
   data_volume_size         = 50
   tags-factory             = module.tags-factory.tags
   private_hosted_zone_id   = module.aws_route53_zone.private_zone_id
-  internal_security_groups = [module.ec2.internal_security_group]
+  internal_security_groups = [module.ec2-1ste.internal_security_group]
 }
 
