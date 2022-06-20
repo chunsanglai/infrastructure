@@ -73,3 +73,6 @@ variable "private_hosted_zone_id" {
   type    = string
   default = ""
 }
+variable "security_groups" {
+  type        = list(string)
+}

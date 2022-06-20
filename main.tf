@@ -40,4 +40,5 @@ module "ec2" {
   data_volume_size       = 50
   tags-factory           = module.tags-factory.tags
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
+  security_groups        = ["sg-07b56f759584976c4"]
 }
