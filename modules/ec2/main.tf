@@ -25,6 +25,8 @@ module "ec2_instance" {
   iam_instance_profile        = aws_iam_instance_profile.this.name
   root_block_device           = [{ volume_type = var.volume_type, volume_size = var.volume_size, encrypted = true, kms_key_id  = aws_kms_key.this.arn}] # Default is gp3
   tags                        = var.tags-factory
+  private_ip                  = var.private_ip
+
 }
 resource "aws_security_group" "security_group" {
   name        = join("-", [var.name, "security-group"])

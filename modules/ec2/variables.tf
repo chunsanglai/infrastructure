@@ -63,3 +63,25 @@ variable "vpc_id" {
 variable "tags-factory" {
   type = map(any)
 }
+
+variable "hosted_zone_ids" {
+  type    = list(string)
+  default = []
+}
+variable "lb_dns_name" {
+  type    = string
+  default = ""
+}
+variable "private_hosted_zone_id" {
+  type    = string
+  default = ""
+}
+variable "dns_cname" {
+  type    = string
+  default = ""
+}
+variable "private_ip" {
+  type        = string
+  default     = null
+  description = "Private IP address to associate with the instance in a VPC"
+}
