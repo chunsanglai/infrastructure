@@ -31,7 +31,7 @@ module "ec2" {
   ami                    = "ami-0a5b5c0ea66ec560d"
   vpc_id                 = module.vpc.vpc_id
   instance_type          = "t2.micro"
-  key_name               = ""
+  key_name               = "infra-ec2"
   availability_zone      = element(module.vpc.azs, 0)
   subnet_id              = element(module.vpc.subnet_private_subnet_ids, 0)
   ports                  = ["80"]
