@@ -1,6 +1,6 @@
 module "aws_route53_zone" {
-  source      = "./modules/route53"
-  public_zone_name = "chunsang.lai"
+  source            = "./modules/route53"
+  public_zone_name  = "chunsang.lai"
   private_zone_name = "chunsang.lai.internal"
   vpc_id            = module.vpc.vpc_id
 }
