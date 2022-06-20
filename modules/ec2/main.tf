@@ -19,7 +19,7 @@ module "ec2_instance" {
   availability_zone           = var.availability_zone
   subnet_id                   = var.subnet_id
   user_data                   = local.userdata
-  vpc_security_group_ids      = [aws_security_group.security_group[0].id, aws_security_group.internal_security_group.id]
+  vpc_security_group_ids      = [aws_security_group.security_group[0].id, aws_security_group.internal_security_group[0].id]
   key_name                    = var.key_name
   monitoring                  = true
   iam_instance_profile        = aws_iam_instance_profile.this.name
@@ -55,7 +55,7 @@ resource "aws_security_group" "internal_security_group" {
   description = "Security group for EC2 instance"
   tags = var.tags-factory
   vpc_id      = var.vpc_id
-  count       = var.internal_security_groups[0] > 0 ? 1 : 0
+  count       = var.internal_security_groups[0]
   ingress {
       from_port        = 0
       to_port          = 0
