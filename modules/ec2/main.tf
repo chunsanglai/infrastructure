@@ -58,9 +58,15 @@ resource "aws_security_group" "internal_security_group" {
   ingress {
       from_port        = 0
       to_port          = 65535
-      protocol         = "tcp"
+      protocol         = "-1"
       security_groups  = var.security_groups
     }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 #Data Volume
 resource "aws_volume_attachment" "this" {
