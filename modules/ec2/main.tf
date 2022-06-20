@@ -56,8 +56,8 @@ resource "aws_security_group" "internal_security_group" {
   tags = var.tags-factory
   vpc_id      = var.vpc_id
   ingress {
-      from_port        = 0
-      to_port          = 0
+      from_port        = -1
+      to_port          = -1
       protocol         = "tcp"
       security_groups  = var.security_groups
     }
