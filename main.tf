@@ -34,8 +34,8 @@ module "ec2" {
   key_name               = "infra-ec2"
   availability_zone      = element(module.vpc.azs, 0)
   subnet_id              = element(module.vpc.subnet_public_subnet_ids, 0)
-  ports                  = ["80"]
-  cidr_block             = ["10.55.2.0/24", "192.168.1.0/24"]
+  ports                  = ["22"]
+  cidr_block             = ["178.84.133.29/32"]
   volume_size            = 50
   data_volume_size       = 50
   tags-factory           = module.tags-factory.tags
