@@ -43,6 +43,7 @@ resource "aws_security_group" "security_group" {
       cidr_blocks = var.cidr_block
     }
   }
+  egress_rules = ["all-all"]
 }
 #Data Volume
 resource "aws_volume_attachment" "this" {
