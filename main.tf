@@ -76,6 +76,6 @@ module "ec2-3e" {
   data_volume_size         = 50
   tags-factory             = module.tags-factory.tags
   private_hosted_zone_id   = module.aws_route53_zone.private_zone_id
-  internal_security_groups = ["sg-061aa4e5f09f3a3dd","sg-07463f092aed0e646"]
+  internal_security_groups = ["sg-061aa4e5f09f3a3dd", "sg-07463f092aed0e646"]
 }
 
