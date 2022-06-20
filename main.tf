@@ -25,19 +25,19 @@ module "vpc" {
   tags-factory            = module.tags-factory.tags
 }
 module "ec2" {
-  source            = "./modules/ec2"
-  aws_region        = var.aws_region
-  name              = "ec2-deploy-fxzxcasd"
-  ami               = "ami-0a5b5c0ea66ec560d"
-  vpc_id            = module.vpc.vpc_id
-  instance_type     = "t2.micro"
-  key_name          = ""
-  availability_zone = element(module.vpc.azs, 0)
-  subnet_id         = element(module.vpc.subnet_private_subnet_ids, 0)
-  ports             = ["80"]
-  cidr_block        = ["10.55.2.0/24", "192.168.1.0/24"]
-  volume_size       = 50
-  data_volume_size  = 50
-  tags-factory      = module.tags-factory.tags
+  source                 = "./modules/ec2"
+  aws_region             = var.aws_region
+  name                   = "ec2-deploy-fxzxcasd"
+  ami                    = "ami-0a5b5c0ea66ec560d"
+  vpc_id                 = module.vpc.vpc_id
+  instance_type          = "t2.micro"
+  key_name               = ""
+  availability_zone      = element(module.vpc.azs, 0)
+  subnet_id              = element(module.vpc.subnet_private_subnet_ids, 0)
+  ports                  = ["80"]
+  cidr_block             = ["10.55.2.0/24", "192.168.1.0/24"]
+  volume_size            = 50
+  data_volume_size       = 50
+  tags-factory           = module.tags-factory.tags
   private_hosted_zone_id = module.aws_route53_zone.outputs.private_zone_id.zone_id
 }
