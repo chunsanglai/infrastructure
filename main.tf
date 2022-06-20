@@ -40,5 +40,24 @@ module "ec2" {
   data_volume_size         = 50
   tags-factory             = module.tags-factory.tags
   private_hosted_zone_id   = module.aws_route53_zone.private_zone_id
-  internal_security_groups = ["sg-07b56f759584976c4", "sg-0ba4b869e681417ad"]
+  internal_security_groups = [module.ec2-2e.security_group, "sg-0ba4b869e681417ad"]
 }
+module "ec2-2e" {
+  source                   = "./modules/ec2"
+  aws_region               = var.aws_region
+  name                     = "ec2-deploy-tweede"
+  ami                      = "ami-0a5b5c0ea66ec560d"
+  vpc_id                   = module.vpc.vpc_id
+  instance_type            = "t2.micro"
+  key_name                 = "infra-ec2"
+  availability_zone        = element(module.vpc.azs, 0)
+  subnet_id                = element(module.vpc.subnet_public_subnet_ids, 0)
+  ports                    = ["22"]
+  cidr_block               = ["178.84.133.29/32"]
+  volume_size              = 50
+  data_volume_size         = 50
+  tags-factory             = module.tags-factory.tags
+  private_hosted_zone_id   = module.aws_route53_zone.private_zone_id
+  internal_security_groups = [module.ec2.security_group, "sg-0ba4b869e681417ad"]
+}
+
