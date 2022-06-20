@@ -24,10 +24,10 @@ module "vpc" {
   traffic_type            = "ALL"
   tags-factory            = module.tags-factory.tags
 }
-module "ec2-1ste" {
+module "ec2" {
   source                   = "./modules/ec2"
   aws_region               = var.aws_region
-  name                     = "ec2-deploy-eerte"
+  name                     = "ec2-deploy-asdawds"
   ami                      = "ami-0a5b5c0ea66ec560d"
   vpc_id                   = module.vpc.vpc_id
   instance_type            = "t2.micro"
@@ -40,7 +40,7 @@ module "ec2-1ste" {
   data_volume_size         = 50
   tags-factory             = module.tags-factory.tags
   private_hosted_zone_id   = module.aws_route53_zone.private_zone_id
-  internal_security_groups = [""]
+  internal_security_groups = ["sg-07463f092aed0e646"]
 }
 module "ec2-2e" {
   source                   = "./modules/ec2"
@@ -58,6 +58,6 @@ module "ec2-2e" {
   data_volume_size         = 50
   tags-factory             = module.tags-factory.tags
   private_hosted_zone_id   = module.aws_route53_zone.private_zone_id
-  internal_security_groups = [""]
+  internal_security_groups = ["sg-061aa4e5f09f3a3dd"]
 }
 
