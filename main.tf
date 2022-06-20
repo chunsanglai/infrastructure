@@ -33,7 +33,7 @@ module "ec2" {
   instance_type          = "t2.micro"
   key_name               = "infra-ec2"
   availability_zone      = element(module.vpc.azs, 0)
-  subnet_id              = element(module.vpc.subnet_private_subnet_ids, 0)
+  subnet_id              = element(module.vpc.subnet_public_subnet_ids, 0)
   ports                  = ["22"]
   cidr_block             = ["178.84.133.29/32"]
   volume_size            = 50
