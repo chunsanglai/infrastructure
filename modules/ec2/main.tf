@@ -27,6 +27,7 @@ module "ec2_instance" {
   tags                        = var.tags-factory
   private_ip                  = var.private_ip
   user_data_replace_on_change = false
+  disable_api_termination     = true
 }
 resource "aws_security_group" "security_group" {
   name        = join("-", [var.name, "security-group"])
