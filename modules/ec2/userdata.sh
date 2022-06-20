@@ -16,15 +16,14 @@ LogMessage "Download SSM package"
 sudo wget https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/debian_amd64/amazon-ssm-agent.deb
 sudo dpkg -i amazon-ssm-agent.deb
 
-LogMessage "Cloudwatch package deleted after install"
-sudo rm amazon-cloudwatch-agent.deb
-
 # Use cloudwatch config from SSM
 LogMessage "Activate Cloudwatch using SSM"
 sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
 -a fetch-config \
 -m ec2 \
 -c ssm:${ssm_cloudwatch_config} -s
+systemctl enable amazon-cloudwatch-agent.service
+service amazon-cloudwatch-agent start
 
 # Install AWS CLI package
 LogMessage "Installing AWS CLI package"

@@ -1,9 +1,14 @@
 {
   "agent": {
     "metrics_collection_interval": 60,
-    "logfile": "/var/log/cloudwatch/amazon-cloudwatch-agent.log"
+    "run_as_user": "cwagent"
   },
   "metrics": {
+    "aggregation_dimensions": [
+      [
+        "InstanceId"
+      ]
+    ],
     "append_dimensions": {
       "AutoScalingGroupName": "${aws:AutoScalingGroupName}",
       "ImageId": "${aws:ImageId}",
@@ -11,23 +16,12 @@
       "InstanceType": "${aws:InstanceType}"
     },
     "metrics_collected": {
-      "cpu": {
-        "measurement": [
-          {"name": "% Idle Time", "rename": "CPU_IDLE", "unit": "Percent"},
-          "% Interrupt Time",
-          "% User Time",
-          "% Processor Time"
-        ],
-        "metrics_collection_interval": 60,
-        "resources": [
-          "*"
-        ]
+      "collectd": {
+        "metrics_aggregation_interval": 60
       },
       "disk": {
         "measurement": [
-          {"name": "% Idle Time", "unit": "Percent"},
-          {"name": "% Disk Read Time", "rename": "DISK_READ"},
-          "% Disk Write Time"
+          "used_percent"
         ],
         "metrics_collection_interval": 60,
         "resources": [
@@ -35,77 +29,11 @@
         ]
       },
       "mem": {
-        "metrics_collection_interval": 5,
         "measurement": [
-          "Available Bytes",
-          "Cache Faults/sec",
-          "Page Faults/sec",
-          "Pages/sec"
-        ]
-      },
-      "Network Interface": {
-        "metrics_collection_interval": 5,
-        "measurement": [
-          "Bytes Received/sec",
-          "Bytes Sent/sec",
-          "Packets Received/sec",
-          "Packets Sent/sec"
+          "mem_used_percent"
         ],
-        "resources": [
-          "*"
-        ]
-      },
-      "System": {
-        "measurement": [
-          "Context Switches/sec",
-          "System Calls/sec",
-          "Processor Queue Length"
-        ]
+        "metrics_collection_interval": 60
       }
-    },
-    "aggregation_dimensions" : [["ImageId"], ["InstanceId", "InstanceType"], ["d1"],[]]
-  },
-  "logs": {
-    "logs_collected": {
-      "files": {
-        "collect_list": [
-          {
-            "file_path": "/var/log/cloudwatch/amazon-cloudwatch-agent.log",
-            "log_group_name": "amazon-cloudwatch-agent.log",
-            "timezone": "UTC"
-          },
-          {
-            "file_path": "/var/log/cloudwatch/test.log",
-            "log_group_name": "test.log",
-            "timezone": "Local"
-          }
-        ]
-      },
-      "windows_events": {
-        "collect_list": [
-          {
-            "event_name": "System",
-            "event_levels": [
-              "INFORMATION",
-              "ERROR"
-            ],
-            "log_group_name": "System",
-            "log_stream_name": "System",
-            "event_format": "xml"
-          },
-          {
-            "event_name": "CustomizedName",
-            "event_levels": [
-              "WARNING",
-              "ERROR"
-            ],
-            "log_group_name": "CustomizedLogGroup",
-            "log_stream_name": "CustomizedLogStream",
-            "event_format": "xml"
-          }
-        ]
-      }
-    },
-    "log_stream_name": "example_log_stream_name"
+    }
   }
 }
