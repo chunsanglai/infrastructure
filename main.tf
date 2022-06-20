@@ -1,26 +1,26 @@
-resource "aws_route53_zone" "public" {
-  name = "chun.lai"
-}
-module "tags-factory" {
-  source = "./modules/tags-factory"
-}
-module "vpc" {
-  source                  = "./modules/vpc"
-  name                    = "chun"
-  env                     = "test"
-  aws_region              = "eu-central-1"
-  azs                     = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
-  cidr                    = "10.55.0.0/16"
-  public_subnets          = ["10.55.1.0/24", "10.55.2.0/24", "10.55.3.0/24"]
-  private_subnets         = ["10.55.4.0/24", "10.55.5.0/24", "10.55.6.0/24"]
-  database_subnets        = ["10.55.7.0/24", "10.55.8.0/24", "10.55.9.0/24"]
-  enable_nat_gateway      = false
-  single_nat_gateway      = false
-  deletion_window_in_days = 30
-  log_destination_type    = "s3"
-  traffic_type            = "ALL"
-  tags-factory            = module.tags-factory.tags
-}
+# resource "aws_route53_zone" "public" {
+#   name = "chun.lai"
+# }
+# module "tags-factory" {
+#   source = "./modules/tags-factory"
+# }
+# module "vpc" {
+#   source                  = "./modules/vpc"
+#   name                    = "chun"
+#   env                     = "test"
+#   aws_region              = "eu-central-1"
+#   azs                     = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
+#   cidr                    = "10.55.0.0/16"
+#   public_subnets          = ["10.55.1.0/24", "10.55.2.0/24", "10.55.3.0/24"]
+#   private_subnets         = ["10.55.4.0/24", "10.55.5.0/24", "10.55.6.0/24"]
+#   database_subnets        = ["10.55.7.0/24", "10.55.8.0/24", "10.55.9.0/24"]
+#   enable_nat_gateway      = false
+#   single_nat_gateway      = false
+#   deletion_window_in_days = 30
+#   log_destination_type    = "s3"
+#   traffic_type            = "ALL"
+#   tags-factory            = module.tags-factory.tags
+# }
 
 # module "ec2" {
 #   source            = "./modules/ec2"
