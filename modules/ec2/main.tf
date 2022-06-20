@@ -19,7 +19,7 @@ module "ec2_instance" {
   availability_zone           = var.availability_zone
   subnet_id                   = var.subnet_id
   user_data                   = local.userdata
-  vpc_security_group_ids      = length(aws_security_group.internal_security_group) > 0 ? [security_group.security_group_id, aws_security_group.internal_security_group[0].id] : [security_group.security_group_id]
+  vpc_security_group_ids      = length(aws_security_group.internal_security_group) > 0 ? [aws_security_group.security_group.id, aws_security_group.internal_security_group[0].id] : [aws_security_group.security_group.id]
   key_name                    = var.key_name
   monitoring                  = true
   iam_instance_profile        = aws_iam_instance_profile.this.name
