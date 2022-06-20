@@ -1,5 +1,5 @@
 module "aws_route53_zone" {
-  source = "./modules/route53"
+  source      = "./modules/route53"
   domain_name = "chunsang.lai"
 }
 module "tags-factory" {
