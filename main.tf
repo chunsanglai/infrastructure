@@ -74,7 +74,7 @@ module "ec2-3e" {
   data_volume_size       = 50
   tags-factory           = module.tags-factory.tags
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
-  sg_ingress_rules = [
+  mgmt_ingress_rules = [
     {
       from_port   = 22
       to_port     = 22

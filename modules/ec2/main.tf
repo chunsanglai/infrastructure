@@ -69,15 +69,15 @@ resource "aws_security_group" "internal_security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-resource "aws_security_group_rule" "ingress_rules" {
-  count = length(var.ingress_rules)
+resource "aws_security_group_rule" "mgmt_ingress_rules" {
+  count = length(var.mgmt_ingress_rules)
 
   type              = "ingress"
-  from_port         = var.ingress_rules[count.index].from_port
-  to_port           = var.ingress_rules[count.index].to_port
-  protocol          = var.ingress_rules[count.index].protocol
-  cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
-  description       = var.ingress_rules[count.index].description
+  from_port         = var.mgmt_ingress_rules[count.index].from_port
+  to_port           = var.mgmt_ingress_rules[count.index].to_port
+  protocol          = var.mgmt_ingress_rules[count.index].protocol
+  cidr_blocks       = [var.mgmt_ingress_rules[count.index].cidr_block]
+  description       = var.mgmt_ingress_rules[count.index].description
   security_group_id = aws_security_group.internal_security_group.id
 }
 

@@ -77,7 +77,7 @@ variable "internal_security_groups" {
   type        = list(string)
   default = null
 }
-variable "sg_ingress_rules" {
+variable "mgmt_ingress_rules" {
     type = list(object({
       from_port   = number
       to_port     = number
