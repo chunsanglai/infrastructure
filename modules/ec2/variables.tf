@@ -85,4 +85,5 @@ variable "sg_ingress_rules" {
       cidr_block  = string
       description = string
     }))
+    default = null
 }
