@@ -52,7 +52,7 @@ resource "aws_security_group" "public-security-group" {
   }
 }
 resource "aws_security_group" "ec2_security_groups" {
-  name        = join("-", [var.name, "iets-sg"])
+  name        = join("-", [var.name, "welloe-sg"])
   vpc_id = var.vpc_id
   count       = length(var.sg_ingress_rules)
   dynamic "ingress" {
