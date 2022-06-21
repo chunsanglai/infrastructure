@@ -2,10 +2,10 @@ variable "aws_region" {
   description = "The AWS region to create things in."
   default     = "eu-central-1"
 }
-variable "green"{
+variable "ok"{
   description = "sns name for ok warning"
 }
-variable "info" {
+variable "warning" {
   description = "sns name for info warning"
 }
 variable "red" {
