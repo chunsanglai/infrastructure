@@ -125,7 +125,7 @@ module "ec2-3e" {
 }
 module "sns" {
   source = "./modules/sns"
-  green = "green-topic"
-  info = "info-topic"
-  red = "red-topic"
+  green  = "green-topic"
+  info   = "info-topic"
+  red    = "red-topic"
 }
