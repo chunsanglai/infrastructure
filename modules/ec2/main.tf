@@ -52,7 +52,7 @@ resource "aws_security_group" "public-security-group" {
   }
 }
 resource "aws_security_group" "ec2_security_groups" {
-  name        = join("-", [var.name, "snap-niet-sg"])
+  name        = join("-", [var.name, "extra-sg"])
   vpc_id = var.vpc_id
   dynamic "ingress" {
     for_each = var.sg_ingress_rules
