@@ -19,7 +19,7 @@ module "ec2_instance" {
   availability_zone           = var.availability_zone
   subnet_id                   = var.subnet_id
   user_data                   = local.userdata
-  vpc_security_group_ids      = [aws_security_group.public-security_group[0].id, aws_security_group.internal_security_group.id, aws_security_group.mgmt_security_group.id]
+  vpc_security_group_ids      = [aws_security_group.public-security-group[0].id, aws_security_group.internal_security_group.id]
   key_name                    = var.key_name
   monitoring                  = true
   iam_instance_profile        = aws_iam_instance_profile.this.name
@@ -29,7 +29,7 @@ module "ec2_instance" {
   disable_api_termination     = true
 }
 
-resource "aws_security_group" "public-security_group" {
+resource "aws_security_group" "public-security-group" {
   name        = join("-", [var.name, "public-security-group"])
   description = "Security group for EC2 instance"
   tags = var.tags-factory
@@ -77,7 +77,7 @@ resource "aws_security_group_rule" "mgmt_ingress_rules" {
   protocol          = each.value.proto
   cidr_blocks       = each.value.cidr
   description       = each.value.desc
-  security_group_id = aws_security_group.internal-security-group.id
+  security_group_id = aws_security_group.public-security-group.id
 }
 
 #Data Volume
