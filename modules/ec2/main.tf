@@ -58,10 +58,10 @@ resource "aws_security_group" "example" {
   dynamic "ingress" {
     for_each = var.fw_rules
     content {
-      from_port = ingress.value["port"]
-      to_port = ingress.value["port"]
-      protocol = ingress.value["protocol"]
-      cidr_blocks = ingress.value["cidr_blocks"]
+      from_port = ingress.value.port
+      to_port = ingress.value.port
+      protocol = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
     }
   }
 }

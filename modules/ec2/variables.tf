@@ -74,7 +74,7 @@ variable "private_hosted_zone_id" {
   default = ""
 }
 variable "fw_rules" {
-  fw_rules = [
+  type = map(object (
     {
       cidr_blocks = ["1.2.3.4/32"]
       port = "80"
@@ -85,5 +85,6 @@ variable "fw_rules" {
       port = "8080"
       protocol = "tcp"
     }
-  ]
+    )
+  )
 }
