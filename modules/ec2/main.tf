@@ -54,7 +54,7 @@ resource "aws_security_group" "public-security-group" {
 resource "aws_security_group" "ec2_security_groups" {
   name        = join("-", [var.name, "iets-sg"])
   vpc_id = var.vpc_id
-  count       = var.sg_ingress_rules[0] > 0 ? 1 : 0
+  count       = var.sg_ingress_rules[0] 
   dynamic "ingress" {
     for_each = var.sg_ingress_rules
     content {
