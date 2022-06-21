@@ -19,7 +19,7 @@ module "ec2_instance" {
   availability_zone           = var.availability_zone
   subnet_id                   = var.subnet_id
   user_data                   = local.userdata
-  vpc_security_group_ids      = [aws_security_group.public-security-group[0].id]
+  vpc_security_group_ids      = [aws_security_group.public-security-group[0].id,aws_security_group.ec2_security_groups[0].id]
   key_name                    = var.key_name
   monitoring                  = true
   iam_instance_profile        = aws_iam_instance_profile.this.name
@@ -52,11 +52,11 @@ resource "aws_security_group" "public-security-group" {
   }
 }
 resource "aws_security_group" "ec2_security_groups" {
-  name        = join("-", [var.name, "snap-er-niks-van-sg"])
+  name        = join("-", [var.name, "snap-niet-sg"])
   vpc_id = var.vpc_id
   count       = length(var.sg_ingress_rules)
   dynamic "ingress" {
-    for_each = var.sg_ingress_rules
+    for_each = var.sg_ingress_rules[0] > 0 ? 1 : 0
     content {
       from_port = var.sg_ingress_rules[count.index].from_port
       to_port = var.sg_ingress_rules[count.index].to_port
