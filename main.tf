@@ -41,8 +41,20 @@ module "ec2" {
   tags-factory           = module.tags-factory.tags
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
   mgmt_ingress_rules = [
-    [22, 22, "tcp", "1.2.3.4/32", "test"],
-    [23, 23, "tcp", "1.2.3.4/32", "test"]
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_block  = "1.2.3.4/32"
+      description = "test"
+    },
+    {
+      from_port   = 23
+      to_port     = 23
+      protocol    = "tcp"
+      cidr_block  = "1.2.3.4/32"
+      description = "test"
+    },
   ]
 }
 module "ec2-2e" {
@@ -62,8 +74,20 @@ module "ec2-2e" {
   tags-factory           = module.tags-factory.tags
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
   mgmt_ingress_rules = [
-    [22, 22, "tcp", "1.2.3.4/32", "test"],
-    [23, 23, "tcp", "1.2.3.4/32", "test"]
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_block  = "1.2.3.4/32"
+      description = "test"
+    },
+    {
+      from_port   = 23
+      to_port     = 23
+      protocol    = "tcp"
+      cidr_block  = "1.2.3.4/32"
+      description = "test"
+    },
   ]
 }
 module "ec2-3e" {
@@ -83,8 +107,20 @@ module "ec2-3e" {
   tags-factory           = module.tags-factory.tags
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
   mgmt_ingress_rules = [
-    [22, 22, "tcp", "1.2.3.4/32", "test"],
-    [23, 23, "tcp", "1.2.3.4/32", "test"]
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_block  = "1.2.3.4/32"
+      description = "test"
+    },
+    {
+      from_port   = 23
+      to_port     = 23
+      protocol    = "tcp"
+      cidr_block  = "1.2.3.4/32"
+      description = "test"
+    },
   ]
 }
 

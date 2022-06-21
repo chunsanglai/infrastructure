@@ -78,9 +78,27 @@ variable "internal-security-groups" {
   default = null
 }
 variable "mgmt_ingress_rules" {
-    type        = list(list(string))
+    type = list(object({
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_block  = string
+      description = string
+    }))
     default     = [
-        [22, 22, "tcp", "1.2.3.4/32", "test"],
-        [23, 23, "tcp", "1.2.3.4/32", "test"]
+        {
+          from_port   = 22
+          to_port     = 22
+          protocol    = "tcp"
+          cidr_block  = "1.2.3.4/32"
+          description = "test"
+        },
+        {
+          from_port   = 23
+          to_port     = 23
+          protocol    = "tcp"
+          cidr_block  = "1.2.3.4/32"
+          description = "test"
+        },
     ]
 }
