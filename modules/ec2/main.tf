@@ -56,7 +56,7 @@ resource "aws_security_group" "ec2_security_groups" {
   vpc_id = var.vpc_id
   count = var.sg_ingress_rules
   dynamic "ingress" {
-    for_each = length(var.sg_ingress_rules)
+    for_each = var.sg_ingress_rules
     content {
       from_port = var.sg_ingress_rules[count.index].from_port
       to_port = var.sg_ingress_rules[count.index].to_port
