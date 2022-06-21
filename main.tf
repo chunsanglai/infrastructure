@@ -40,7 +40,7 @@ module "ec2" {
   data_volume_size        = 50
   tags-factory            = module.tags-factory.tags
   private_hosted_zone_id  = module.aws_route53_zone.private_zone_id
-  internal_security_group = ["sg-0f3cea82ceffc2abb"]
+  internal_security_group = ["sg-0e4cd2b8a86c6bb8e"]
   mgmt_ingress_rules = [
     {
       from_port   = 22
