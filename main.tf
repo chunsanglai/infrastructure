@@ -34,7 +34,7 @@ module "ec2" {
   key_name               = "infra-ec2"
   availability_zone      = element(module.vpc.azs, 0)
   subnet_id              = element(module.vpc.subnet_public_subnet_ids, 0)
-  ports                  = ["22"]
+  public_ports           = ["80", "443"]
   cidr_block             = ["178.84.133.29/32"]
   volume_size            = 50
   data_volume_size       = 50
@@ -51,7 +51,7 @@ module "ec2-2e" {
   key_name               = "infra-ec2"
   availability_zone      = element(module.vpc.azs, 0)
   subnet_id              = element(module.vpc.subnet_public_subnet_ids, 0)
-  ports                  = ["22"]
+  public_ports           = ["80", "443"]
   cidr_block             = ["178.84.133.29/32", "192.168.1.0/32"]
   volume_size            = 50
   data_volume_size       = 50
@@ -68,11 +68,27 @@ module "ec2-3e" {
   key_name               = "infra-ec2"
   availability_zone      = element(module.vpc.azs, 0)
   subnet_id              = element(module.vpc.subnet_public_subnet_ids, 0)
-  ports                  = ["22"]
+  public_ports           = ["80", "443"]
   cidr_block             = ["178.84.133.29/32"]
   volume_size            = 50
   data_volume_size       = 50
   tags-factory           = module.tags-factory.tags
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
+  sg_ingress_rules = [
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_block  = "1.2.3.4/32"
+      description = "test"
+    },
+    {
+      from_port   = 23
+      to_port     = 23
+      protocol    = "tcp"
+      cidr_block  = "1.2.3.4/32"
+      description = "test"
+    },
+  ]
 }
 

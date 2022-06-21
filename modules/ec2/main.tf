@@ -34,9 +34,9 @@ resource "aws_security_group" "public-security_group" {
   description = "Security group for EC2 instance"
   tags = var.tags-factory
   vpc_id      = var.vpc_id
-  count       = var.ports[0] > 0 ? 1 : 0
+  count       = var.public_ports[0] > 0 ? 1 : 0
   dynamic "ingress" {
-    for_each = var.ports
+    for_each = var.public_ports
     content {
       from_port   = ingress.value
       to_port     = ingress.value
@@ -69,24 +69,18 @@ resource "aws_security_group" "internal_security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-resource "aws_security_group" "mgmt_security_group" {
-  name        = join("-", [var.name, "mgmt-security-group"])
-  description = "Security group for EC2 instance"
-  tags = var.tags-factory
-  vpc_id      = var.vpc_id
-  ingress {
-      from_port        = 0
-      to_port          = 0
-      protocol         = "-1"
-      security_groups  = var.internal_security_groups
-    }
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+resource "aws_security_group_rule" "ingress_rules" {
+  count = length(var.ingress_rules)
+
+  type              = "ingress"
+  from_port         = var.ingress_rules[count.index].from_port
+  to_port           = var.ingress_rules[count.index].to_port
+  protocol          = var.ingress_rules[count.index].protocol
+  cidr_blocks       = [var.ingress_rules[count.index].cidr_block]
+  description       = var.ingress_rules[count.index].description
+  security_group_id = aws_security_group.internal_security_group.id
 }
+
 #Data Volume
 resource "aws_volume_attachment" "this" {
   device_name = "/dev/sdh"

@@ -45,7 +45,7 @@ variable "subnet_id" {
   type        = string
   default     = ""
 }
-variable "ports" {
+variable "public_ports" {
   description = "Port numbers to be used in the security group"
   type        = list(number)
   default     = [-1]
@@ -76,4 +76,13 @@ variable "private_hosted_zone_id" {
 variable "internal_security_groups" {
   type        = list(string)
   default = null
+}
+variable "sg_ingress_rules" {
+    type = list(object({
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      cidr_block  = string
+      description = string
+    }))
 }
