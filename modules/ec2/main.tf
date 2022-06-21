@@ -52,7 +52,7 @@ resource "aws_security_group" "public-security-group" {
   }
 }
 resource "aws_security_group" "ec2_security_groups" {
-  name   = "test-sg"
+  name   = "huwgqyeuqxh"
   vpc_id = var.vpc_id
 }
 resource "aws_security_group_rule" "ingress_rules" {
