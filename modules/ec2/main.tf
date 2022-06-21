@@ -28,6 +28,7 @@ module "ec2_instance" {
   private_ip                  = var.private_ip
   disable_api_termination     = true
 }
+
 resource "aws_security_group" "public-security_group" {
   name        = join("-", [var.name, "public-security-group"])
   description = "Security group for EC2 instance"

@@ -53,7 +53,7 @@ module "ec2-2e" {
   availability_zone        = element(module.vpc.azs, 0)
   subnet_id                = element(module.vpc.subnet_public_subnet_ids, 0)
   ports                    = ["22"]
-  cidr_block               = ["178.84.133.29/32"]
+  cidr_block               = ["178.84.133.29/32","192.168.1.0/32"]
   volume_size              = 50
   data_volume_size         = 50
   tags-factory             = module.tags-factory.tags
