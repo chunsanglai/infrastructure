@@ -7,6 +7,9 @@ module "aws_route53_zone" {
 module "tags-factory" {
   source = "./modules/tags-factory"
 }
+module "sns" {
+  source  = "./modules/sns"
+}
 module "vpc" {
   source                  = "./modules/vpc"
   name                    = "chun"
@@ -122,10 +125,4 @@ module "ec2-3e" {
   #     description = "test"
   #   },
   # ]
-}
-module "sns" {
-  source  = "./modules/sns"
-  ok      = "ok-topic"
-  warning = "warning-topic"
-  red     = "red-topic"
 }

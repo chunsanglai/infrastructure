@@ -4,10 +4,14 @@ variable "aws_region" {
 }
 variable "ok"{
   description = "sns name for ok warning"
+  default = "ok-topic"
 }
 variable "warning" {
   description = "sns name for info warning"
+  default = "warning-topic"
+
 }
-variable "red" {
-  description = "sns name for red warning" 
+variable "critical" {
+  description = "sns name for critical warning" 
+  default = "critical-topic"
 }
