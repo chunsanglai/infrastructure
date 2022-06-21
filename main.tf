@@ -8,7 +8,7 @@ module "tags-factory" {
   source = "./modules/tags-factory"
 }
 module "sns" {
-  source  = "./modules/sns"
+  source = "./modules/sns"
 }
 module "vpc" {
   source                  = "./modules/vpc"
