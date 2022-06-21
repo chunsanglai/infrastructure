@@ -73,7 +73,7 @@ variable "private_hosted_zone_id" {
   type    = string
   default = ""
 }
-variable "internal-security-group" {
+variable "internal-security-groups" {
   type        = list(string)
   default = null
 }
