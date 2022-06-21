@@ -57,11 +57,11 @@ resource "aws_security_group" "ec2_security_groups" {
   dynamic "ingress" {
     for_each = var.sg_ingress_rules
     content {
-      from_port = var.sg_ingress_rules.["from_port"]
-      to_port = var.sg_ingress_rules.["to_port"]
-      protocol = var.sg_ingress_rules.["protocol"]
-      cidr_blocks = [var.sg_ingress_rules.["cidr_block"]]
-      description = var.sg_ingress_rules.["description"]
+      from_port = ingress.value["from_port"]
+      to_port = ingress.value["to_port"]
+      protocol = ingress.value["protocol"]
+      cidr_blocks = [ingress.value["cidr_block"]]
+      description = ingress.value["description"]
     }
   }
   egress {
