@@ -52,7 +52,7 @@ resource "aws_security_group" "public-security-group" {
   }
 }
 resource "aws_security_group" "ec2_security_groups" {
-  name   = "jasdhadhuihde-sg"
+  name   = "test-sg"
   vpc_id = var.vpc_id
 }
 resource "aws_security_group_rule" "ingress_rules" {
@@ -69,8 +69,9 @@ resource "aws_security_group_rule" "ingress_rules" {
 resource "aws_security_group_rule" "egress_rules" {
   type              = "egress"
   to_port           = 0
-  protocol          = "-1"
   from_port         = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.ec2_security_groups.id
 }
 #Data Volume
