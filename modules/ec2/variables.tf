@@ -75,4 +75,5 @@ variable "private_hosted_zone_id" {
 }
 variable "internal_security_groups" {
   type        = list(string)
+  default = null
 }
