@@ -69,28 +69,15 @@ resource "aws_security_group" "internal-security-group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-resource "aws_security_group" "mgmt-security-group" {
-  name        = join("-", [var.name, "mgmt-security-group"])
-  description = "Security group for EC2 instance"
-  tags = var.tags-factory
-  vpc_id      = var.vpc_id
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-resource "aws_security_group_rule" "mgmt-ingress-rules" {
-  count = length(var.mgmt_ingress_rules)
-
+resource "aws_security_group_rule" "mgmt_ingress_rules" {
+  for_each          = var.mgmt_ingress_rules
   type              = "ingress"
-  from_port         = var.mgmt_ingress_rules[count.index].from_port
-  to_port           = var.mgmt_ingress_rules[count.index].to_port
-  protocol          = var.mgmt_ingress_rules[count.index].protocol
-  cidr_blocks       = [var.mgmt_ingress_rules[count.index].cidr_block]
-  description       = var.mgmt_ingress_rules[count.index].description
-  security_group_id = aws_security_group.internal_security_group.id
+  from_port         = each.value.from
+  to_port           = each.value.to
+  protocol          = each.value.proto
+  cidr_blocks       = each.value.cidr
+  description       = each.value.desc
+  security_group_id = aws_security_group.internal-security-group.id
 }
 
 #Data Volume
