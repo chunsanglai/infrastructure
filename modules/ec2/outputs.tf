@@ -5,6 +5,3 @@ output "instance_ip" {
 output "private_dns" {
   value = var.private_hosted_zone_id != "" ? aws_route53_record.private_record[0].fqdn : null
 }
-output "internal_security_group" {
-  value = aws_security_group.internal-security-group.id
-}
