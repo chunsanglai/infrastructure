@@ -51,19 +51,27 @@ resource "aws_security_group" "public-security-group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+resource "aws_security_group" "ec2_security_groups" {
+  name   = "test-sg"
+  vpc_id = var.vpc_id
+}
+resource "aws_security_group_rule" "ingress_rules" {
+  count = length(var.sg_ingress_rules)
 
-resource "aws_security_group" "example" {
-  name = "example"
-
-  dynamic "ingress" {
-    for_each = var.fw_rules
-    content {
-      from_port = ingress.value.port
-      to_port = ingress.value.port
-      protocol = ingress.value.protocol
-      cidr_blocks = ingress.value.cidr_blocks
-    }
-  }
+  type              = "ingress"
+  from_port         = var.sg_ingress_rules[count.index].from_port
+  to_port           = var.sg_ingress_rules[count.index].to_port
+  protocol          = var.sg_ingress_rules[count.index].protocol
+  cidr_blocks       = [var.sg_ingress_rules[count.index].cidr_block]
+  description       = var.sg_ingress_rules[count.index].description
+  security_group_id = aws_security_group.ec2_security_groups.id
+}
+resource "aws_security_group_rule" "egress_rules" {
+  type              = "egress"
+  to_port           = 0
+  protocol          = "-1"
+  from_port         = 0
+  security_group_id = aws_security_group.ec2_security_groups.id
 }
 #Data Volume
 resource "aws_volume_attachment" "this" {
