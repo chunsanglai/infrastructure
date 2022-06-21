@@ -54,9 +54,9 @@ resource "aws_security_group" "public-security-group" {
 resource "aws_security_group" "ec2_security_groups" {
   name        = join("-", [var.name, "snap-niet-sg"])
   vpc_id = var.vpc_id
-  count       = length(var.sg_ingress_rules)
+  count       = var.sg_ingress_rules[0] > 0 ? 1 : 0
   dynamic "ingress" {
-    for_each = var.sg_ingress_rules[0] > 0 ? 1 : 0
+    for_each = var.sg_ingress_rules
     content {
       from_port = var.sg_ingress_rules[count.index].from_port
       to_port = var.sg_ingress_rules[count.index].to_port
