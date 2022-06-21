@@ -60,7 +60,7 @@ resource "aws_security_group" "internal-security-group" {
       from_port        = 0
       to_port          = 0
       protocol         = "-1"
-      security_groups  = var.internal_security_groups
+      security_groups  = var.internal-security-groups
     }
   egress {
     from_port   = 0
@@ -77,7 +77,7 @@ resource "aws_security_group_rule" "mgmt_ingress_rules" {
   protocol          = each.value.proto
   cidr_blocks       = each.value.cidr
   description       = each.value.desc
-  security_group_id = aws_security_group.public-security-group.id
+  security_group_id = aws_security_group.public-security-group[0].id
 }
 
 #Data Volume
