@@ -1,7 +1,7 @@
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
   version = "~> v3.14.0"
-  name = join("-", [var.name, var.aws_region, "vpc"])
+  name = join("-", [var.name,var.env, "vpc"])
   cidr = var.cidr
 
   azs                       = var.azs 

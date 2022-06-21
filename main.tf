@@ -40,7 +40,7 @@ module "ec2" {
   data_volume_size         = 50
   tags-factory             = module.tags-factory.tags
   private_hosted_zone_id   = module.aws_route53_zone.private_zone_id
-  internal_security_groups = ["sg-0e4cd2b8a86c6bb8e"]
+  internal_security_groups = ["sg-00462d25b42611214"]
   mgmt_ingress_rules = [
     {
       from_port   = 22
@@ -74,7 +74,7 @@ module "ec2-2e" {
   data_volume_size         = 50
   tags-factory             = module.tags-factory.tags
   private_hosted_zone_id   = module.aws_route53_zone.private_zone_id
-  internal_security_groups = ["sg-061aa4e5f09f3a3dd"]
+  internal_security_groups = ["sg-027bdcc435b553ea9"]
   mgmt_ingress_rules = [
     {
       from_port   = 22
@@ -108,7 +108,7 @@ module "ec2-3e" {
   data_volume_size         = 50
   tags-factory             = module.tags-factory.tags
   private_hosted_zone_id   = module.aws_route53_zone.private_zone_id
-  internal_security_groups = ["sg-061aa4e5f09f3a3dd"]
+  internal_security_groups = ["sg-00462d25b42611214"]
   mgmt_ingress_rules = [
     {
       from_port   = 22
