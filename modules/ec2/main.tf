@@ -19,7 +19,7 @@ module "ec2_instance" {
   availability_zone           = var.availability_zone
   subnet_id                   = var.subnet_id
   user_data                   = local.userdata
-  vpc_security_group_ids      = [aws_security_group.public-security-group[0].id, aws_security_group.internal-security-group.id,aws_security_group.mgmt_security_groups]
+  vpc_security_group_ids      = [aws_security_group.public-security-group[0].id, aws_security_group.internal-security-group.id]
   key_name                    = var.key_name
   monitoring                  = true
   iam_instance_profile        = aws_iam_instance_profile.this.name
@@ -84,7 +84,7 @@ resource "aws_security_group_rule" "mgmt_ingress_rules" {
   protocol          = var.mgmt_ingress_rules[count.index].protocol
   cidr_blocks       = [var.mgmt_ingress_rules[count.index].cidr_block]
   description       = var.mgmt_ingress_rules[count.index].description
-  security_group_id = aws_security_group.public-security-group.id
+  security_group_id = aws_security_group.public-security-group[count.index].id
 }
 
 #Data Volume
