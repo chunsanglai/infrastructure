@@ -60,7 +60,7 @@ resource "aws_security_group" "internal-security-group" {
       from_port        = 0
       to_port          = 0
       protocol         = "-1"
-      security_groups  = var.internal-security-groups
+      security_groups  = var.internal_security_groups
     }
   egress {
     from_port   = 0
