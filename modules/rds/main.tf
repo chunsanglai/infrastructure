@@ -41,7 +41,7 @@ module "rds-aurora" {
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.example.id
 
   iam_database_authentication_enabled = true
-  master_password                     = data.aws_secretsmanager_secret_version.password
+  master_password                     = aws_secretsmanager_secret_version.password
   create_random_password              = false
 }
 
