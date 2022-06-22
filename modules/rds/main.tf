@@ -4,7 +4,6 @@ module "rds-aurora" {
   name = var.name
   engine         = var.engine
   engine_version = var.engine_version
-  # enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
 
   storage_encrypted = true
 

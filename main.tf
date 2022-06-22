@@ -58,7 +58,7 @@ module "rds" {
   source              = "./modules/rds"
   name                = "test-rds"
   engine              = "aurora-mysql"
-  engine_version      = "2.10.2"
+  engine_version      = "2.10.1"
   vpc_id              = module.vpc.vpc_id
   allowed_cidr_blocks = module.vpc.subnet_database_subnets_cidr_blocks
 }
