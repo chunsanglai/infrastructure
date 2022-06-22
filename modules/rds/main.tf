@@ -4,6 +4,13 @@ module "rds-aurora" {
   name = var.name
   engine         = var.engine
   engine_version = var.engine_version
+  instance_class = "db.t3.small"
+  instances = {
+    one = {}
+    two   = {}
+    three = {}
+  }
+
 
   storage_encrypted = true
 
