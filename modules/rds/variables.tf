@@ -28,3 +28,16 @@ variable "instance_class" {
 variable "deletion_protection" {
   
 }
+variable "family" {
+  
+}
+variable "autoscaling_enabled" {
+  type        = string 
+  default = false
+}
+variable "autoscaling_min_capacity" {
+  type        = string 
+}
+variable "autoscaling_max_capacity" {
+  type        = string 
+}

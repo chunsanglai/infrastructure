@@ -1,3 +1,4 @@
+#Create RDS password
 resource "random_password" "password"{
   length           = 16
   special          = true
@@ -17,7 +18,7 @@ resource "aws_secretsmanager_secret_version" "password" {
    }
 EOF
 }
-
+#Import RDS password
 data "aws_secretsmanager_secret" "password" {
   arn = aws_secretsmanager_secret.password.arn
 }
@@ -28,6 +29,7 @@ locals {
   db_creds = jsondecode(data.aws_secretsmanager_secret_version.credentials.secret_string)
 }
 
+#Create RDS Cluster with 1 instance
 module "rds-aurora" {
   source  = "terraform-aws-modules/rds-aurora/aws"
   version = "~> 7.2.0"
@@ -52,23 +54,43 @@ module "rds-aurora" {
   enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
 
   db_subnet_group_name   = var.database_subnet_group_name
-  db_parameter_group_name         = aws_db_parameter_group.example.id
-  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.example.id
+  db_parameter_group_name         = aws_db_parameter_group.db_group.id
+  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.rds_group.id
 
   iam_database_authentication_enabled = true
   master_username                     = local.db_creds.username 
   master_password                     = local.db_creds.password
   create_random_password              = false
-}
 
-resource "aws_db_parameter_group" "example" {
-  name        = "test-aurora-db-57-parameter-group"
-  family      = "aurora-mysql5.7"
-  description = "test-aurora-db-57-parameter-group"
+  autoscaling_enabled      = var.autoscaling_enabled
+  autoscaling_min_capacity = var.autoscaling_min_capacity
+  autoscaling_max_capacity = var.autoscaling_max_capacity
 }
+#Create DB Parameter group
+resource "aws_db_parameter_group" "db_group" {
+  name        = "${var.name}-parameter-group"
+  family      = var.family
+  description = "${var.name}-parameter-group"
+}
+#Create RDS Cluster Parameter group
+resource "aws_rds_cluster_parameter_group" "rds_group" {
+  name        = "${var.name}-cluster-parameter-group"
+  family      = var.family
+  description = "${var.name}-cluster-parameter-group"
+}
+#Cloudwatch Alarm for Storage
+resource "aws_cloudwatch_metric_alarm" "database-storage-low-alarm" {
+  alarm_name                = "database-storage-low-alarm"
+  alarm_description         = "This metric monitors database storage dipping below threshold"
+  comparison_operator       = "LessThanThreshold"
+  threshold                 = "20"
+  evaluation_periods        = "2"
+  metric_name               = "FreeStorageSpace"
+  namespace                 = "AWS/RDS"
+  period                    = "120"
+  statistic                 = "Average"
 
-resource "aws_rds_cluster_parameter_group" "example" {
-  name        = "test-aurora-57-cluster-parameter-group"
-  family      = "aurora-mysql5.7"
-  description = "test-aurora-57-cluster-parameter-group"
+  dimensions {
+    DBInstanceIdentifier    = "${rds-aurora.database.id}"
+  }
 }
