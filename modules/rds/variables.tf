@@ -1,3 +1,7 @@
+variable "name" {
+  description = "Aurora database name"
+  type        = string  
+}
 variable "engine_version" {
   description = "Aurora database engine version"
   type        = string  

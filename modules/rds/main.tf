@@ -1,16 +1,12 @@
 module "rds-aurora" {
   source  = "terraform-aws-modules/rds-aurora/aws"
   version = "~> 7.2.0"
-  name = "test-aurora-db"
+  name = var.name
   engine         = "aurora-mysql"
-  engine_mode    = "serverless"
   engine_version = var.engine_version
   # enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
 
   storage_encrypted = true
-
-  auto_minor_version_upgrade  = true
-  allow_major_version_upgrade = false
 
   vpc_id                = var.vpc_id
   allowed_cidr_blocks   = var.allowed_cidr_blocks
@@ -20,9 +16,14 @@ module "rds-aurora" {
 
   skip_final_snapshot = true
   deletion_protection = true
+  enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
 
   db_parameter_group_name         = aws_db_parameter_group.standard_aurora_mysql_5_7.id
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.example.id
+
+  iam_database_authentication_enabled = true
+  master_password                     = random_password.master.result
+  create_random_password              = false
 }
 
 resource "aws_db_parameter_group" "example" {
@@ -37,3 +38,6 @@ resource "aws_rds_cluster_parameter_group" "example" {
   description = "test-aurora-57-cluster-parameter-group"
 }
 
+resource "random_password" "master" {
+  length = 10
+}

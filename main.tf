@@ -105,3 +105,10 @@ module "ec2-3e" {
   ]
   internal_ingress_rules = []
 }
+module "rds" {
+  source = "./modules/rds"
+  name = "test-rds"
+  engine_version = "5.7.12"
+  vpc_id = module.vpc.vpc_id
+  allowed_cidr_blocks = module.vpc.private_subnets
+}
