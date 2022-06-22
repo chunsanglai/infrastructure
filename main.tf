@@ -53,58 +53,7 @@ module "ec2" {
   ]
   internal_ingress_rules = []
 }
-module "ec2-2e" {
-  source                 = "./modules/ec2"
-  aws_region             = var.aws_region
-  name                   = "ec2-deploy-tweede"
-  ami                    = "ami-0a5b5c0ea66ec560d"
-  vpc_id                 = module.vpc.vpc_id
-  instance_type          = "t2.micro"
-  key_name               = "infra-ec2"
-  availability_zone      = element(module.vpc.azs, 0)
-  subnet_id              = element(module.vpc.subnet_public_subnet_ids, 0)
-  public_ports           = ["80", "443"]
-  volume_size            = 50
-  data_volume_size       = 50
-  tags-factory           = module.tags-factory.tags
-  private_hosted_zone_id = module.aws_route53_zone.private_zone_id
-  management_ingress_rules = [
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_block  = "10.60.0.0/16"
-      description = "ssh"
-    },
-  ]
-  internal_ingress_rules = []
-}
-# module "ec2-3e" {
-#   source                 = "./modules/ec2"
-#   aws_region             = var.aws_region
-#   name                   = "ec2-deploy-derde"
-#   ami                    = "ami-0a5b5c0ea66ec560d"
-#   vpc_id                 = module.vpc.vpc_id
-#   instance_type          = "t2.micro"
-#   key_name               = "infra-ec2"
-#   availability_zone      = element(module.vpc.azs, 0)
-#   subnet_id              = element(module.vpc.subnet_public_subnet_ids, 0)
-#   public_ports           = ["80", "443"]
-#   volume_size            = 50
-#   data_volume_size       = 50
-#   tags-factory           = module.tags-factory.tags
-#   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
-#   management_ingress_rules = [
-#     {
-#       from_port   = 22
-#       to_port     = 22
-#       protocol    = "tcp"
-#       cidr_block  = "10.60.0.0/16"
-#       description = "ssh"
-#     },
-#   ]
-#   internal_ingress_rules = []
-# }
+
 # module "rds" {
 #   source              = "./modules/rds"
 #   name                = "test-rds"
