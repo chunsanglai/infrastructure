@@ -18,7 +18,7 @@ module "rds-aurora" {
   deletion_protection = true
   enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
 
-  db_parameter_group_name         = aws_db_parameter_group.standard_aurora_mysql_5_7.id
+  db_parameter_group_name         = aws_db_parameter_group.example.id
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.example.id
 
   iam_database_authentication_enabled = true
@@ -27,7 +27,7 @@ module "rds-aurora" {
 }
 
 resource "aws_db_parameter_group" "example" {
-  name        = "$test-aurora-db-57-parameter-group"
+  name        = "test-aurora-db-57-parameter-group"
   family      = "aurora-mysql5.7"
   description = "test-aurora-db-57-parameter-group"
 }
