@@ -30,7 +30,7 @@ module "vpc" {
 module "ec2" {
   source                 = "./modules/ec2"
   aws_region             = var.aws_region
-  name                   = "ec2-deploy-asdawds"
+  name                   = "carenire7"
   ami                    = "ami-0a5b5c0ea66ec560d"
   vpc_id                 = module.vpc.vpc_id
   instance_type          = "t2.micro"
@@ -54,19 +54,19 @@ module "ec2" {
   internal_ingress_rules = []
 }
 
-# module "rds" {
-#   source                     = "./modules/rds"
-#   name                       = "test-rds"
-#   engine                     = "aurora-mysql"
-#   family                     = "aurora-mysql5.7"
-#   engine_version             = "5.7.mysql_aurora.2.10.2"
-#   instance_class             = "db.t3.small"
-#   db_instances               = 1
-#   autoscaling_enabled        = false
-#   autoscaling_min_capacity   = 0
-#   autoscaling_max_capacity   = 0
-#   deletion_protection        = false
-#   vpc_id                     = module.vpc.vpc_id
-#   database_subnet_group_name = module.vpc.subnet_database_subnets_group_name
-#   allowed_cidr_blocks        = module.vpc.subnet_private_subnets_cidr_blocks
-# }
+module "rds" {
+  source                     = "./modules/rds/mysql8"
+  name                       = "test-rds"
+  engine                     = "aurora-mysql"
+  family                     = "aurora-mysql8.0"
+  engine_version             = "3.02.0"
+  instance_class             = "db.t3.medium"
+  db_instances               = 1
+  autoscaling_enabled        = false
+  autoscaling_min_capacity   = 0
+  autoscaling_max_capacity   = 0
+  deletion_protection        = false
+  vpc_id                     = module.vpc.vpc_id
+  database_subnet_group_name = module.vpc.subnet_database_subnets_group_name
+  allowed_cidr_blocks        = module.vpc.subnet_private_subnets_cidr_blocks
+}
