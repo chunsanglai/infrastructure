@@ -1,4 +1,4 @@
-resource "random_password" "master"{
+resource "random_password" "password"{
   length           = 16
   special          = true
   override_special = "_!%^"
@@ -10,7 +10,22 @@ resource "aws_secretsmanager_secret" "password" {
 
 resource "aws_secretsmanager_secret_version" "password" {
   secret_id     = aws_secretsmanager_secret.password.id
-  secret_string = random_password.master.result
+  secret_string = <<EOF
+   {
+    "username": "root",
+    "password": "${random_password.password.result}"
+   }
+EOF
+}
+
+data "aws_secretsmanager_secret" "password" {
+  arn = aws_secretsmanager_secret.password.arn
+}
+data "aws_secretsmanager_secret_version" "credentials" {
+  secret_id = data.aws_secretsmanager_secret.password.arn
+}
+locals {
+  db_creds = jsondecode(data.aws_secretsmanager_secret_version.credentials.secret_string)
 }
 
 module "rds-aurora" {
@@ -41,7 +56,8 @@ module "rds-aurora" {
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.example.id
 
   iam_database_authentication_enabled = true
-  master_password                     = aws_secretsmanager_secret_version.password
+  master_username                     = local.db_creds.username 
+  master_password                     = local.db_creds.password
   create_random_password              = false
 }
 
