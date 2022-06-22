@@ -79,8 +79,8 @@ resource "aws_rds_cluster_parameter_group" "rds_group" {
   description = "${var.name}-cluster-parameter-group"
 }
 #Cloudwatch Alarm for Storage
-resource "aws_cloudwatch_metric_alarm" "database-storage-low-alarm" {
-  alarm_name                = "database-storage-low-alarm"
+resource "aws_cloudwatch_metric_alarm" "storage-low-alarm" {
+  alarm_name                = "${var.name}-storage-low-alarm"
   alarm_description         = "This metric monitors database storage dipping below threshold"
   comparison_operator       = "LessThanThreshold"
   threshold                 = "20"
@@ -89,6 +89,17 @@ resource "aws_cloudwatch_metric_alarm" "database-storage-low-alarm" {
   namespace                 = "AWS/RDS"
   period                    = "120"
   statistic                 = "Average"
-  dimensions                = { DBInstanceIdentifier    = "test-rds-1"}
-
+  dimensions                = { DBInstanceIdentifier    = "${var.name}-1"}
+}
+resource "aws_cloudwatch_metric_alarm" "cpu-alarm" {
+  alarm_name                = "${var.name}-cpu-alarm"
+  alarm_description         = "This metric monitors database storage dipping below threshold"
+  comparison_operator       = "LessThanThreshold"
+  threshold                 = "20"
+  evaluation_periods        = "2"
+  metric_name               = "CPUUtilization"
+  namespace                 = "AWS/RDS"
+  period                    = "120"
+  statistic                 = "Average"
+  dimensions                = { DBInstanceIdentifier    = "${var.name}-1"}
 }
