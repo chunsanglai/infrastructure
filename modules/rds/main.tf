@@ -2,7 +2,7 @@ module "rds-aurora" {
   source  = "terraform-aws-modules/rds-aurora/aws"
   version = "~> 7.2.0"
   name = var.name
-  engine         = "aurora-mysql"
+  engine         = var.engine
   engine_version = var.engine_version
   # enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
 
