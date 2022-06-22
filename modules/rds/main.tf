@@ -17,6 +17,7 @@ module "rds-aurora" {
   deletion_protection = true
   enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
 
+  db_subnet_group_name   = var.database_subnet_group_name
   db_parameter_group_name         = aws_db_parameter_group.example.id
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.example.id
 
