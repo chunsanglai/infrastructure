@@ -38,11 +38,28 @@ module "ec2" {
   availability_zone      = element(module.vpc.azs, 0)
   subnet_id              = element(module.vpc.subnet_public_subnet_ids, 0)
   public_ports           = ["80", "443"]
-  cidr_block             = ["178.84.133.29/32"]
   volume_size            = 50
   data_volume_size       = 50
   tags-factory           = module.tags-factory.tags
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
+  management_ingress_rules = [
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_block  = "10.60.0.0/16"
+      description = "ssh"
+    },
+  ]
+  internal_ingress_rules = [
+    {
+      from_port       = 22
+      to_port         = 22
+      protocol        = "tcp"
+      security_groups = [module.ec2-instance-1.instance_sg, module.ec2-instance-2.instance_sg]
+      description     = "ssh"
+    },
+  ]
 }
 module "ec2-2e" {
   source                 = "./modules/ec2"
@@ -55,11 +72,28 @@ module "ec2-2e" {
   availability_zone      = element(module.vpc.azs, 0)
   subnet_id              = element(module.vpc.subnet_public_subnet_ids, 0)
   public_ports           = ["80", "443"]
-  cidr_block             = ["178.84.133.29/32", "192.168.1.0/32"]
   volume_size            = 50
   data_volume_size       = 50
   tags-factory           = module.tags-factory.tags
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
+  management_ingress_rules = [
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_block  = "10.60.0.0/16"
+      description = "ssh"
+    },
+  ]
+  internal_ingress_rules = [
+    {
+      from_port       = 22
+      to_port         = 22
+      protocol        = "tcp"
+      security_groups = [module.ec2-instance-1.instance_sg, module.ec2-instance-2.instance_sg]
+      description     = "ssh"
+    },
+  ]
 }
 module "ec2-3e" {
   source                 = "./modules/ec2"
@@ -72,9 +106,26 @@ module "ec2-3e" {
   availability_zone      = element(module.vpc.azs, 0)
   subnet_id              = element(module.vpc.subnet_public_subnet_ids, 0)
   public_ports           = ["80", "443"]
-  cidr_block             = ["178.84.133.29/32"]
   volume_size            = 50
   data_volume_size       = 50
   tags-factory           = module.tags-factory.tags
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
+  management_ingress_rules = [
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_block  = "10.60.0.0/16"
+      description = "ssh"
+    },
+  ]
+  internal_ingress_rules = [
+    {
+      from_port       = 22
+      to_port         = 22
+      protocol        = "tcp"
+      security_groups = [module.ec2-instance-1.instance_sg, module.ec2-instance-2.instance_sg]
+      description     = "ssh"
+    },
+  ]
 }
