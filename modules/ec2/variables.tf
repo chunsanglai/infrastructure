@@ -51,12 +51,6 @@ variable "public_ports" {
   default     = [-1]
 }
 
-variable "cidr_block" {
-  description = "CIDR range of the non-standard subnet(s)"
-  type        = list(string)
-  default     = [""]
-}
-
 variable "vpc_id" {
   description = "vpc id"
 }
@@ -73,7 +67,7 @@ variable "private_hosted_zone_id" {
   type    = string
   default = ""
 }
-variable "sg_ingress_rules" {
+variable "management_ingress_rules" {
     type = list(object({
       from_port   = number
       to_port     = number
@@ -81,20 +75,13 @@ variable "sg_ingress_rules" {
       cidr_block  = string
       description = string
     }))
-    default     = [
-        {
-          from_port   = 22
-          to_port     = 22
-          protocol    = "tcp"
-          cidr_block  = "1.2.3.4/32"
-          description = "test"
-        },
-        {
-          from_port   = 23
-          to_port     = 23
-          protocol    = "tcp"
-          cidr_block  = "1.2.3.4/32"
-          description = "test"
-        },
-    ]
+}
+variable "internal_ingress_rules" {
+    type = list(object({
+      from_port   = number
+      to_port     = number
+      protocol    = string
+      security_groups  = list(string)
+      description = string
+    }))
 }

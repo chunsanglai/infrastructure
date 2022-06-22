@@ -4,6 +4,13 @@ sudo apt update -y
 LogMessage "Running package upgrade"
 sudo apt upgrade -y
 
+#Format data disk
+sudo mkfs -t ext4 /dev/nvme1n1
+sudo mkdir /data
+sudo mount /dev/nvme1n1 /data
+UUID=$(blkid -o value -s UUID /dev/nvme1n1)
+echo UUID=$UUID /data ext4 defaults,nofail  0  2 >> /etc/fstab
+
 # Configure Cloudwatch agent
 LogMessage "Configure Cloudwatch agent"
 LogMessage "Download Cloudwatch package"
@@ -24,8 +31,3 @@ sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
 -c ssm:${ssm_cloudwatch_config} -s
 sudo systemctl enable amazon-cloudwatch-agent.service
 sudo service amazon-cloudwatch-agent start
-
-# Install AWS CLI package
-LogMessage "Installing AWS CLI package"
-sudo apt install awscli -y
-
