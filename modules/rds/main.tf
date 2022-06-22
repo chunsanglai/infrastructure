@@ -28,6 +28,9 @@ data "aws_secretsmanager_secret_version" "credentials" {
 locals {
   db_creds = jsondecode(data.aws_secretsmanager_secret_version.credentials.secret_string)
 }
+#Create KMS for RDS
+resource "aws_kms_key" "this" {
+}
 
 #Create RDS Cluster with 1 instance
 module "rds-aurora" {
@@ -40,7 +43,7 @@ module "rds-aurora" {
   instances = {
     1 = {}
   }
-
+  kms_key_id  = aws_kms_key.this.arn
   storage_encrypted = true
 
   vpc_id                = var.vpc_id
