@@ -48,7 +48,7 @@ module "rds-aurora" {
   create_monitoring_role = true
 
   skip_final_snapshot = true
-  deletion_protection = true
+  deletion_protection = var.deletion_protection
   enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
 
   db_subnet_group_name   = var.database_subnet_group_name

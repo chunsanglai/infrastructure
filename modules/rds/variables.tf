@@ -25,3 +25,6 @@ variable "database_subnet_group_name" {
 variable "instance_class" {
   description = "The instance type of the RDS instance."
 }
+variable "deletion_protection" {
+  
+}

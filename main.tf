@@ -60,6 +60,7 @@ module "rds" {
   engine                     = "aurora-mysql"
   engine_version             = "5.7.mysql_aurora.2.10.2"
   instance_class             = "db.t3.small"
+  deletion_protection        = false
   vpc_id                     = module.vpc.vpc_id
   database_subnet_group_name = module.vpc.subnet_database_subnets_group_name
   allowed_cidr_blocks        = module.vpc.subnet_database_subnets_cidr_blocks
