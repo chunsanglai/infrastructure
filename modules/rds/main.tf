@@ -1,16 +1,28 @@
+resource "random_password" "master"{
+  length           = 16
+  special          = true
+  override_special = "_!%^"
+}
+
+data "aws_secretsmanager_secret" "password" {
+  name = "${var.name}-db-password"
+}
+
+data "aws_secretsmanager_secret_version" "password" {
+  secret_id = data.aws_secretsmanager_secret.password
+  secret_string = random_password.master.result
+}
+
 module "rds-aurora" {
   source  = "terraform-aws-modules/rds-aurora/aws"
   version = "~> 7.2.0"
   name = var.name
   engine         = var.engine
   engine_version = var.engine_version
-  instance_class = "db.t3.small"
+  instance_class = var.instance_class 
   instances = {
-    one = {}
-    two   = {}
-    three = {}
+    1 = {}
   }
-
 
   storage_encrypted = true
 
@@ -29,7 +41,7 @@ module "rds-aurora" {
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.example.id
 
   iam_database_authentication_enabled = true
-  master_password                     = random_password.master.result
+  master_password                     = data.aws_secretsmanager_secret_version.password
   create_random_password              = false
 }
 
@@ -43,8 +55,4 @@ resource "aws_rds_cluster_parameter_group" "example" {
   name        = "test-aurora-57-cluster-parameter-group"
   family      = "aurora-mysql5.7"
   description = "test-aurora-57-cluster-parameter-group"
-}
-
-resource "random_password" "master" {
-  length = 10
 }
