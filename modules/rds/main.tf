@@ -91,6 +91,6 @@ resource "aws_cloudwatch_metric_alarm" "database-storage-low-alarm" {
   statistic                 = "Average"
 
   dimensions {
-    DBInstanceIdentifier    = "${rds-aurora.database.id}"
+    DBInstanceIdentifier    = "${module.rds-aurora.database.id}"
   }
 }
