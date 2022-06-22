@@ -39,10 +39,9 @@ module "rds-aurora" {
   name = var.name
   engine         = var.engine
   engine_version = var.engine_version
-  instance_class = var.instance_class 
-  instances = {
-    1 = {}
-  }
+  instance_class = var.instance_class
+  count = length(var.db_instances)
+  instances = var.db_instances[count.index]
   kms_key_id  = aws_kms_key.this.arn
   storage_encrypted = true
 
