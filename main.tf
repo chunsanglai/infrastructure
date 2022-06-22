@@ -51,15 +51,7 @@ module "ec2" {
       description = "ssh"
     },
   ]
-  internal_ingress_rules = [
-    {
-      from_port       = 22
-      to_port         = 22
-      protocol        = "tcp"
-      security_groups = [module.ec2-instance-1.instance_sg, module.ec2-instance-2.instance_sg]
-      description     = "ssh"
-    },
-  ]
+  internal_ingress_rules = []
 }
 module "ec2-2e" {
   source                 = "./modules/ec2"
@@ -85,15 +77,7 @@ module "ec2-2e" {
       description = "ssh"
     },
   ]
-  internal_ingress_rules = [
-    {
-      from_port       = 22
-      to_port         = 22
-      protocol        = "tcp"
-      security_groups = [module.ec2-instance-1.instance_sg, module.ec2-instance-2.instance_sg]
-      description     = "ssh"
-    },
-  ]
+  internal_ingress_rules = []
 }
 module "ec2-3e" {
   source                 = "./modules/ec2"
@@ -119,13 +103,5 @@ module "ec2-3e" {
       description = "ssh"
     },
   ]
-  internal_ingress_rules = [
-    {
-      from_port       = 22
-      to_port         = 22
-      protocol        = "tcp"
-      security_groups = [module.ec2-instance-1.instance_sg, module.ec2-instance-2.instance_sg]
-      description     = "ssh"
-    },
-  ]
+  internal_ingress_rules = []
 }
