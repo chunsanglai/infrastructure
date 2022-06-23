@@ -56,7 +56,7 @@ module "ec2" {
 
 module "rds" {
   source                     = "./modules/rds/mysql8"
-  name                       = "test-rds"
+  name                       = "mysql8-rds"
   engine                     = "aurora-mysql"
   family                     = "aurora-mysql8.0"
   engine_version             = "3.02.0"
