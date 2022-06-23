@@ -41,6 +41,3 @@ variable "autoscaling_min_capacity" {
 variable "autoscaling_max_capacity" {
   type        = string 
 }
-variable "db_instances" {
-  
-}
