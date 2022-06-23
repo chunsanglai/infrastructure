@@ -41,3 +41,10 @@ variable "autoscaling_min_capacity" {
 variable "autoscaling_max_capacity" {
   type        = string 
 }
+variable "database_name" {
+  type        = string 
+}
+variable "instances" {
+  description = "Instances types for RDS cluster"
+  type = map
+}

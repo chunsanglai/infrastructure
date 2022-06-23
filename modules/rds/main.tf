@@ -37,12 +37,12 @@ module "rds-aurora" {
   source  = "terraform-aws-modules/rds-aurora/aws"
   version = "~> 7.2.0"
   name = var.name
+  database_name = var.database_name
   engine         = var.engine
   engine_version = var.engine_version
   instance_class = var.instance_class
-  instances = {
-    1 = {}
-  }
+  instances = var.instances
+
   kms_key_id  = aws_kms_key.this.arn
   storage_encrypted = true
 

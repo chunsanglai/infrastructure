@@ -61,6 +61,8 @@ module "rds" {
   family                     = "aurora-mysql8.0"
   engine_version             = "8.0.mysql_aurora.3.02.0"
   instance_class             = "db.t3.medium"
+  database_name              = "chun"
+  instances                  = 2
   autoscaling_enabled        = false
   autoscaling_min_capacity   = 0
   autoscaling_max_capacity   = 0
