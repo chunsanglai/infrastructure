@@ -50,7 +50,7 @@ module "security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 4.0"
 
-  name        = "alb-sg-${name}-${aws_region}"
+  name        = "alb-sg-${var.name}-${var.aws_region}"
   description = "Security group for example usage with ALB"
   vpc_id      = var.vpc_id
 
