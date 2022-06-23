@@ -55,11 +55,11 @@ module "ec2" {
 }
 
 module "rds" {
-  source                     = "./modules/rds/mysql8"
+  source                     = "./modules/rds"
   name                       = "mysql8-rds"
   engine                     = "aurora-mysql"
   family                     = "aurora-mysql8.0"
-  engine_version             = "3.02.0"
+  engine_version             = "8.0.mysql_aurora.3.02.0"
   instance_class             = "db.t3.medium"
   db_instances               = 1
   autoscaling_enabled        = false
