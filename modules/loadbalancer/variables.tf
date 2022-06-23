@@ -9,3 +9,6 @@ variable "name" {
 variable "target_id" {
   
 }
+variable "vpc_id" {
+  description = "vpc id"
+}

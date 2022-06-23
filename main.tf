@@ -33,6 +33,7 @@ module "alb" {
   aws_region = var.aws_region
   name       = "chun"
   target_id  = module.ec2.instance_id
+  vpc_id     = module.vpc.vpc_id
 }
 
 module "ec2" {
