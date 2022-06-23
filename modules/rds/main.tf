@@ -83,7 +83,7 @@ resource "aws_rds_cluster_parameter_group" "rds_group" {
 }
 #Cloudwatch Alarm for Storage
 resource "aws_cloudwatch_metric_alarm" "storage-low-alarm" {
-  for_each = keys(var.instances)
+  for_each = var.instances
   alarm_name                = "${var.name}-${var.instances}-storage-low-alarm"
   alarm_description         = "This metric monitors database storage dipping below threshold"
   comparison_operator       = "LessThanThreshold"
