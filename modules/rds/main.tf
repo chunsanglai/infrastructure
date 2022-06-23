@@ -68,9 +68,12 @@ module "rds-aurora" {
   autoscaling_enabled      = var.autoscaling_enabled
   autoscaling_min_capacity = var.autoscaling_min_capacity
   autoscaling_max_capacity = var.autoscaling_max_capacity
+  preferred_backup_window = var.preferred_backup_window
+  backup_retention_period = var.backup_retention_period
   copy_tags_to_snapshot = true
   tags = var.tags-factory
 }
+
 #Create DB Parameter group
 resource "aws_db_parameter_group" "db_group" {
   name        = "${var.name}-parameter-group"

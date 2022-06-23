@@ -51,3 +51,9 @@ variable "instances" {
 variable "tags-factory" {
   type = map(any)
 }
+variable "preferred_backup_window" {
+  
+}
+variable "backup_retention_period" {
+  
+}

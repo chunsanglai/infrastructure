@@ -67,6 +67,8 @@ module "rds" {
   autoscaling_min_capacity   = 0
   autoscaling_max_capacity   = 0
   deletion_protection        = false
+  preferred_backup_window    = "02:00-03:00"
+  backup_retention_period    = "7"
   vpc_id                     = module.vpc.vpc_id
   database_subnet_group_name = module.vpc.subnet_database_subnets_group_name
   allowed_cidr_blocks        = module.vpc.subnet_private_subnets_cidr_blocks
