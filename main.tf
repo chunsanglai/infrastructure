@@ -28,15 +28,6 @@ module "vpc" {
   tags-factory            = module.tags-factory.tags
 }
 
-module "alb" {
-  source     = "./modules/loadbalancer"
-  aws_region = var.aws_region
-  name       = "chun"
-  target_id  = module.ec2.instance_id
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.subnet_public_subnet_ids
-}
-
 module "ec2" {
   source                 = "./modules/ec2"
   aws_region             = var.aws_region
@@ -62,25 +53,4 @@ module "ec2" {
     },
   ]
   internal_ingress_rules = []
-}
-
-module "rds" {
-  source                     = "./modules/rds"
-  name                       = "mysql8-rds"
-  engine                     = "aurora-mysql"
-  family                     = "aurora-mysql8.0"
-  engine_version             = "8.0.mysql_aurora.3.02.0"
-  instance_class             = "db.t3.medium"
-  database_name              = "chun"
-  instances                  = { 1 = {}, 2 = {} }
-  autoscaling_enabled        = false
-  autoscaling_min_capacity   = 0
-  autoscaling_max_capacity   = 0
-  deletion_protection        = false
-  preferred_backup_window    = "02:00-03:00"
-  backup_retention_period    = "7"
-  vpc_id                     = module.vpc.vpc_id
-  database_subnet_group_name = module.vpc.subnet_database_subnets_group_name
-  allowed_cidr_blocks        = module.vpc.subnet_private_subnets_cidr_blocks
-  tags-factory               = module.tags-factory.tags
 }
