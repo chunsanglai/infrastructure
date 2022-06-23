@@ -54,3 +54,8 @@ module "ec2" {
   ]
   internal_ingress_rules = []
 }
+module "opensearch" {
+  source    = "./modules/opensearch"
+  user_name = "test"
+  password  = "test123"
+}
