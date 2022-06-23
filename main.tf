@@ -70,4 +70,5 @@ module "rds" {
   vpc_id                     = module.vpc.vpc_id
   database_subnet_group_name = module.vpc.subnet_database_subnets_group_name
   allowed_cidr_blocks        = module.vpc.subnet_private_subnets_cidr_blocks
+  tags-factory               = module.tags-factory.tags
 }
