@@ -56,6 +56,7 @@ module "ec2" {
 }
 module "opensearch" {
   source       = "./modules/opensearch"
+  domain       = "chunsang"
   user_name    = "test"
   password     = "test123"
   tags-factory = module.tags-factory.tags
