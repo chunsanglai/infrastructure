@@ -6,8 +6,8 @@ module "alb" {
 
   load_balancer_type = "application"
 
-  vpc_id             = var.vpc.id
-  subnets            = var.subnets_ids
+  vpc_id             = var.vpc_id
+  subnets            = var.subnet_ids
   security_groups    = [module.security_group.security_group_id]
   # access_logs = {
   #   bucket = "my-alb-logs"
@@ -52,7 +52,7 @@ module "security_group" {
 
   name        = "alb-sg-${name}-${aws_region}"
   description = "Security group for example usage with ALB"
-  vpc_id      = var.vpc.id
+  vpc_id      = var.vpc_id
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
   ingress_rules       = ["http-80-tcp", "all-icmp"]
