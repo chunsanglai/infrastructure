@@ -104,7 +104,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu-alarm" {
   for_each = var.instances
   alarm_name                = "${var.name}-${each.key}-cpu-alarm"
   alarm_description         = "This metric monitors database storage dipping below threshold"
-  comparison_operator       = "LessThanThreshold"
+  comparison_operator       = "Average"
   threshold                 = "20"
   evaluation_periods        = "2"
   metric_name               = "CPUUtilization"
