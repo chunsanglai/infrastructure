@@ -1,12 +1,6 @@
 
-variable "log_sender_ID" {
-  description = "Log sender AWS account ID"
-  type        = string
-}
-
-variable "tags" {
-  description = "A map of tags to add to all resources"
-  type        = map(string)
+variable "tags-factory" {
+  type = map(any)
 }
 
 variable "domain" {
