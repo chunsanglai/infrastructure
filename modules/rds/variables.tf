@@ -48,3 +48,6 @@ variable "instances" {
   description = "Amount of instances for RDS cluster"
   type = map
 }
+variable "tags-factory" {
+  type = map(any)
+}
