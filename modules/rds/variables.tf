@@ -47,4 +47,8 @@ variable "database_name" {
 variable "instances" {
   description = "Instances types for RDS cluster"
   type = map
+  default = {
+    1 = {}
+    2 = {}
+  }
 }
