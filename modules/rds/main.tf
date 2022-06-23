@@ -93,10 +93,11 @@ resource "aws_cloudwatch_metric_alarm" "storage-low-alarm" {
   namespace                 = "AWS/RDS"
   period                    = "120"
   statistic                 = "Average"
-  dimensions                = { DBInstanceIdentifier    = "${var.name}-${var.instances.keys}"}
+  dimensions                = { DBInstanceIdentifier    = "${var.name}-${each.key}"}
 }
 resource "aws_cloudwatch_metric_alarm" "cpu-alarm" {
-  alarm_name                = "${var.name}-cpu-alarm"
+  for_each = var.instances
+  alarm_name                = "${var.name}-${each.key}-cpu-alarm"
   alarm_description         = "This metric monitors database storage dipping below threshold"
   comparison_operator       = "LessThanThreshold"
   threshold                 = "20"
@@ -105,5 +106,5 @@ resource "aws_cloudwatch_metric_alarm" "cpu-alarm" {
   namespace                 = "AWS/RDS"
   period                    = "120"
   statistic                 = "Average"
-  dimensions                = { DBInstanceIdentifier    = "${var.name}-1"}
+  dimensions                = { DBInstanceIdentifier    = "${var.name}-${each.key}"}
 }
