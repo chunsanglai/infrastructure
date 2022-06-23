@@ -27,6 +27,14 @@ module "vpc" {
   traffic_type            = "ALL"
   tags-factory            = module.tags-factory.tags
 }
+
+module "alb" {
+  source     = "./modules/loadbalancer"
+  aws_region = var.aws_region
+  name       = "chun"
+  target_id  = module.ec2.instance_id
+}
+
 module "ec2" {
   source                 = "./modules/ec2"
   aws_region             = var.aws_region

@@ -1,27 +1,17 @@
-data "vpc" "default" {
-  default = true
-}
-
-data "aws_subnets" "all" {
-  filter {
-    name   = "vpc-id"
-    values = [data.vpc.default.id]
-  }
-}
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
-  version = "~> 6.0"
+  version = "~> 7.0"
 
   name = "my-alb"
 
   load_balancer_type = "application"
 
-  vpc_id             = data.vpc.default.ID
-  subnets            = data.aws_subnets.all.ids
+  vpc_id             = var.vpc.id
+  subnets            = var.aws_subnets.ids
   security_groups    = [module.security_group.security_group_id]
-  access_logs = {
-    bucket = "my-alb-logs"
-  }
+  # access_logs = {
+  #   bucket = "my-alb-logs"
+  # }
 
   target_groups = [
     {
@@ -31,12 +21,8 @@ module "alb" {
       target_type      = "instance"
       targets = {
         my_target = {
-          target_id = aws_instance.this.id
+          target_id = var.target_id
           port = 80
-        }
-        my_other_target = {
-          target_id = aws_instance.this.id
-          port = 8080
         }
       }
     }
@@ -58,10 +44,6 @@ module "alb" {
       target_group_index = 0
     }
   ]
-
-  tags = {
-    Environment = "Test"
-  }
 }
 
 module "security_group" {
@@ -70,7 +52,7 @@ module "security_group" {
 
   name        = "alb-sg-${name}-${aws_region}"
   description = "Security group for example usage with ALB"
-  vpc_id      = data.vpc.default.id
+  vpc_id      = var.vpc.id
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
   ingress_rules       = ["http-80-tcp", "all-icmp"]
