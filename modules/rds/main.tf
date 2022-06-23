@@ -86,20 +86,7 @@ resource "aws_rds_cluster_parameter_group" "rds_group" {
   family      = var.family
   description = "${var.name}-cluster-parameter-group"
 }
-#Cloudwatch Alarm for Storage
-resource "aws_cloudwatch_metric_alarm" "storage-low-alarm" {
-  for_each = var.instances
-  alarm_name                = "${var.name}-${each.key}-storage-low-alarm"
-  alarm_description         = "This metric monitors database storage dipping below threshold"
-  comparison_operator       = "LessThanThreshold"
-  threshold                 = "20"
-  evaluation_periods        = "2"
-  metric_name               = "FreeStorageSpace"
-  namespace                 = "AWS/RDS"
-  period                    = "120"
-  statistic                 = "Average"
-  dimensions                = { DBInstanceIdentifier    = "${var.name}-${each.key}"}
-}
+
 resource "aws_cloudwatch_metric_alarm" "cpu-alarm" {
   for_each = var.instances
   alarm_name                = "${var.name}-${each.key}-cpu-alarm"
