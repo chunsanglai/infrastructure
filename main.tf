@@ -34,6 +34,7 @@ module "alb" {
   name       = "chun"
   target_id  = module.ec2.instance_id
   vpc_id     = module.vpc.vpc_id
+  subnet_ids = [module.vpc.subnet_public_subnet_ids]
 }
 
 module "ec2" {
