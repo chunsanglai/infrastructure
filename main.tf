@@ -107,7 +107,7 @@ module "rds-stg-57" {
   backup_retention_period    = "7"
   vpc_id                     = module.vpc.vpc_id
   database_subnet_group_name = module.vpc.subnet_database_subnets_group_name
-  allowed_security_groups    = [module.ec2.instance_sg, module.ec2-1.instance_sg]
+  allowed_security_groups    = []
   allowed_cidr_blocks        = []
   tags          = {
       CostCenter   = "Carenity"
