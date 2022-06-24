@@ -4,9 +4,9 @@ module "aws_route53_zone" {
   private_zone_name = "chunsang.lai.internal"
   vpc_id            = module.vpc.vpc_id
 }
-module "tags-factory" {
-  source = "./modules/tags-factory"
-}
+# module "tags-factory" {
+#   source = "./modules/tags-factory"
+# }
 module "sns" {
   source = "./modules/sns"
 }
@@ -25,7 +25,11 @@ module "vpc" {
   deletion_window_in_days = 30
   log_destination_type    = "s3"
   traffic_type            = "ALL"
-  tags-factory            = module.tags-factory.tags
+  tags          = {
+      CostCenter   = "chun"
+      map-migrated = "d-server-12345"
+      Managedby    = "Terraform"
+    }
 }
 
 module "ec2" {
@@ -41,7 +45,11 @@ module "ec2" {
   public_ports           = ["80", "443"]
   volume_size            = 50
   data_volume_size       = 50
-  tags-factory           = module.tags-factory.tags
+  tags          = {
+      CostCenter   = "chun"
+      map-migrated = "d-server-12345"
+      Managedby    = "Terraform"
+    }
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
   management_ingress_rules = [
     {
@@ -53,11 +61,4 @@ module "ec2" {
     },
   ]
   internal_ingress_rules = []
-}
-module "opensearch" {
-  source       = "./modules/opensearch"
-  domain       = "chunsang-01"
-  user_name    = "test"
-  password     = "test123"
-  tags-factory = module.tags-factory.tags
 }

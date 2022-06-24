@@ -24,7 +24,7 @@ module "ec2_instance" {
   monitoring                  = true
   iam_instance_profile        = aws_iam_instance_profile.this.name
   root_block_device           = [{ volume_type = var.volume_type, volume_size = var.volume_size, encrypted = true, kms_key_id  = aws_kms_key.this.arn}] # Default is gp3
-  tags                        = var.tags-factory
+  tags                        = var.tags
   private_ip                  = var.private_ip
   disable_api_termination     = true
 }
@@ -55,7 +55,7 @@ resource "aws_security_group" "management-security-group" {
 resource "aws_security_group" "public-security-group" {
   name        = join("-", [var.name, "public-security-group"])
   description = join(" ", ["Public security group for", var.name])
-  tags = var.tags-factory
+  tags = var.tags
   vpc_id      = var.vpc_id
   count       = var.public_ports[0] > 0 ? 1 : 0
   dynamic "ingress" {
@@ -116,7 +116,7 @@ resource "aws_ebs_volume" "this" {
   encrypted = true
   type = var.volume_type
   kms_key_id  = aws_kms_key.this.arn
-  tags = var.tags-factory
+  tags = var.tags
 }
 
 resource "aws_kms_key" "this" {

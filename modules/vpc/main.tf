@@ -20,7 +20,7 @@ module "vpc" {
 
   enable_dns_hostnames = true
   
-  tags = var.tags-factory
+  tags = var.tags
 }
 ### VPC FLOW LOG
 resource "aws_flow_log" "vpc_flow_log" {
@@ -33,7 +33,7 @@ resource "aws_flow_log" "vpc_flow_log" {
 
 resource "aws_s3_bucket" "vpc_log" {
   bucket = join("-", [var.name, var.env, var.aws_region, "vpc-flowlog"])
-  tags = var.tags-factory
+  tags = var.tags
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "s3_encryption" {
@@ -90,6 +90,6 @@ EOF
 ### KMS KEY
 resource "aws_kms_key" "kms_vpc" {
   deletion_window_in_days  = var.deletion_window_in_days
-  tags                     = var.tags-factory
+  tags = var.tags
 }
 ### END KMS KEY

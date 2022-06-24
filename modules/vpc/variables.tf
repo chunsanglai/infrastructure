@@ -71,7 +71,7 @@ variable "single_nat_gateway" {
   default     = true
 }
 
-variable "tags-factory" {
+variable "tags" {
   type = map(any)
 }
 variable "deletion_window_in_days" {

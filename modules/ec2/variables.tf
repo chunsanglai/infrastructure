@@ -54,7 +54,7 @@ variable "public_ports" {
 variable "vpc_id" {
   description = "vpc id"
 }
-variable "tags-factory" {
+variable "tags" {
   type = map(any)
 }
 
