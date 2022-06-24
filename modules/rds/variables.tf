@@ -52,7 +52,7 @@ variable "instances" {
   description = "Amount of instances for RDS cluster"
   type = map
 }
-variable "tags-factory" {
+variable "tags" {
   type = map(any)
 }
 variable "preferred_backup_window" {

@@ -72,7 +72,7 @@ module "rds-aurora" {
   preferred_backup_window = var.preferred_backup_window
   backup_retention_period = var.backup_retention_period
   copy_tags_to_snapshot = true
-  tags = var.tags-factory
+  tags = var.tags
 }
 
 #Create DB Parameter group
