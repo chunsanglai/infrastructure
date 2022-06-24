@@ -65,7 +65,7 @@ module "opensearch" {
   source    = "./modules/opensearch"
   domain    = "os-chun-123"
   user_name = "root"
-  password  = "258ABCopa"
+  password  = ""
   tags = {
     CostCenter   = "chun"
     map-migrated = "d-server-12345"
