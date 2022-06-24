@@ -19,6 +19,10 @@ variable "allowed_cidr_blocks" {
   description = "A list of CIDR blocks which are allowed to access the database"
   type        = list(string)  
 }
+variable "allowed_security_groups" {
+  description = "A list of security groups which are allowed to access the database"
+  type        = list(string)  
+}
 variable "database_subnet_group_name" {
 }
 
