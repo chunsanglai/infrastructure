@@ -1,5 +1,5 @@
 
-variable "tags-factory" {
+variable "tags" {
   type = map(any)
 }
 
