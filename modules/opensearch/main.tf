@@ -30,5 +30,5 @@ resource "aws_elasticsearch_domain" "opensearch" {
     enforce_https       = true
     tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
   }
-  tags = var.tags-factory
+  tags = var.tags
 }
