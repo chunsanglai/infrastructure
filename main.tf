@@ -116,4 +116,30 @@ module "rds-stg-57" {
       Managedby    = "Terraform"
     }
 }
+module "rds-stg" {
+  source                     = "./modules/rds"
+  name                       = "stg-rds"
+  engine                     = "aurora-mysql"
+  family                     = "aurora-mysql5.7"
+  engine_version             = "5.7.mysql_aurora.2.10.2"
+  instance_class             = "db.t3.small"
+  instances                  = { 1 = {} }
+  autoscaling_enabled        = false
+  autoscaling_min_capacity   = 0
+  autoscaling_max_capacity   = 0
+  deletion_protection        = false
+  preferred_backup_window    = "02:00-03:00"
+  backup_retention_period    = "7"
+  vpc_id                     = module.vpc.vpc_id
+  database_subnet_group_name = module.vpc.subnet_database_subnets_group_name
+  allowed_security_groups    = []
+  allowed_cidr_blocks        = []
+  database_name = "test"
+  tags          = {
+      CostCenter   = "Carenity"
+      map-migrated = "d-server-01xjpnal552bj6"
+      Managedby    = "Terraform"
+    }
+}
+
 
