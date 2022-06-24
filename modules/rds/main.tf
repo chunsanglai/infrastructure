@@ -47,6 +47,7 @@ module "rds-aurora" {
   storage_encrypted = true
 
   vpc_id                = var.vpc_id
+  allowed_security_groups = var.allowed_security_groups 
   allowed_cidr_blocks   = var.allowed_cidr_blocks
   create_db_subnet_group = false
   create_security_group = true
