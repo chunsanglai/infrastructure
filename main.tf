@@ -109,6 +109,7 @@ module "rds-stg-57" {
   database_subnet_group_name = module.vpc.subnet_database_subnets_group_name
   allowed_security_groups    = []
   allowed_cidr_blocks        = []
+  database_name = "test"
   tags          = {
       CostCenter   = "Carenity"
       map-migrated = "d-server-01xjpnal552bj6"
