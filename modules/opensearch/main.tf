@@ -51,6 +51,7 @@ resource "aws_elasticsearch_domain" "opensearch" {
   }
   encrypt_at_rest {
     enabled = true
+    kms_key_id  = aws_kms_key.this.arn
   }
   node_to_node_encryption {
     enabled = true
@@ -59,5 +60,38 @@ resource "aws_elasticsearch_domain" "opensearch" {
     enforce_https       = true
     tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
   }
+  log_publishing_options {
+    cloudwatch_log_group_arn = aws_cloudwatch_log_group.opensearch.arn
+    log_type                 = "INDEX_SLOW_LOGS"
+  }
   tags = var.tags
+}
+resource "aws_cloudwatch_log_group" "opensearch" {
+  name = "opensearch"
+}
+
+resource "aws_cloudwatch_log_resource_policy" "opensearch" {
+  policy_name = "opensearch"
+
+  policy_document = <<CONFIG
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "es.amazonaws.com"
+      },
+      "Action": [
+        "logs:PutLogEvents",
+        "logs:PutLogEventsBatch",
+        "logs:CreateLogStream"
+      ],
+      "Resource": "arn:aws:logs:*"
+    }
+  ]
+}
+CONFIG
+}
+resource "aws_kms_key" "this" {
 }

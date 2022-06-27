@@ -61,3 +61,12 @@ module "ec2" {
   ]
   internal_ingress_rules = []
 }
+module "os" {
+  source             = "./modules/opensearch"
+  domain             = "os-chuns1"
+  opensearch_version = "OpenSearch_1.2"
+  instance_type      = "t3.small.elasticsearch"
+  instance_count     = "1"
+  volume_size        = "10"
+  volume_type        = "gp3"
+}

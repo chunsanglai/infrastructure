@@ -38,11 +38,3 @@ variable "volume_type" {
   description = "Opensearch volume type"
   type        = string
 }
-
-variable "user_name" {
-  type = string
-}
-
-variable "password" {
-  type = string
-}
