@@ -49,3 +49,6 @@ variable "vpc_id" {
   description = "VPC ID"
   type        = string  
 }
+variable "security_group_ids" {
+  type        = list(string) 
+}

@@ -46,7 +46,7 @@ resource "aws_elasticsearch_domain" "opensearch" {
   }
   vpc_options {
     subnet_ids = var.subnet_ids
-    security_group_ids = [aws_security_group.es.id]
+    security_group_ids = var.security_group_ids
   }
   advanced_security_options {
     enabled                        = true
@@ -73,19 +73,7 @@ resource "aws_elasticsearch_domain" "opensearch" {
   }
   tags = var.tags
 }
-resource "aws_security_group" "es" {
-  name        = "${var.vpc_id}-elasticsearch-${var.domain}"
-  description = "Managed by Terraform"
-  vpc_id      = var.vpc_id
 
-  ingress {
-    from_port = 443
-    to_port   = 443
-    protocol  = "tcp"
-
-    cidr_blocks = var.cidr_blocks
-  }
-}
 resource "aws_iam_service_linked_role" "es" {
   aws_service_name = "es.amazonaws.com"
 }
