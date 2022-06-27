@@ -78,7 +78,7 @@ resource "aws_elasticsearch_domain" "opensearch" {
 }
 
 resource "aws_iam_service_linked_role" "es" {
-  custom_suffix = var.domain
+  create_iam_service_linked_role = false #https://github.com/cloudposse/terraform-aws-elasticsearch/issues/5
   aws_service_name = "es.amazonaws.com"
 }
 
