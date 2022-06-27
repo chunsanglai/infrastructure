@@ -61,37 +61,38 @@ module "ec2" {
   ]
   internal_ingress_rules = []
 }
-module "os" {
-  source             = "./modules/opensearch"
-  vpc_id             = module.vpc.vpc_id
-  domain             = "os-chuns12"
-  opensearch_version = "OpenSearch_1.2"
-  instance_type      = "t3.small.elasticsearch"
-  subnet_ids         = [module.vpc.subnet_private_subnet_ids[0]]
-  allowed_security_groups = [] 
-  instance_count     = "1"
-  volume_size        = "10"
-  volume_type        = "gp2" #doesnt support GP3 yet
-  tags = {
-    CostCenter   = "chun"
-    map-migrated = "d-server-12345"
-    Managedby    = "Terraform"
-  }
-}
-module "os-1" {
-  source             = "./modules/opensearch"
-  vpc_id             = module.vpc.vpc_id
-  domain             = "os-chuns12345676"
-  opensearch_version = "OpenSearch_1.2"
-  instance_type      = "t3.small.elasticsearch"
-  subnet_ids         = [module.vpc.subnet_private_subnet_ids[0]]
-  allowed_security_groups = [] 
-  instance_count     = "1"
-  volume_size        = "10"
-  volume_type        = "gp2" #doesnt support GP3 yet
-  tags = {
-    CostCenter   = "chun"
-    map-migrated = "d-server-12345"
-    Managedby    = "Terraform"
-  }
-}
+# module "os" {
+#   source             = "./modules/opensearch"
+#   vpc_id             = module.vpc.vpc_id
+#   domain             = "os-chuns12"
+#   opensearch_version = "OpenSearch_1.2"
+#   instance_type      = "t3.small.elasticsearch"
+#   subnet_ids         = [module.vpc.subnet_private_subnet_ids[0]]
+#   allowed_security_groups = [] 
+#   instance_count     = "1"
+#   volume_size        = "10"
+#   volume_type        = "gp2" #doesnt support GP3 yet
+#   tags = {
+#     CostCenter   = "chun"
+#     map-migrated = "d-server-12345"
+#     Managedby    = "Terraform"
+#   }
+# }
+# module "os-1" {
+#   source             = "./modules/opensearch"
+#   vpc_id             = module.vpc.vpc_id
+#   domain             = "os-chuns12345676"
+#   opensearch_version = "OpenSearch_1.2"
+#   instance_type      = "t3.small.elasticsearch"
+#   create_iam_service_linked_role = false
+#   subnet_ids         = [module.vpc.subnet_private_subnet_ids[0]]
+#   allowed_security_groups = [] 
+#   instance_count     = "1"
+#   volume_size        = "10"
+#   volume_type        = "gp2" #doesnt support GP3 yet
+#   tags = {
+#     CostCenter   = "chun"
+#     map-migrated = "d-server-12345"
+#     Managedby    = "Terraform"
+#   }
+# }
