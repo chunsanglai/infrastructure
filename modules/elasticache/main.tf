@@ -22,11 +22,11 @@ resource "aws_elasticache_cluster" "redis" {
   }
 }
 resource "aws_cloudwatch_log_group" "redis_slow" {
-  name = "${name}-slow"
+  name = "${var.name}-slow"
   tags = var.tags
 }
 resource "aws_cloudwatch_log_group" "redis_engine" {
-  name = "${name}-engine"
+  name = "${var.name}-engine"
   tags = var.tags
 }
 resource "aws_cloudwatch_metric_alarm" "elasticache-high-cpu-warning" {
