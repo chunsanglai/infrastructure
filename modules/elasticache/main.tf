@@ -30,7 +30,7 @@ resource "aws_cloudwatch_log_group" "redis_engine" {
   tags = var.tags
 }
 resource "aws_cloudwatch_metric_alarm" "elasticache-high-cpu-warning" {
-  alarm_name          = "elasticache-high-cpu-warning"
+  alarm_name          = "${var.name}-high-cpu-warning"
   alarm_description   = "Average CPU of ElastiCache >= 70% during 1 minute"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
@@ -47,7 +47,7 @@ resource "aws_cloudwatch_metric_alarm" "elasticache-high-cpu-warning" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "elasticache-high-db-memory-warning" {
-  alarm_name          = "elasticache-high-db-memory-warning"
+  alarm_name          = "${var.name}-high-db-memory-warning"
   alarm_description   = "Average DB Memory on ElastiCache >= 60% during 1 minute"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
@@ -62,7 +62,7 @@ resource "aws_cloudwatch_metric_alarm" "elasticache-high-db-memory-warning" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "elasticache-high-connection-warning" {
-  alarm_name          = "elasticache-high-connection-warning"
+  alarm_name          = "${var.name}-high-connection-warning"
   alarm_description   = "Average Number of Connections on ElastiCache >= 1000 connections during 1 minute"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
