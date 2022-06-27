@@ -14,6 +14,10 @@ resource "aws_elasticache_cluster" "example" {
 #     log_format       = "text"
 #     log_type         = "slow-log"
 #   }
-  subnet_group_name = var.subnet_ids
+  subnet_group_name = aws_elasticache_subnet_group.elasticache_subnet.name
 }
 
+resource "aws_elasticache_subnet_group" "elasticache_subnet" {
+  name = "elasticache-subnet"
+  subnet_ids = [var.subnet_ids]
+}
