@@ -84,7 +84,7 @@ resource "aws_security_group" "es" {
   }
 }
 resource "aws_iam_service_linked_role" "es" {
-  aws_service_name = "${var.domain}-es.amazonaws.com"
+  aws_service_name = "es.amazonaws.com"
 }
 
 resource "aws_cloudwatch_log_group" "opensearch" {
