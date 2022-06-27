@@ -64,7 +64,7 @@ module "ec2" {
 module "os" {
   source             = "./modules/opensearch"
   vpc_id             = module.vpc.vpc_id
-  domain             = "os-chuns12"
+  domain             = "os-chuns987"
   opensearch_version = "OpenSearch_1.2"
   instance_type      = "t3.small.elasticsearch"
   create_iam_service_linked_role = true
@@ -82,7 +82,7 @@ module "os" {
 module "os-1" {
   source             = "./modules/opensearch"
   vpc_id             = module.vpc.vpc_id
-  domain             = "os-chuns12345676"
+  domain             = "os-chuns654"
   opensearch_version = "OpenSearch_1.2"
   instance_type      = "t3.small.elasticsearch"
   create_iam_service_linked_role = false
