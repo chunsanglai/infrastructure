@@ -7,13 +7,27 @@ resource "aws_elasticache_cluster" "redis" {
   engine_version       = var.engine_version
   port                 = var.port 
   apply_immediately = var.apply_immediately
-  auto_minor_version_upgrade = var.auto_minor_version_upgrade
-#   log_delivery_configuration {
-#     destination      = aws_cloudwatch_log_group.example.name
-#     destination_type = "cloudwatch-logs"
-#     log_format       = "text"
-#     log_type         = "slow-log"
-#   }
+  tags = var.tags
+  log_delivery_configuration {
+    destination      = aws_cloudwatch_log_group.redis_slow.name
+    destination_type = "cloudwatch-logs"
+    log_format       = "json"
+    log_type         = "slow-log"
+  }
+  log_delivery_configuration {
+    destination      = aws_cloudwatch_log_group.redis_engine.name
+    destination_type = "cloudwatch-logs"
+    log_format       = "json"
+    log_type         = "engine-log"
+  }
+}
+resource "aws_cloudwatch_log_group" "redis_slow" {
+  name = "${name}-slow"
+  tags = var.tags
+}
+resource "aws_cloudwatch_log_group" "redis_engine" {
+  name = "${name}-engine"
+  tags = var.tags
 }
 resource "aws_cloudwatch_metric_alarm" "elasticache-high-cpu-warning" {
   alarm_name          = "elasticache-high-cpu-warning"
