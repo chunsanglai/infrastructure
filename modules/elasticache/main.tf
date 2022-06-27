@@ -1,17 +1,63 @@
-resource "aws_elasticache_cluster" "example" {
+resource "aws_elasticache_cluster" "redis" {
   cluster_id           = var.name
-  engine               = "redis"
-  node_type            = "cache.m4.large"
-  num_cache_nodes      = 1
-  parameter_group_name = "default.redis3.2"
-  engine_version       = "3.2.10"
-  port                 = 6379
-  apply_immediately = "true"
-  auto_minor_version_upgrade = "true"
+  engine               = var.engine
+  node_type            = var.node_type
+  num_cache_nodes      = var.num_cache_nodes 
+  parameter_group_name = var.parameter_group_name
+  engine_version       = var.engine_version
+  port                 = var.port 
+  apply_immediately = var.apply_immediately
+  auto_minor_version_upgrade = var.auto_minor_version_upgrade
 #   log_delivery_configuration {
 #     destination      = aws_cloudwatch_log_group.example.name
 #     destination_type = "cloudwatch-logs"
 #     log_format       = "text"
 #     log_type         = "slow-log"
 #   }
+}
+resource "aws_cloudwatch_metric_alarm" "elasticache-high-cpu-warning" {
+  alarm_name          = "elasticache-high-cpu-warning"
+  alarm_description   = "Average CPU of ElastiCache >= 70% during 1 minute"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/ElastiCache"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = 70
+  alarm_actions       = [var.sns_alert_arn]
+  treat_missing_data  = "breaching"
+  dimensions = {
+    CacheClusterId = aws_elasticache_cluster.redis.cluster_id
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "elasticache-high-db-memory-warning" {
+  alarm_name          = "elasticache-high-db-memory-warning"
+  alarm_description   = "Average DB Memory on ElastiCache >= 60% during 1 minute"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "DatabaseMemoryUsagePercentage"
+  namespace           = "AWS/ElastiCache"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = 60
+  alarm_actions       = [var.sns_alert_arn]
+  dimensions = {
+    CacheClusterId = aws_elasticache_cluster.redis.cluster_id  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "elasticache-high-connection-warning" {
+  alarm_name          = "elasticache-high-connection-warning"
+  alarm_description   = "Average Number of Connections on ElastiCache >= 1000 connections during 1 minute"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "CurrConnections"
+  namespace           = "AWS/ElastiCache"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = 1000
+  alarm_actions       = [var.sns_alert_arn]
+  dimensions = {
+    CacheClusterId = aws_elasticache_cluster.redis.cluster_id  }
 }

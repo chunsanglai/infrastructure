@@ -80,6 +80,15 @@ module "ec2" {
 #   }
 # }
 module "elasticache" {
-  source     = "./modules/elasticache"
-  name       = "elasticache-test"
+  source                     = "./modules/elasticache"
+  name                       = "elasticache-test"
+  engine                     = "redis"
+  node_type                  = "cache.m4.large"
+  num_cache_nodes            = 1
+  parameter_group_name       = "default.redis3.2"
+  engine_version             = "3.2.10"
+  port                       = 6379
+  apply_immediately          = "true"
+  auto_minor_version_upgrade = "true"
+  sns_alert_arn              = module.sns.sns
 }
