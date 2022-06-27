@@ -49,3 +49,7 @@ variable "vpc_id" {
 variable "allowed_security_groups" {
   type        = list(string) 
 }
+variable "create_iam_service_linked_role" {
+  default     = "false"
+  description = "Whether to create 'AWSServiceRoleForAmazonElasticsearchService' service-linked roles. Set it to 'false' if you already have this role in the AWS account"
+}
