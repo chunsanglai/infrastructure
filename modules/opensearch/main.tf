@@ -6,7 +6,7 @@ resource "random_password" "password"{
 }
 
 resource "aws_secretsmanager_secret" "password" {
-  name = "${var.name}-opensearch-password"
+  name = "${var.domain}-opensearch-password"
 }
 
 resource "aws_secretsmanager_secret_version" "password" {
