@@ -85,8 +85,8 @@ module "elasticache" {
   engine                     = "redis"
   node_type                  = "cache.m4.large"
   num_cache_nodes            = 1
-  parameter_group_name       = "default.redis3.2"
-  engine_version             = "3.2.10"
+  parameter_group_name       = "default.redis6.x"
+  engine_version             = "6.2"
   port                       = 6379
   apply_immediately          = "true"
   auto_minor_version_upgrade = "true"
