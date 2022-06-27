@@ -71,9 +71,9 @@ resource "aws_elasticsearch_domain" "opensearch" {
   tags = var.tags
 }
 resource "aws_security_group" "es" {
-  name        = "${var.vpc}-elasticsearch-${var.domain}"
+  name        = "${var.vpc_id}-elasticsearch-${var.domain}"
   description = "Managed by Terraform"
-  vpc_id      = var.aws_vpc
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port = 443
