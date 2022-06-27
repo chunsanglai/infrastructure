@@ -63,10 +63,12 @@ module "ec2" {
 }
 module "os" {
   source             = "./modules/opensearch"
+  vpc_id             = module.vpc.vpc_id
   domain             = "os-chuns1"
   opensearch_version = "OpenSearch_1.2"
   instance_type      = "t3.small.elasticsearch"
   subnet_ids         = [module.vpc.subnet_private_subnet_ids]
+  cidr_blocks        = [module.vpc.subnet_public_subnet_ids]
   instance_count     = "1"
   volume_size        = "10"
   volume_type        = "gp2" #doesnt support GP3 yet

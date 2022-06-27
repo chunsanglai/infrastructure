@@ -70,6 +70,19 @@ resource "aws_elasticsearch_domain" "opensearch" {
   }
   tags = var.tags
 }
+resource "aws_security_group" "es" {
+  name        = "${var.vpc}-elasticsearch-${var.domain}"
+  description = "Managed by Terraform"
+  vpc_id      = var.aws_vpc
+
+  ingress {
+    from_port = 443
+    to_port   = 443
+    protocol  = "tcp"
+
+    cidr_blocks = var.cidr_blocks
+  }
+}
 resource "aws_iam_service_linked_role" "es" {
   aws_service_name = "${var.domain}-es.amazonaws.com"
 }
