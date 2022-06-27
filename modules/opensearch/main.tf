@@ -6,7 +6,10 @@ resource "random_password" "password"{
   min_upper        = 1
   min_lower        = 1
   min_numeric      = 1
-  override_special = "!#$%&*()-_=+[]{}<>:?"
+  numeric          = 1
+  upper            = true
+  lower            = true
+  override_special = "!#$%&?"
 }
 
 resource "aws_secretsmanager_secret" "password" {
