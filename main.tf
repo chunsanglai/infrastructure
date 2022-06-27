@@ -91,5 +91,9 @@ module "elasticache" {
   apply_immediately          = "true"
   auto_minor_version_upgrade = "true"
   sns_alert_arn              = module.sns.sns
-  tags                       = module.tags-factory.tags
+  tags                       = {
+    CostCenter   = "chun"
+    map-migrated = "d-server-12345"
+    Managedby    = "Terraform"
+  } #module.tags-factory.tags
 }
