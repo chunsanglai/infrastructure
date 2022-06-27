@@ -5,7 +5,6 @@ resource "random_password" "password"{
   numeric          = true
   upper            = true
   lower            = true
-  override_special = "!#$%&?"
 }
 
 resource "aws_secretsmanager_secret" "password" {
