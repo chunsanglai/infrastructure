@@ -19,5 +19,5 @@ resource "aws_elasticache_cluster" "example" {
 
 resource "aws_elasticache_subnet_group" "elasticache_subnet" {
   name = "elasticache-subnet"
-  subnet_ids = [var.subnet_ids]
+  subnet_ids = var.subnet_ids
 }
