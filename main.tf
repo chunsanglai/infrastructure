@@ -68,7 +68,7 @@ module "os" {
   opensearch_version = "OpenSearch_1.2"
   instance_type      = "t3.small.elasticsearch"
   subnet_ids         = [module.vpc.subnet_private_subnet_ids]
-  cidr_blocks        = [module.vpc.subnet_public_subnet_ids]
+  cidr_blocks        = []
   instance_count     = "1"
   volume_size        = "10"
   volume_type        = "gp2" #doesnt support GP3 yet
