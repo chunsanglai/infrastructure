@@ -67,7 +67,7 @@ module "os" {
   domain             = "os-chuns1"
   opensearch_version = "OpenSearch_1.2"
   instance_type      = "t3.small.elasticsearch"
-  subnet_ids         = [module.vpc.subnet_private_subnet_ids]
+  subnet_ids         = element(module.vpc.subnet_private_subnet_ids, 0)
   cidr_blocks        = []
   instance_count     = "1"
   volume_size        = "10"
