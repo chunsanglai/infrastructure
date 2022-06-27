@@ -5,6 +5,10 @@ resource "random_password" "password"{
   numeric          = true
   upper            = true
   lower            = true
+  min_lower = 2
+  min_numeric = 2
+  min_special = 2
+  min_upper = 2
 }
 
 resource "aws_secretsmanager_secret" "password" {
