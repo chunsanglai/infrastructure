@@ -42,9 +42,6 @@ variable "subnet_ids" {
   type        = list(string)
   description = "Subnet IDs."
 }
-variable "cidr_blocks" {
-  type        = list(string)  
-}
 variable "vpc_id" {
   description = "VPC ID"
   type        = string  
