@@ -46,7 +46,7 @@ resource "aws_elasticsearch_domain" "opensearch" {
   }
   vpc_options {
     subnet_ids = var.subnet_ids
-    security_group_ids = var.security_group_ids
+    security_group_ids = var.allowed_security_groups
   }
   advanced_security_options {
     enabled                        = true
