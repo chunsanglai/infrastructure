@@ -67,7 +67,7 @@ module "os" {
   domain             = "os-chuns1"
   opensearch_version = "OpenSearch_1.2"
   instance_type      = "t3.small.elasticsearch"
-  subnet_ids         = [module.vpc.subnet_private_subnet_ids[0], module.vpc.subnet_private_subnet_ids[1], module.vpc.subnet_private_subnet_ids[2]]
+  subnet_ids         = [module.vpc.subnet_private_subnet_ids[0]]
   cidr_blocks        = [module.vpc.subnet_public_subnets_cidr_blocks[0], module.vpc.subnet_public_subnets_cidr_blocks[1], module.vpc.subnet_public_subnets_cidr_blocks[2]] #allowed cidr blocks for 443 security group
   instance_count     = "1"
   volume_size        = "10"
