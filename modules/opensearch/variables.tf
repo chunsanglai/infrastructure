@@ -38,3 +38,7 @@ variable "volume_type" {
   description = "Opensearch volume type"
   type        = string
 }
+variable "subnet_ids" {
+  type        = list(string)
+  description = "Subnet IDs."
+}

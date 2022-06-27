@@ -41,6 +41,10 @@ resource "aws_elasticsearch_domain" "opensearch" {
     volume_type = var.volume_type
     volume_size = var.volume_size
   }
+  vpc_options {
+    subnet_ids = var.subnet_ids
+    security_group_ids = [aws_security_group.es.id]
+  }
   advanced_security_options {
     enabled                        = true
     internal_user_database_enabled = true
@@ -66,12 +70,16 @@ resource "aws_elasticsearch_domain" "opensearch" {
   }
   tags = var.tags
 }
+resource "aws_iam_service_linked_role" "es" {
+  aws_service_name = "${var.domain}-es.amazonaws.com"
+}
+
 resource "aws_cloudwatch_log_group" "opensearch" {
-  name = "opensearch"
+  name = "${var.domain}-opensearch"
 }
 
 resource "aws_cloudwatch_log_resource_policy" "opensearch" {
-  policy_name = "opensearch"
+  policy_name = "${var.domain}-opensearch"
 
   policy_document = <<CONFIG
 {
