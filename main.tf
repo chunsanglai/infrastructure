@@ -69,4 +69,9 @@ module "os" {
   instance_count     = "1"
   volume_size        = "10"
   volume_type        = "gp3"
+  tags = {
+    CostCenter   = "chun"
+    map-migrated = "d-server-12345"
+    Managedby    = "Terraform"
+  }
 }
