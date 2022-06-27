@@ -33,11 +33,12 @@ data "aws_secretsmanager_secret_version" "credentials" {
 }
 locals {
   creds = jsondecode(data.aws_secretsmanager_secret_version.credentials.secret_string)
-}# OpenSearch domain
+}
+# OpenSearch domain
 resource "aws_elasticsearch_domain" "opensearch" {
   domain_name           = var.domain
   elasticsearch_version = var.opensearch_version
-
+  create_iam_service_linked_role = false #https://github.com/cloudposse/terraform-aws-elasticsearch/issues/5
   cluster_config {
     instance_type  = var.instance_type
     instance_count = var.instance_count
@@ -78,7 +79,6 @@ resource "aws_elasticsearch_domain" "opensearch" {
 }
 
 resource "aws_iam_service_linked_role" "es" {
-  create_iam_service_linked_role = false #https://github.com/cloudposse/terraform-aws-elasticsearch/issues/5
   aws_service_name = "es.amazonaws.com"
 }
 
