@@ -78,6 +78,7 @@ resource "aws_elasticsearch_domain" "opensearch" {
 }
 
 resource "aws_iam_service_linked_role" "es" {
+  custom_suffix = "${var.domain}-"
   aws_service_name = "es.amazonaws.com"
 }
 
