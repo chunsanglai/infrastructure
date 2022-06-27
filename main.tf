@@ -82,5 +82,5 @@ module "ec2" {
 module "elasticache" {
   source     = "./modules/elasticache"
   name       = "elasticache-test"
-  subnet_ids = [module.vpc.subnet_public_subnet_ids[0]]
+  subnet_ids = [module.vpc.subnet_public_subnet_ids]
 }
