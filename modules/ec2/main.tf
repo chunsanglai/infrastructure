@@ -26,7 +26,7 @@ module "ec2_instance" {
   root_block_device           = [{ volume_type = var.volume_type, volume_size = var.volume_size, encrypted = true, kms_key_id  = aws_kms_key.this.arn}] # Default is gp3
   tags                        = var.tags
   private_ip                  = var.private_ip
-  eip = true
+  eip = var.eip
   disable_api_termination     = true
 }
 resource "aws_eip" "ec2" {
