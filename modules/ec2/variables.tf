@@ -68,7 +68,7 @@ variable "private_hosted_zone_id" {
   default = ""
 }
 variable "public_hosted_zone_id" {
-  type = String
+  type = string
 }
 variable "management_ingress_rules" {
     type = list(object({
