@@ -74,20 +74,21 @@ module "os" {
   volume_type                    = "gp2" #doesnt support GP3 yet
   management_ingress_rules = [
     {
-      from_port  = 6379
-      to_port    = 6379
-      protocol   = "tcp"
-      cidr_block = "10.60.0.0/16"
+      from_port   = 6379
+      to_port     = 6379
+      protocol    = "tcp"
+      cidr_block  = "10.60.0.0/16"
+      description = "redis"
     },
   ]
   internal_ingress_rules = [
-    {
-      from_port       = 22
-      to_port         = 22
-      protocol        = "tcp"
-      security_groups = [] #module.ec2-instance-1.instance_sg, module.ec2-instance-2.instance_sg
-      description     = "ssh"
-    },
+    # {
+    #   from_port       = 22
+    #   to_port         = 22
+    #   protocol        = "tcp"
+    #   security_groups = [] #module.ec2-instance-1.instance_sg, module.ec2-instance-2.instance_sg
+    #   description     = "ssh"
+    # },
   ]
   tags = {
     CostCenter   = "chun"
