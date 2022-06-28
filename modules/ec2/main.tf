@@ -29,12 +29,12 @@ module "ec2_instance" {
   disable_api_termination     = true
 }
 resource "aws_eip" "pub_ip" {
-  count = var.eip  == "true" && var.subnet_id == "*public*" ? 1 : 0
+  count = var.eip  == "true" ? 1 : 0
   instance = module.ec2_instance.id
   vpc      = true
 }
 resource "aws_eip_association" "eip_assoc" {
-  count = var.eip  == "true" && var.subnet_id == "*public*" ? 1 : 0
+  count = var.eip  == "true" ? 1 : 0
   instance_id   = module.ec2_instance.id
   allocation_id = aws_eip.pub_ip[0].id
 }
