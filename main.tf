@@ -64,7 +64,7 @@ module "ec2" {
 module "os" {
   source                         = "./modules/opensearch"
   vpc_id                         = module.vpc.vpc_id
-  domain                         = "ppd-os-chun"
+  domain_name                    = "ppd-os-chun"
   opensearch_version             = "OpenSearch_1.2"
   instance_type                  = "t3.small.elasticsearch"
   create_iam_service_linked_role = true

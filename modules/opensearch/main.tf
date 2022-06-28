@@ -50,7 +50,7 @@ resource "aws_elasticsearch_domain" "opensearch" {
   }
   vpc_options {
     subnet_ids = var.subnet_ids
-    security_group_ids = [aws_security_group.management-security-group.id,aws_security_group.elasticsearch-security-group.id]
+    security_group_ids = [aws_security_group.management-security-group.id,aws_security_group.internal-security-group.id]
   }
   advanced_security_options {
     enabled                        = true
