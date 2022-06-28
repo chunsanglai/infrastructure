@@ -51,3 +51,21 @@ variable "create_iam_service_linked_role" {
   default     = "false"
   description = "Whether to create 'AWSServiceRoleForAmazonElasticsearchService' service-linked roles. Set it to 'false' if you already have this role in the AWS account"
 }
+variable "management_ingress_rules" {
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_block  = string
+    description = string
+  }))
+}
+variable "internal_ingress_rules" {
+  type = list(object({
+    from_port       = number
+    to_port         = number
+    protocol        = string
+    security_groups = list(string)
+    description     = string
+  }))
+}
