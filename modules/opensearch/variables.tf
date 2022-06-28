@@ -3,7 +3,7 @@ variable "tags" {
   type = map(any)
 }
 
-variable "domain" {
+variable "domain_name" {
   default     = "os-%s"
   description = "OpenSearch domain name"
   type        = string

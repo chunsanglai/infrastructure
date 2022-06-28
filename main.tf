@@ -81,7 +81,7 @@ module "ec2" {
 # }
 module "elasticache" {
   source                     = "./modules/elasticache"
-  name                       = "elasticache-test"
+  domain_name                = "ppd-chun-es"
   engine                     = "redis"
   node_type                  = "cache.m4.large"
   num_cache_nodes            = 1
@@ -91,7 +91,24 @@ module "elasticache" {
   apply_immediately          = "true"
   auto_minor_version_upgrade = "true"
   sns_alert_arn              = module.sns.sns
-  tags                       = {
+  management_ingress_rules = [
+    {
+      from_port  = 6379
+      to_port    = 6379
+      protocol   = "tcp"
+      cidr_block = "10.60.0.0/16"
+    },
+  ]
+  internal_ingress_rules = [
+    # {
+    #   from_port       = 22
+    #   to_port         = 22
+    #   protocol        = "tcp"
+    #   security_groups = [] #module.ec2-instance-1.instance_sg, module.ec2-instance-2.instance_sg
+    #   description     = "ssh"
+    # },
+  ]
+  tags = {
     CostCenter   = "chun"
     map-migrated = "d-server-12345"
     Managedby    = "Terraform"

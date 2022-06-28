@@ -12,7 +12,7 @@ resource "random_password" "password"{
 }
 
 resource "aws_secretsmanager_secret" "password" {
-  name = "${var.domain}-opensearch-password"
+  name = "${var.domain_name}-opensearch-password"
 }
 
 resource "aws_secretsmanager_secret_version" "password" {
@@ -36,7 +36,7 @@ locals {
 }
 # OpenSearch domain
 resource "aws_elasticsearch_domain" "opensearch" {
-  domain_name           = var.domain
+  domain_name           = var.domain_name
   elasticsearch_version = var.opensearch_version
 
   cluster_config {
@@ -50,7 +50,7 @@ resource "aws_elasticsearch_domain" "opensearch" {
   }
   vpc_options {
     subnet_ids = var.subnet_ids
-    security_group_ids = var.allowed_security_groups
+    security_group_ids = [aws_security_group.management-security-group.id,aws_security_group.elasticsearch-security-group.id]
   }
   advanced_security_options {
     enabled                        = true
@@ -78,17 +78,58 @@ resource "aws_elasticsearch_domain" "opensearch" {
   tags = var.tags
 }
 
+resource "aws_security_group" "management-security-group" {
+  name   = join("-", [var.domain_name, "management-security-group"])
+  vpc_id = var.vpc_id
+  dynamic "ingress" {
+    for_each = var.management_ingress_rules
+    content {
+      from_port   = ingress.value["from_port"]
+      to_port     = ingress.value["to_port"]
+      protocol    = ingress.value["protocol"]
+      cidr_blocks = [ingress.value["cidr_block"]]
+      description = ingress.value["description"]
+    }
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+resource "aws_security_group" "internal-security-group" {
+  name   = join("-", [var.domain_name, "internal-security-group"])
+  vpc_id = var.vpc_id
+  dynamic "ingress" {
+    for_each = var.internal_ingress_rules
+    content {
+      from_port       = ingress.value["from_port"]
+      to_port         = ingress.value["to_port"]
+      protocol        = ingress.value["protocol"]
+      security_groups = ingress.value["security_groups"]
+      description     = ingress.value["description"]
+    }
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_iam_service_linked_role" "es" {
   count = var.create_iam_service_linked_role == "true" ? 1 : 0
   aws_service_name = "es.amazonaws.com"
 }
 
 resource "aws_cloudwatch_log_group" "opensearch" {
-  name = "${var.domain}-opensearch"
+  name = "${var.domain_name}-opensearch"
 }
 
 resource "aws_cloudwatch_log_resource_policy" "opensearch" {
-  policy_name = "${var.domain}-opensearch"
+  policy_name = "${var.domain_name}-opensearch"
 
   policy_document = <<CONFIG
 {
