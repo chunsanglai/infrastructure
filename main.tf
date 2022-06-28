@@ -40,9 +40,9 @@ module "ec2" {
   instance_type     = "t2.micro"
   key_name          = "infra-ec2"
   availability_zone = element(module.vpc.azs, 0)
-  subnet_id         = element(module.vpc.subnet_public_subnet_ids, 0)
+  subnet_id         = element(module.vpc.subnet_private_subnet_ids, 0)
   public_ports      = ["80", "443"]
-  eip               = false
+  eip               = true
   volume_size       = 50
   data_volume_size  = 50
   tags = {
