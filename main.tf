@@ -51,6 +51,7 @@ module "ec2" {
     Managedby    = "Terraform"
   }
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
+  public_hosted_zone_id = module.aws_route53_zone.public_zone_id
   management_ingress_rules = [
     {
       from_port   = 22
