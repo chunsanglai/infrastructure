@@ -34,7 +34,6 @@ resource "aws_eip" "ec2" {
   vpc      = true
 }
 resource "aws_eip_association" "eip_assoc" {
-  count = var.eip  == "true" ? 1 : 0
   instance_id   = module.ec2_instance.id
   allocation_id = aws_eip.ec2.id
 }
