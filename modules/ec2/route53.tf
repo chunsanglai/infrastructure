@@ -8,6 +8,7 @@ resource "aws_route53_record" "private_record" {
   records = [module.ec2_instance.private_ip]
 }
 resource "aws_route53_record" "public_record" {
+  count   = var.eip  == "true" ? 1 : 0 
   zone_id = var.public_hosted_zone_id
   name    = var.name
   type    = "A"
