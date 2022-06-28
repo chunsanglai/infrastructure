@@ -28,14 +28,15 @@ module "ec2_instance" {
   private_ip                  = var.private_ip
   disable_api_termination     = true
 }
-resource "aws_eip" "ec2_instance" {
+resource "aws_eip" "pub_ip" {
   count = var.eip  == "true" ? 1 : 0
   instance = module.ec2_instance.id
   vpc      = true
 }
 resource "aws_eip_association" "eip_assoc" {
+  count = var.eip  == "true" ? 1 : 0
   instance_id   = module.ec2_instance.id
-  allocation_id = [aws_eip.ec2_instance.id[0]]
+  allocation_id = aws_eip.pub_ip[0].id
 }
 
 # Static Security group. Must exist since managing an instance is a bare necessity
