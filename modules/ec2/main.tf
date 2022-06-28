@@ -26,7 +26,6 @@ module "ec2_instance" {
   root_block_device           = [{ volume_type = var.volume_type, volume_size = var.volume_size, encrypted = true, kms_key_id  = aws_kms_key.this.arn}] # Default is gp3
   tags                        = var.tags
   private_ip                  = var.private_ip
-  eip = var.eip
   disable_api_termination     = true
 }
 resource "aws_eip" "ec2" {
@@ -34,6 +33,12 @@ resource "aws_eip" "ec2" {
   instance = module.ec2_instance.id
   vpc      = true
 }
+resource "aws_eip_association" "eip_assoc" {
+  count = var.eip  == "true" ? 1 : 0
+  instance_id   = module.ec2_instance.id
+  allocation_id = aws_eip.ec2.id
+}
+
 # Static Security group. Must exist since managing an instance is a bare necessity
 resource "aws_security_group" "management-security-group" {
   name        = join("-", [var.name, "management-security-group"])
