@@ -85,3 +85,7 @@ variable "internal_ingress_rules" {
       description = string
     }))
 }
+variable "eip" {
+  type = string
+  description = "(optional) describe your variable"
+}
