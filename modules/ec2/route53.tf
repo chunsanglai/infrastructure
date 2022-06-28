@@ -14,5 +14,5 @@ resource "aws_route53_record" "public_record" {
   type    = "A"
   ttl     = "60"
 
-  records = [aws_eip.pub_ip.public_dns]
+  records = aws_eip.pub_ip[0].public_dns
 }
