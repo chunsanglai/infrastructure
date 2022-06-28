@@ -61,36 +61,17 @@ module "ec2" {
   ]
   internal_ingress_rules = []
 }
-# module "os" {
-#   source                         = "./modules/opensearch"
-#   vpc_id                         = module.vpc.vpc_id
-#   domain                         = "os-chuns987"
-#   opensearch_version             = "OpenSearch_1.2"
-#   instance_type                  = "t3.small.elasticsearch"
-#   create_iam_service_linked_role = true
-#   subnet_ids                     = [module.vpc.subnet_private_subnet_ids[0]]
-#   allowed_security_groups        = []
-#   instance_count                 = "1"
-#   volume_size                    = "10"
-#   volume_type                    = "gp2" #doesnt support GP3 yet
-#   tags = {
-#     CostCenter   = "chun"
-#     map-migrated = "d-server-12345"
-#     Managedby    = "Terraform"
-#   }
-# }
-module "elasticache" {
-  source                     = "./modules/elasticache"
-  domain_name                = "ppd-chun-es"
-  engine                     = "redis"
-  node_type                  = "cache.m4.large"
-  num_cache_nodes            = 1
-  parameter_group_name       = "default.redis6.x"
-  engine_version             = "6.2"
-  port                       = 6379
-  apply_immediately          = "true"
-  auto_minor_version_upgrade = "true"
-  sns_alert_arn              = module.sns.sns
+module "os" {
+  source                         = "./modules/opensearch"
+  vpc_id                         = module.vpc.vpc_id
+  domain                         = "ppd-os-chun"
+  opensearch_version             = "OpenSearch_1.2"
+  instance_type                  = "t3.small.elasticsearch"
+  create_iam_service_linked_role = true
+  subnet_ids                     = [module.vpc.subnet_private_subnet_ids[0]]
+  instance_count                 = "1"
+  volume_size                    = "10"
+  volume_type                    = "gp2" #doesnt support GP3 yet
   management_ingress_rules = [
     {
       from_port  = 6379
@@ -100,17 +81,36 @@ module "elasticache" {
     },
   ]
   internal_ingress_rules = [
-    # {
-    #   from_port       = 22
-    #   to_port         = 22
-    #   protocol        = "tcp"
-    #   security_groups = [] #module.ec2-instance-1.instance_sg, module.ec2-instance-2.instance_sg
-    #   description     = "ssh"
-    # },
+    {
+      from_port       = 22
+      to_port         = 22
+      protocol        = "tcp"
+      security_groups = [] #module.ec2-instance-1.instance_sg, module.ec2-instance-2.instance_sg
+      description     = "ssh"
+    },
   ]
   tags = {
     CostCenter   = "chun"
     map-migrated = "d-server-12345"
     Managedby    = "Terraform"
-  } #module.tags-factory.tags
+  }
 }
+# module "elasticache" {
+#   source                     = "./modules/elasticache"
+#   domain                = "ppd-chun-es"
+#   engine                     = "redis"
+#   node_type                  = "cache.m4.large"
+#   num_cache_nodes            = 1
+#   parameter_group_name       = "default.redis6.x"
+#   engine_version             = "6.2"
+#   port                       = 6379
+#   apply_immediately          = "true"
+#   auto_minor_version_upgrade = "true"
+#   sns_alert_arn              = module.sns.sns
+
+#   tags = {
+#     CostCenter   = "chun"
+#     map-migrated = "d-server-12345"
+#     Managedby    = "Terraform"
+#   } #module.tags-factory.tags
+# }
