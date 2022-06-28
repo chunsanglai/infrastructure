@@ -14,5 +14,5 @@ resource "aws_route53_record" "public_record" {
   type    = "A"
   ttl     = "60"
 
-  records = [module.ec2_instance.public_ip]
+  records = [aws_eip.pub_ip.public_dns]
 }
