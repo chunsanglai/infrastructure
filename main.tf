@@ -42,7 +42,7 @@ module "ec2" {
   availability_zone = element(module.vpc.azs, 0)
   subnet_id         = element(module.vpc.subnet_public_subnet_ids, 0)
   public_ports      = ["80", "443"]
-  eip               = true
+  eip               = false
   volume_size       = 50
   data_volume_size  = 50
   tags = {
