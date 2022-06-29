@@ -22,17 +22,11 @@ variable "load_balancer_type" {
 variable "targets" {
   type = list(object(
     {
-      name_prefix      = "pref-"
-      backend_protocol = "HTTP"
-      backend_port     = "80"
-      target_type      = "instance"
-      targets = {
-        my_target = {
-          target_id = ""
-          port = ""
-        }
-      }
+      name_prefix      = string
+      backend_protocol = string
+      backend_port     = number
+      target_type      = string
+      targets = list(string)
     }
   ))
 }
-
