@@ -7,8 +7,7 @@ module "alb" {
   load_balancer_type = var.load_balancer_type
 
   vpc_id             = var.vpc_id
-  subnets            = var.subnet_ids
-  security_groups    = [module.security_group.security_group_id]
+  subnets            = var.subnet_ids\
   # access_logs = {
   #   bucket = "my-alb-logs"
   # }

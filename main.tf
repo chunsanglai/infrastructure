@@ -38,8 +38,7 @@ module "alb" {
   name       = "test-alb"
   load_balancer_type = "application"
   target_id  = module.ec2.instance_id
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = element(module.vpc.subnet_public_subnet_ids, 0)
+  vpc_id     = module.vpc.vpc_id\
 }
 
 # module "acm" {
