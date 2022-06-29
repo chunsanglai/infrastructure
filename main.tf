@@ -37,7 +37,7 @@ module "alb" {
   aws_region = "var.aws_region"
   name       = "test-alb"
   load_balancer_type = "application"
-  target_id  = module.ec2.id
+  target_id  = module.ec2.instance_id
   vpc_id     = module.vpc.vpc_id
   subnet_ids = element(module.vpc.subnet_public_subnet_ids, 0)
 }
