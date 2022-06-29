@@ -31,6 +31,14 @@ module "vpc" {
     Managedby    = "Terraform"
   }
 }
+
+module "acm" {
+  source      = "./modules/acm"
+  zone_id     = module.aws_route53_zone.public_zone_id
+  domain_name = "test.jaychunlai.com"
+}
+
+
 # module "ec2" {
 #   source            = "./modules/ec2"
 #   aws_region        = var.aws_region
