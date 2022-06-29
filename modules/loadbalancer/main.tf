@@ -8,25 +8,18 @@ module "alb" {
 
   vpc_id             = var.vpc_id
   subnets            = var.subnet_ids
-  # access_logs = {
-  #   bucket = "my-alb-logs"
-  # }
 
-  target_groups = [
-    {
-      name_prefix      = "pref-"
-      backend_protocol = "HTTP"
-      backend_port     = 80
-      target_type      = "instance"
-      targets = {
-        my_target = {
-          target_id = var.target_id
-          port = 80
-        }
-      }
+  dynamic "target_groups" {
+    for_each = var.targets
+    content {
+      name_prefix = target_groups.value["pref-"]
+      backend_protocol = target_groups.value["backend_protocol"]
+      backend_port = target_groups.value["backend_port"]
+      target_type = target_groups.value["target_type"]
+      targets = {target_groups.value = [""]}
     }
-  ]
-
+  }
+ 
   http_tcp_listeners = [
     {
       port               = 80
