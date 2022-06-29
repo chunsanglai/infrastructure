@@ -33,12 +33,12 @@ module "vpc" {
 }
 
 module "alb" {
-  source     = "./modules/loadbalancer"
-  aws_region = "var.aws_region"
-  name       = "test-alb"
+  source             = "./modules/loadbalancer"
+  aws_region         = "var.aws_region"
+  name               = "test-alb"
   load_balancer_type = "application"
-  target_id  = module.ec2.instance_id
-  vpc_id     = module.vpc.vpc_id\
+  target_id          = module.ec2.instance_id
+  vpc_id             = module.vpc.vpc_id
 }
 
 # module "acm" {
@@ -68,7 +68,7 @@ module "ec2" {
     Managedby    = "Terraform"
   }
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
-  public_hosted_zone_id = module.aws_route53_zone.public_zone_id
+  public_hosted_zone_id  = module.aws_route53_zone.public_zone_id
   management_ingress_rules = [
     {
       from_port   = 22
