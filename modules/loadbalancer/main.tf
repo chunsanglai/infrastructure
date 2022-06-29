@@ -8,20 +8,7 @@ module "alb" {
 
   vpc_id             = var.vpc_id
   subnets            = var.subnet_ids
-  target_groups = [
-    {
-      name_prefix      = "pref-"
-      backend_protocol = "HTTP"
-      backend_port     = 80
-      target_type      = "instance"
-      targets = {
-        my_target = {
-          target_id = var.target_id
-          port = 80
-        }
-      }
-    }
-  ]
+  target_groups = var.targets
   http_tcp_listeners = [
     {
       port               = 80
