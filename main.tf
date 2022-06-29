@@ -39,7 +39,7 @@ module "alb" {
   load_balancer_type = "application"
   subnet_ids         = [module.vpc.subnet_public_subnet_ids[0], module.vpc.subnet_public_subnet_ids[1]]
   vpc_id             = module.vpc.vpc_id
-  targets = {
+  targets = [{
     name_prefix      = "pref-"
     backend_protocol = "HTTP"
     backend_port     = "80"
@@ -50,7 +50,8 @@ module "alb" {
         port      = "80"
       }
     }
-  }
+    }
+  ]
 }
 
 # module "acm" {
