@@ -23,7 +23,11 @@ variable "targets" {
       backend_protocol = string
       backend_port     = number
       target_type      = string
-      targets = list(string)
+      targets = list(object({
+        my_target = string
+          target_id = string
+          port = string
+      }))
     }
   ))
 }
