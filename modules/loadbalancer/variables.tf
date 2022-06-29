@@ -19,17 +19,5 @@ variable "load_balancer_type" {
   type = string
   description = "(optional) describe your variable"
 }
-variable "targets" {
-  type = list(object({
-    name_prefix       = string
-    backend_protocol  = string
-    backend_port      = string
-    target_type       = string
-    targets           = list(string)
-  }))
-}
-
-
-
 
 
