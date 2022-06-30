@@ -40,3 +40,6 @@ variable "certificate_arn" {
   type = string
   description = "(optional) describe your variable"
 }
+variable "tags" {
+  type = map(any)
+}
