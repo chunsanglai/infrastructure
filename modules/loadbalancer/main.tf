@@ -75,7 +75,6 @@ resource "aws_s3_bucket" "lb_logs" {
 
 resource "aws_s3_bucket_public_access_block" "lb_logs" {
   bucket = aws_s3_bucket.lb_logs.id
-
   block_public_acls   = true
   block_public_policy = true
 }
@@ -93,7 +92,7 @@ resource "aws_s3_bucket_policy" "allow_lb_logs" {
   bucket = aws_s3_bucket.lb_logs.id
   policy = data.aws_iam_policy_document.allow_lb_logs.json
 }
-data "aws_iam_policy_document" "allow_lb_logs" {
+data "aws_iam_policy_document" "allow_lb_logs_policy" {
   statement {
     effect    = "Allow"
     actions   = ["s3:PutObject"]
