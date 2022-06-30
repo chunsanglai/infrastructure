@@ -8,7 +8,7 @@ module "alb" {
 
   vpc_id             = var.vpc_id
   subnets            = var.subnet_ids
-  target_groups = var.targets
+  target_groups = for_each (var.targets)
   http_tcp_listeners = [
     {
       port               = 80
