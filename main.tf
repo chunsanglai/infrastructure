@@ -55,7 +55,6 @@ module "vpc" {
 
 module "acm" {
   source      = "./modules/acm"
-  zone_id     = "Z06641831JH10UEN38RDA" #module.aws_route53_zone.public_zone_id
   domain_name = "jaychunlai.com"
 }
 
