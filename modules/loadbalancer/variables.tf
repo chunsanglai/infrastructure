@@ -16,6 +16,10 @@ variable "load_balancer_type" {
   type = string
   description = "(optional) describe your variable"
 }
+variable "target_id" {
+  type = string
+  description = "(optional) describe your variable"
+}
 # variable "targets" {
 #   type = list(object(
 #     {
