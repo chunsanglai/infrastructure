@@ -62,7 +62,7 @@ resource "aws_security_group" "allow_lb" {
 }
 
 resource "aws_s3_bucket" "lb_logs" {
-  bucket = join("-", [var.name, var.env, var.aws_region, "lb_logs"])
+  bucket = join("-", [var.name,var.aws_region, "lb_logs"])
   tags   = var.tags
 }
 
