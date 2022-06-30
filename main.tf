@@ -45,6 +45,11 @@ module "stg-alb" {
   protocol                   = "HTTP"
   ssl_policy                 = ""
   certificate_arn            = ""
+  tags = {
+    CostCenter   = "chun"
+    map-migrated = "d-server-12345"
+    Managedby    = "Terraform"
+  }
 }
 
 # module "acm" {
