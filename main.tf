@@ -32,66 +32,66 @@ module "vpc" {
   }
 }
 
-module "stg-alb" {
-  source                     = "./modules/loadbalancer"
-  aws_region                 = var.aws_region
-  name                       = "chun-alb"
-  load_balancer_type         = "application"
-  subnet_ids                 = [module.vpc.subnet_public_subnet_ids[0], module.vpc.subnet_public_subnet_ids[1]]
-  vpc_id                     = module.vpc.vpc_id
-  target_id                  = "" #currently supports 1 instance
-  enable_deletion_protection = "false"
-  port                       = "80"
-  protocol                   = "HTTP"
-  ssl_policy                 = ""
-  certificate_arn            = ""
-  # deletion_window_in_days    = "7"
-  tags = {
-    CostCenter   = "chun"
-    map-migrated = "d-server-12345"
-    Managedby    = "Terraform"
-  }
-}
-
-# module "acm" {
-#   source      = "./modules/acm"
-#   zone_id     = module.aws_route53_zone.public_zone_id
-#   domain_name = "jaychunlai.com1"
+# module "stg-alb" {
+#   source                     = "./modules/loadbalancer"
+#   aws_region                 = var.aws_region
+#   name                       = "chun-alb"
+#   load_balancer_type         = "application"
+#   subnet_ids                 = [module.vpc.subnet_public_subnet_ids[0], module.vpc.subnet_public_subnet_ids[1]]
+#   vpc_id                     = module.vpc.vpc_id
+#   target_id                  = "" #currently supports 1 instance
+#   enable_deletion_protection = "false"
+#   port                       = "80"
+#   protocol                   = "HTTP"
+#   ssl_policy                 = ""
+#   certificate_arn            = ""
+#   # deletion_window_in_days    = "7"
+#   tags = {
+#     CostCenter   = "chun"
+#     map-migrated = "d-server-12345"
+#     Managedby    = "Terraform"
+#   }
 # }
 
-
-module "ec2" {
-  source            = "./modules/ec2"
-  aws_region        = var.aws_region
-  name              = "carenire7"
-  ami               = "ami-0a5b5c0ea66ec560d"
-  vpc_id            = module.vpc.vpc_id
-  instance_type     = "t2.micro"
-  key_name          = "infra-ec2"
-  availability_zone = element(module.vpc.azs, 0)
-  subnet_id         = element(module.vpc.subnet_public_subnet_ids, 0)
-  public_ports      = ["80", "443"]
-  eip               = true
-  volume_size       = 50
-  data_volume_size  = 50
-  tags = {
-    CostCenter   = "chun"
-    map-migrated = "d-server-12345"
-    Managedby    = "Terraform"
-  }
-  private_hosted_zone_id = module.aws_route53_zone.private_zone_id
-  public_hosted_zone_id  = module.aws_route53_zone.public_zone_id
-  management_ingress_rules = [
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_block  = "10.60.0.0/16"
-      description = "ssh"
-    },
-  ]
-  internal_ingress_rules = []
+module "acm" {
+  source      = "./modules/acm"
+  zone_id     = module.aws_route53_zone.public_zone_id
+  domain_name = "jaychunlai.com1"
 }
+
+
+# module "ec2" {
+#   source            = "./modules/ec2"
+#   aws_region        = var.aws_region
+#   name              = "carenire7"
+#   ami               = "ami-0a5b5c0ea66ec560d"
+#   vpc_id            = module.vpc.vpc_id
+#   instance_type     = "t2.micro"
+#   key_name          = "infra-ec2"
+#   availability_zone = element(module.vpc.azs, 0)
+#   subnet_id         = element(module.vpc.subnet_public_subnet_ids, 0)
+#   public_ports      = ["80", "443"]
+#   eip               = true
+#   volume_size       = 50
+#   data_volume_size  = 50
+#   tags = {
+#     CostCenter   = "chun"
+#     map-migrated = "d-server-12345"
+#     Managedby    = "Terraform"
+#   }
+#   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
+#   public_hosted_zone_id  = module.aws_route53_zone.public_zone_id
+#   management_ingress_rules = [
+#     {
+#       from_port   = 22
+#       to_port     = 22
+#       protocol    = "tcp"
+#       cidr_block  = "10.60.0.0/16"
+#       description = "ssh"
+#     },
+#   ]
+#   internal_ingress_rules = []
+# }
 # module "os" {
 #   source                         = "./modules/opensearch"
 #   vpc_id                         = module.vpc.vpc_id
