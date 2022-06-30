@@ -40,19 +40,6 @@ module "alb" {
   subnet_ids         = [module.vpc.subnet_public_subnet_ids[0], module.vpc.subnet_public_subnet_ids[1]]
   vpc_id             = module.vpc.vpc_id
   target_id          = module.ec2.instance_id
-  # targets = [{
-  #   name_prefix      = "pref-"
-  #   backend_protocol = "HTTP"
-  #   backend_port     = "80"
-  #   target_type      = "instance"
-  #   targets = {
-  #     my_target = {
-  #       target_id = module.ec2.instance_id
-  #       port      = "80"
-  #     }
-  #   }
-  #   }
-  # ]
 }
 
 # module "acm" {
