@@ -1,7 +1,7 @@
 module "aws_route53_zone" {
   source            = "./modules/route53"
-  public_zone_name  = "chunsang.lai"
-  private_zone_name = "chunsang.lai.internal"
+  public_zone_name  = "jaychunlai.com"
+  private_zone_name = "jaychunlai.internal"
   vpc_id            = module.vpc.vpc_id
 }
 # module "tags-factory" {
