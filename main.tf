@@ -39,13 +39,13 @@ module "stg-alb" {
   load_balancer_type         = "application"
   subnet_ids                 = [module.vpc.subnet_public_subnet_ids[0], module.vpc.subnet_public_subnet_ids[1]]
   vpc_id                     = module.vpc.vpc_id
-  target_id                  = module.ec2.instance_id #currently supports 1 instance
+  target_id                  = "" #currently supports 1 instance
   enable_deletion_protection = "false"
   port                       = "80"
   protocol                   = "HTTP"
   ssl_policy                 = ""
   certificate_arn            = ""
-  deletion_window_in_days    = "7"
+  # deletion_window_in_days    = "7"
   tags = {
     CostCenter   = "chun"
     map-migrated = "d-server-12345"
