@@ -89,7 +89,21 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "s3_encryption" {
     }
   }
 }
-### END VPC FLOW LOG
+resource "aws_s3_bucket_policy" "allow_lb_logs" {
+  bucket = aws_s3_bucket.lb_logs.id
+  policy = data.aws_iam_policy_document.allow_lb_logs.json
+}
+data "aws_iam_policy_document" "allow_lb_logs" {
+  statement {
+    effect    = "Allow"
+    actions   = ["s3:PutObject"]
+    resources = ["arn:aws:s3:::${aws_s3_bucket.lb_log.id}/*"]
+    principals {
+      type        = "AWS"
+      identifiers = ["054676820928"]
+    }
+  }
+}
 
 ### KMS KEY
 resource "aws_kms_key" "kms" {
