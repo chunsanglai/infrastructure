@@ -20,3 +20,23 @@ variable "target_id" {
   type = string
   description = "(optional) describe your variable"
 }
+variable "enable_deletion_protection" {
+  type = string
+  description = "(optional) describe your variable"
+}
+variable "port" {
+  type = string
+  description = "(optional) describe your variable"
+}
+variable "protocol" {
+  type = string
+  description = "(optional) describe your variable"
+}
+variable "ssl_policy" {
+  type = string
+  description = "(optional) describe your variable"
+}
+variable "certificate_arn" {
+  type = string
+  description = "(optional) describe your variable"
+}
