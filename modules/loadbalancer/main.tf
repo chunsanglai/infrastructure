@@ -2,7 +2,7 @@ resource "aws_lb" "test" {
   name               = var.name
   internal           = false
   load_balancer_type = var.load_balancer_type
-  security_groups    = [security_group.id]
+  security_groups    = [aws_security_group.allow_lb.id]
   subnets            = var.subnet_ids
 
   enable_deletion_protection = true
@@ -30,10 +30,7 @@ resource "aws_lb_target_group_attachment" "test" {
   port             = 80
 }
 
-module "security_group" {
-  source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 4.0"
-
+resource "aws_security_group" "allow_lb" {
   name        = "alb-sg-${var.name}-${var.aws_region}"
   description = "Security group for example usage with ALB"
   vpc_id      = var.vpc_id
