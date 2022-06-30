@@ -35,7 +35,7 @@ module "vpc" {
 module "stg-alb" {
   source                     = "./modules/loadbalancer"
   aws_region                 = var.aws_region
-  name                       = "stg-alb"
+  name                       = "chun-alb"
   load_balancer_type         = "application"
   subnet_ids                 = [module.vpc.subnet_public_subnet_ids[0], module.vpc.subnet_public_subnet_ids[1]]
   vpc_id                     = module.vpc.vpc_id
