@@ -2,7 +2,7 @@ resource "aws_lb" "test" {
   name               = var.name
   internal           = false
   load_balancer_type = var.load_balancer_type
-  security_groups    = [module.security_group.id]
+  security_groups    = [security_group.id]
   subnets            = var.subnet_ids
 
   enable_deletion_protection = true
