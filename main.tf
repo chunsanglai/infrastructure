@@ -45,7 +45,7 @@ module "stg-alb" {
   protocol                   = "HTTP"
   ssl_policy                 = ""
   certificate_arn            = ""
-  # deletion_window_in_days    = "7"
+  deletion_window_in_days    = "7"
   tags = {
     CostCenter   = "chun"
     map-migrated = "d-server-12345"
