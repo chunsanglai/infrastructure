@@ -26,7 +26,7 @@ module "vpc" {
   log_destination_type    = "s3"
   traffic_type            = "ALL"
   tags = {
-    CostCenter   = "chun"
+    CostCenter   = "chun1"
     map-migrated = "d-server-12345"
     Managedby    = "Terraform"
   }
