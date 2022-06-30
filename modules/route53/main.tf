@@ -6,7 +6,6 @@
 
 resource "aws_route53_zone" "public" {
   name = var.public_zone_name
-  comment = "${var.public_zone_name} public zone"
 }
 # Private zone
 resource "aws_route53_zone" "private" {
