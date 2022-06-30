@@ -7,11 +7,11 @@ resource "aws_lb" "loadbalancer" {
 
   enable_deletion_protection = var.enable_deletion_protection 
 
-  access_logs {
-    bucket  = aws_s3_bucket.lb_logs.bucket
-    prefix  = "${var.name}-lb_logs"
-    enabled = true
-  }
+  # access_logs {
+  #   bucket  = aws_s3_bucket.lb_logs.bucket
+  #   prefix  = "${var.name}-lb_logs"
+  #   enabled = true
+  # }
 
   tags = var.tags
 }
@@ -68,45 +68,45 @@ resource "aws_security_group" "allow_lb" {
   }
 }
 
-resource "aws_s3_bucket" "lb_logs" {
-  bucket = join("-", [var.name,var.aws_region, "lb-logs"])
-  tags   = var.tags
-}
+# resource "aws_s3_bucket" "lb_logs" {
+#   bucket = join("-", [var.name,var.aws_region, "lb-logs"])
+#   tags   = var.tags
+# }
 
-resource "aws_s3_bucket_public_access_block" "lb_logs" {
-  bucket = aws_s3_bucket.lb_logs.id
-  block_public_acls   = true
-  block_public_policy = true
-}
+# resource "aws_s3_bucket_public_access_block" "lb_logs" {
+#   bucket = aws_s3_bucket.lb_logs.id
+#   block_public_acls   = true
+#   block_public_policy = true
+# }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "s3_encryption" {
-  bucket = aws_s3_bucket.lb_logs.bucket
-  rule {
-    apply_server_side_encryption_by_default {
-      kms_master_key_id = aws_kms_key.kms.arn
-      sse_algorithm     = "aws:kms"
-    }
-  }
-}
-resource "aws_s3_bucket_policy" "allow_lb_logs" {
-  bucket = aws_s3_bucket.lb_logs.id
-  policy = data.aws_iam_policy_document.allow_lb_logs_policy.json
-}
-data "aws_iam_policy_document" "allow_lb_logs_policy" {
-  statement {
-    effect    = "Allow"
-    actions   = ["s3:PutObject"]
-    resources = ["arn:aws:s3:::${aws_s3_bucket.lb_logs.id}/*"]
-    principals {
-      type        = "AWS"
-      identifiers = ["054676820928"]
-    }
-  }
-}
+# resource "aws_s3_bucket_server_side_encryption_configuration" "s3_encryption" {
+#   bucket = aws_s3_bucket.lb_logs.bucket
+#   rule {
+#     apply_server_side_encryption_by_default {
+#       kms_master_key_id = aws_kms_key.kms.arn
+#       sse_algorithm     = "aws:kms"
+#     }
+#   }
+# }
+# resource "aws_s3_bucket_policy" "allow_lb_logs" {
+#   bucket = aws_s3_bucket.lb_logs.id
+#   policy = data.aws_iam_policy_document.allow_lb_logs_policy.json
+# }
+# data "aws_iam_policy_document" "allow_lb_logs_policy" {
+#   statement {
+#     effect    = "Allow"
+#     actions   = ["s3:PutObject"]
+#     resources = ["arn:aws:s3:::${aws_s3_bucket.lb_logs.id}/*"]
+#     principals {
+#       type        = "AWS"
+#       identifiers = ["054676820928"]
+#     }
+#   }
+# }
 
-### KMS KEY
-resource "aws_kms_key" "kms" {
-  deletion_window_in_days = var.deletion_window_in_days
-  tags                    = var.tags
-}
-### END KMS KEY
+# ### KMS KEY
+# resource "aws_kms_key" "kms" {
+#   deletion_window_in_days = var.deletion_window_in_days
+#   tags                    = var.tags
+# }
+# ### END KMS KEY
