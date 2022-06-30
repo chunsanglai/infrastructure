@@ -99,7 +99,7 @@ data "aws_iam_policy_document" "allow_lb_logs_policy" {
     resources = ["arn:aws:s3:::${aws_s3_bucket.lb_logs.id}/*"]
     principals {
       type        = "AWS"
-      identifiers = "arn:aws:iam::054676820928:root"
+      identifiers = ["arn:aws:iam::054676820928:root"]
     }
   }
 }
