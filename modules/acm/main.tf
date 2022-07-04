@@ -1,10 +1,7 @@
 resource "aws_acm_certificate" "cert" {
   domain_name       = var.domain_name
   validation_method = "DNS"
-
-  tags = {
-    Environment = "test"
-  }
+  subject_alternative_names = ["*.${var.domain_name}"]
 
   lifecycle {
     create_before_destroy = true
@@ -26,7 +23,7 @@ resource "aws_route53_record" "record" {
   type            = each.value.type
   zone_id         = var.zone_id
 }
-resource "aws_acm_certificate_validation" "example" {
+resource "aws_acm_certificate_validation" "cert" {
   certificate_arn         = aws_acm_certificate.cert.arn
   validation_record_fqdns = [for record in aws_route53_record.record : record.fqdn]
 }
