@@ -1,5 +1,5 @@
 locals {
-  subject_alternative_names = concat(["*.${var.domain_name}"], var.custom_sub_domain_names)
+  subject_alternative_names = concat(["*.${var.domain_name}"],["*.stage.${var.domain_name}"], var.custom_sub_domain_names)
 }
 
 resource "aws_acm_certificate" "cert" {
