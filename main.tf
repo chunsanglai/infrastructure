@@ -57,7 +57,7 @@ module "acm" {
   source      = "./modules/acm"
   zone_id     = module.aws_route53_zone.public_zone_id
   domain_name = "chunsanglai.com"
-  custom_sub_domain_names = [""]
+  custom_sub_domain_names = []
 }
 
 
