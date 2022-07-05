@@ -16,25 +16,25 @@ resource "aws_lb" "loadbalancer" {
   tags = var.tags
 }
 
-resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.loadbalancer.arn
-  port              = "80" 
-  protocol          = "HTTP"
-  ssl_policy        = var.ssl_policy
-  certificate_arn   = var.certificate_arn
-  default_action {
-    type             = "redirect"
-    redirect {
-      port = "443"
-      protocol = "HTTPS"
-      status_code = "HTTP_301"
-    }
-  }
-}
+# resource "aws_lb_listener" "http" {
+#   load_balancer_arn = aws_lb.loadbalancer.arn
+#   port              = "80" 
+#   protocol          = "HTTP"
+#   ssl_policy        = var.ssl_policy
+#   certificate_arn   = var.certificate_arn
+#   default_action {
+#     type             = "redirect"
+#     redirect {
+#       port = "443"
+#       protocol = "HTTPS"
+#       status_code = "HTTP_301"
+#     }
+#   }
+# }
 resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.loadbalancer.arn
-  port              = "443" 
-  protocol          = "HTTPS" 
+  port              = "80" 
+  protocol          = "HTTP" 
   ssl_policy        = var.ssl_policy
   certificate_arn   = var.certificate_arn
   default_action {
