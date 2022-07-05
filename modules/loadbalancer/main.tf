@@ -31,7 +31,7 @@ resource "aws_lb" "loadbalancer" {
 #     }
 #   }
 # }
-resource "aws_lb_listener" "https" {
+resource "aws_lb_listener" "test" {
   load_balancer_arn = aws_lb.loadbalancer.arn
   port              = "80" 
   protocol          = "HTTP" 
@@ -43,7 +43,7 @@ resource "aws_lb_listener" "https" {
   }
 }
 resource "aws_lb_listener_rule" "host_based_weighted_routing" {
-  listener_arn = aws_lb_listener.https.arn
+  listener_arn = aws_lb_listener.test.arn
   priority     = 99
 
   action {
