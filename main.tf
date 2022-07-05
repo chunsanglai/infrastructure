@@ -53,12 +53,12 @@ module "vpc" {
 #   }
 # }
 
-# module "acm" {
-#   source      = "./modules/acm"
-#   zone_id     = module.aws_route53_zone.public_zone_id
-#   domain_name = "test1.chunsang.lai.com"
-#   custom_sub_domain_names = []
-# }
+module "acm" {
+  source      = "./modules/acm"
+  zone_id     = module.aws_route53_zone.public_zone_id
+  domain_name = "test1.chunsang.lai.com"
+  custom_sub_domain_names = []
+}
 
 
 module "ec2" {
