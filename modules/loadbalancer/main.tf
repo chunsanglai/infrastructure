@@ -35,8 +35,9 @@ resource "aws_lb_target_group" "lb_target_group" {
   vpc_id   = var.vpc_id
 }
 resource "aws_lb_target_group_attachment" "lb_target_group_attachment" {
+  count = length(var.instance_ids)
   target_group_arn = aws_lb_target_group.lb_target_group.arn
-  target_id        = var.target_id
+  target_id        = var.instance_ids[count.index].id
   port             = var.port 
 }
 

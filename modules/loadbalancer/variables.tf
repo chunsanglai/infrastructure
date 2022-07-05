@@ -16,10 +16,6 @@ variable "load_balancer_type" {
   type = string
   description = "(optional) describe your variable"
 }
-variable "target_id" {
-  type = string
-  description = "(optional) describe your variable"
-}
 variable "enable_deletion_protection" {
   type = string
   description = "(optional) describe your variable"
@@ -47,3 +43,7 @@ variable "tags" {
 #   type    = number
 #   default = 30
 # }
+variable "instance_ids" {
+  type = list
+  description = "(optional) describe your variable"
+}
