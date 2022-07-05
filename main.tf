@@ -13,7 +13,7 @@ module "aws_route53_zone" {
 module "vpc" {
   source                  = "./modules/vpc"
   name                    = "chun"
-  env                     = "test"
+  env                     = "staging"
   aws_region              = "eu-central-1"
   azs                     = ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
   cidr                    = "10.55.0.0/16"
