@@ -41,8 +41,8 @@ module "stg-alb" {
   vpc_id                     = module.vpc.vpc_id
   instance_ids               = [module.ec2.instance_id,module.ec2-1.instance_id] #currently supports 1 instance
   enable_deletion_protection = "false"
-  ssl_policy                 = "ELBSecurityPolicy-2016-08"
-  certificate_arn            = "arn:aws:acm:eu-central-1:989427353090:certificate/be2ab16d-1391-4506-9159-cc88a73fcb32"
+  ssl_policy                 = ""
+  certificate_arn            = ""
   # deletion_window_in_days    = "7"
   tags = {
     CostCenter   = "chun"

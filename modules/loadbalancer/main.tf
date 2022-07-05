@@ -42,6 +42,21 @@ resource "aws_lb_listener" "https" {
     target_group_arn = aws_lb_target_group.lb_target_group.arn
   }
 }
+resource "aws_lb_listener_rule" "host_based_weighted_routing" {
+  listener_arn = aws_lb_listener.https.arn
+  priority     = 99
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lb_target_group.arn
+  }
+
+  condition {
+    host_header {
+      values = ["my-service.*.terraform.io"]
+    }
+  }
+}
 
 resource "aws_lb_target_group" "lb_target_group" {
   name     = "${var.name}-lb-tg"
