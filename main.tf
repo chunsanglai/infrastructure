@@ -32,26 +32,26 @@ module "vpc" {
   }
 }
 
-# module "stg-alb" {
-#   source                     = "./modules/loadbalancer"
-#   aws_region                 = var.aws_region
-#   name                       = "chun-alb"
-#   load_balancer_type         = "application"
-#   subnet_ids                 = [module.vpc.subnet_public_subnet_ids[0], module.vpc.subnet_public_subnet_ids[1]]
-#   vpc_id                     = module.vpc.vpc_id
-#   instance_ids               = [module.ec2.instance_id,module.ec2-1.instance_id] #currently supports 1 instance
-#   enable_deletion_protection = "false"
-#   port                       = "443"
-#   protocol                   = "HTTP"
-#   ssl_policy                 = ""
-#   certificate_arn            = ""
-#   # deletion_window_in_days    = "7"
-#   tags = {
-#     CostCenter   = "chun"
-#     map-migrated = "d-server-12345"
-#     Managedby    = "Terraform"
-#   }
-# }
+module "stg-alb" {
+  source                     = "./modules/loadbalancer"
+  aws_region                 = var.aws_region
+  name                       = "chun-alb"
+  load_balancer_type         = "application"
+  subnet_ids                 = [module.vpc.subnet_public_subnet_ids[0], module.vpc.subnet_public_subnet_ids[1]]
+  vpc_id                     = module.vpc.vpc_id
+  instance_ids               = [module.ec2.instance_id,module.ec2-1.instance_id] #currently supports 1 instance
+  enable_deletion_protection = "false"
+  port                       = "443"
+  protocol                   = "HTTP"
+  ssl_policy                 = ""
+  certificate_arn            = ""
+  # deletion_window_in_days    = "7"
+  tags = {
+    CostCenter   = "chun"
+    map-migrated = "d-server-12345"
+    Managedby    = "Terraform"
+  }
+}
 
 module "acm" {
   source                  = "./modules/acm"

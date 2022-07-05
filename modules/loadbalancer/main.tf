@@ -16,10 +16,10 @@ resource "aws_lb" "loadbalancer" {
   tags = var.tags
 }
 
-resource "aws_lb_listener" "listener-80" {
+resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.loadbalancer.arn
   port              = "80" 
-  protocol          = var.protocol 
+  protocol          = "HTTP"
   ssl_policy        = var.ssl_policy
   certificate_arn   = var.certificate_arn
   default_action {
@@ -31,18 +31,29 @@ resource "aws_lb_listener" "listener-80" {
     }
   }
 }
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.loadbalancer.arn
+  port              = "443" 
+  protocol          = "HTTPS" 
+  ssl_policy        = var.ssl_policy
+  certificate_arn   = var.certificate_arn
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lb_target_group.arn
+  }
+}
 
 resource "aws_lb_target_group" "lb_target_group" {
   name     = "${var.name}-lb-tg"
-  port     = "443"
-  protocol = var.protocol 
+  port     = "80"
+  protocol = "HTTP" 
   vpc_id   = var.vpc_id
 }
 resource "aws_lb_target_group_attachment" "lb_target_group_attachment" {
   count = length(var.instance_ids)
   target_group_arn = aws_lb_target_group.lb_target_group.arn
   target_id        = var.instance_ids[count.index]
-  port             = "443"
+  port             = "80"
 }
 
 resource "aws_security_group" "allow_lb" {
