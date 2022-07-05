@@ -37,7 +37,7 @@ resource "aws_lb_target_group" "lb_target_group" {
 resource "aws_lb_target_group_attachment" "lb_target_group_attachment" {
   count = length(var.instance_ids)
   target_group_arn = aws_lb_target_group.lb_target_group.arn
-  target_id        = var.instance_ids[count.index].id
+  target_id        = var.instance_ids[0].id
   port             = var.port 
 }
 
