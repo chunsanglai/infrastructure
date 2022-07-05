@@ -41,7 +41,7 @@ module "stg-alb" {
   vpc_id                     = module.vpc.vpc_id
   instance_ids               = [module.ec2.instance_id,module.ec2-1.instance_id] #currently supports 1 instance
   enable_deletion_protection = "false"
-  port                       = "80"
+  port                       = "443"
   protocol                   = "HTTP"
   ssl_policy                 = ""
   certificate_arn            = ""

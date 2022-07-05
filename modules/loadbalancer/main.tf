@@ -16,9 +16,24 @@ resource "aws_lb" "loadbalancer" {
   tags = var.tags
 }
 
-resource "aws_lb_listener" "listener" {
+resource "aws_lb_listener" "listener-80" {
   load_balancer_arn = aws_lb.loadbalancer.arn
-  port              = var.port 
+  port              = "80" 
+  protocol          = var.protocol 
+  ssl_policy        = var.ssl_policy
+  certificate_arn   = var.certificate_arn
+  default_action {
+    type             = "redirect"
+    redirect {
+      port = "443"
+      protocol = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+resource "aws_lb_listener" "listener-443" {
+  load_balancer_arn = aws_lb.loadbalancer.arn
+  port              = "80" 
   protocol          = var.protocol 
   ssl_policy        = var.ssl_policy
   certificate_arn   = var.certificate_arn
@@ -30,7 +45,7 @@ resource "aws_lb_listener" "listener" {
 
 resource "aws_lb_target_group" "lb_target_group" {
   name     = "${var.name}-lb-tg"
-  port     = var.port 
+  port     = "443"
   protocol = var.protocol 
   vpc_id   = var.vpc_id
 }
@@ -38,7 +53,7 @@ resource "aws_lb_target_group_attachment" "lb_target_group_attachment" {
   count = length(var.instance_ids)
   target_group_arn = aws_lb_target_group.lb_target_group.arn
   target_id        = var.instance_ids[count.index]
-  port             = var.port 
+  port             = "443"
 }
 
 resource "aws_security_group" "allow_lb" {
