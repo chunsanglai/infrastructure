@@ -1,9 +1,9 @@
-# module "aws_route53_zone" {
-#   source            = "./modules/route53"
-#   public_zone_name  = "chunsanglai.com"
-#   private_zone_name = "chunsanglai.internal"
-#   vpc_id            = module.vpc.vpc_id
-# }
+module "aws_route53_zone" {
+  source            = "./modules/route53"
+  public_zone_name  = "chunsanglai.com"
+  private_zone_name = "chunsanglai.internal"
+  vpc_id            = module.vpc.vpc_id
+}
 # # module "tags-factory" {
 # #   source = "./modules/tags-factory"
 # # }
