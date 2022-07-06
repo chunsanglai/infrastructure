@@ -1,11 +1,11 @@
 resource "aws_route53_record" "private_record" {
   # count   = var.private_hosted_zone_id == "" ? 0 : 1
   zone_id = var.private_hosted_zone_id
-  name    = module.ec2_instance.private_dns
+  name    = join(".","${var.name}","chunsanglai.com")
   type    = "A"
   ttl     = "60"
 
-  records = [var.name]
+  records = [module.ec2_instance.private_ip]
 }
 resource "aws_route53_record" "public_record" {
   count   = var.eip  == "true" ? 1 : 0 
