@@ -5,7 +5,7 @@ resource "aws_route53_record" "private_record" {
   type    = "A"
   ttl     = "60"
 
-  records = [module.ec2_instance.private_ip]
+  records = [var.name]
 }
 resource "aws_route53_record" "public_record" {
   count   = var.eip  == "true" ? 1 : 0 
