@@ -39,7 +39,7 @@ module "stg-alb" {
   load_balancer_type         = "application"
   subnet_ids                 = [module.vpc.subnet_public_subnet_ids[0], module.vpc.subnet_public_subnet_ids[1]]
   vpc_id                     = module.vpc.vpc_id
-  aws_ec2_instance_id        = module.ec2.instance_id
+  instance_ids               = [module.ec2.instance_id]
   enable_deletion_protection = "false"
   ssl_policy                 = ""
   certificate_arn            = ""
@@ -48,17 +48,14 @@ module "stg-alb" {
     "default" = {
       "tgport"  = "80"
       "tgproto" = "HTTP"
-      "ip"      = "${module.ec2.instance_ip}"
     }
     "nginx" = {
       "tgport"  = "443"
       "tgproto" = "HTTPS"
-      "ip"      = "${module.ec2-1.instance_ip}"
     },
     "rabbit" = {
       "tgport"  = "15672"
       "tgproto" = "HTTP"
-      "ip"      = "${module.ec2-1.instance_ip}"
     }
   }
   tags = {

@@ -50,17 +50,18 @@ variable "hosts" {
     "default" = {
       "tgport"  = "80"
       "tgproto" = "HTTP"
-      "ip" = ""
     }
     "nginx" = {
       "tgport"  = "443"
       "tgproto" = "HTTPS"
-      "ip" = ""
     },
     "rabbit" = {
       "tgport"  = "15672"
       "tgproto" = "HTTP"
-      "ip" = ""
     }
   }
+}
+variable "instance_ids" {
+  type = list
+  description = "(optional) describe your variable"
 }
