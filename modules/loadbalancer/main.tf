@@ -59,7 +59,7 @@ resource "aws_lb_listener_rule" "host_based_weighted_routing" {
 }
 
 resource "aws_lb_target_group" "lb_target_group" {
-  for_each = var.hosts 
+  for_each = var.hosts2 
   name     = "${each.key}-lb-tg"
   port     = each.value.tgport
   protocol = each.value.tgproto
