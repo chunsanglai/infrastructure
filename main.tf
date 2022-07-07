@@ -43,7 +43,6 @@ module "stg-alb" {
   enable_deletion_protection = "false"
   ssl_policy                 = ""
   certificate_arn            = ""
-  hosts                      = ["*.chun.carenity.com"]
   # deletion_window_in_days    = "7"
   tags = {
     CostCenter   = "chun"
