@@ -53,10 +53,12 @@ module "stg-alb" {
     "nginx" = {
       "tgport"  = "443"
       "tgproto" = "HTTPS"
+      "ip"      = "${module.ec2-1.instance_ip}"
     },
     "rabbit" = {
       "tgport"  = "15672"
       "tgproto" = "HTTP"
+      "ip"      = "${module.ec2-1.instance_ip}"
     }
   }
   tags = {
