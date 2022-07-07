@@ -35,10 +35,10 @@ variable "tags" {
 #   type    = number
 #   default = 30
 # }
-variable "instance_ids" {
-  type = list
-  description = "(optional) describe your variable"
+variable "aws_ec2_instance_id" {
+
 }
+
 variable "domain_name" {
   type = string
   description = "(optional) describe your variable"
