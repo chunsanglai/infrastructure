@@ -44,12 +44,6 @@ module "stg-alb" {
   ssl_policy                 = ""
   certificate_arn            = ""
   hosts                      = ["*.chun.carenity.com"]
-  tenant_data = {
-    instance1 = {
-      port = 32876
-      listener_priority = 99
-    } 
-  }
   # deletion_window_in_days    = "7"
   tags = {
     CostCenter   = "chun"

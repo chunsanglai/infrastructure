@@ -39,9 +39,10 @@ variable "instance_ids" {
   type = list
   description = "(optional) describe your variable"
 }
-variable "hosts" {
-  type = list
+variable "domain_name" {
+  type = string
   description = "(optional) describe your variable"
+  default = "*.chunsanglai.com"
 }
 variable "hosts2" {
   # type = "map"
