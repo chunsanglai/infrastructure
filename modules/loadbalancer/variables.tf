@@ -50,17 +50,17 @@ variable "hosts" {
     "default" = {
       "tgport"  = "80"
       "tgproto" = "HTTP"
-      "instance" = ""
+      "ip" = ""
     }
     "nginx" = {
       "tgport"  = "443"
       "tgproto" = "HTTPS"
-      "instance" = ""
+      "ip" = ""
     },
     "rabbit" = {
       "tgport"  = "15672"
       "tgproto" = "HTTP"
-      "instance" = ""
+      "ip" = ""
     }
   }
 }
