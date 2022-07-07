@@ -91,6 +91,7 @@ module "ec2" {
     CostCenter   = "chun"
     map-migrated = "d-server-12345"
     Managedby    = "Terraform"
+    
   }
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
   public_hosted_zone_id  = module.aws_route53_zone.public_zone_id

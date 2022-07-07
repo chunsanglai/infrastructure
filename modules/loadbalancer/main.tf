@@ -65,12 +65,6 @@ resource "aws_lb_target_group" "lb_target_group" {
   protocol = each.value.tgproto
   vpc_id   = var.vpc_id
 }
-resource "aws_lb_target_group_attachment" "lb_target_group_attachment" {
-  for_each = aws_lb_target_group.lb_target_group
-  target_group_arn = each.value.arn
-  target_id        = var.instance_id
-  port             = each.value.port
-}
 
 resource "aws_security_group" "allow_lb" {
   name        = "${var.name}-sg"
