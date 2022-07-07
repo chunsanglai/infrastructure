@@ -35,8 +35,8 @@ variable "tags" {
 #   type    = number
 #   default = 30
 # }
-variable "instance_ids" {
-  type = list
+variable "instance_id" {
+  type = string
   description = "(optional) describe your variable"
 }
 
