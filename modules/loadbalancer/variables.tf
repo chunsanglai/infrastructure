@@ -43,9 +43,16 @@ variable "hosts" {
   type = list
   description = "(optional) describe your variable"
 }
-variable "tenant_data" {
-  type = map(object({
-    port              = number
-    listener_priority = number
-  }))
+variable "hosts2" {
+  # type = "map"
+  default = {
+    "nginx" = {
+      "tgport"  = "8080"
+      "tgproto" = "HTTP"
+    },
+    "rabbit" = {
+      "tgport"  = "15672"
+      "tgproto" = "HTTP"
+    }
+  }
 }
