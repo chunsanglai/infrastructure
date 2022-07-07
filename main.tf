@@ -44,20 +44,20 @@ module "stg-alb" {
   ssl_policy                 = ""
   certificate_arn            = ""
   # deletion_window_in_days    = "7"
-  hosts = {
-    "default" = {
-      "tgport"  = "80"
-      "tgproto" = "HTTP"
-    }
-    "nginx" = {
-      "tgport"  = "443"
-      "tgproto" = "HTTPS"
-    },
-    "rabbit" = {
-      "tgport"  = "15672"
-      "tgproto" = "HTTP"
-    }
-  }
+  # hosts = {
+  #   "default" = {
+  #     "tgport"  = "80"
+  #     "tgproto" = "HTTP"
+  #   }
+  #   "nginx" = {
+  #     "tgport"  = "443"
+  #     "tgproto" = "HTTPS"
+  #   },
+  #   "rabbit" = {
+  #     "tgport"  = "15672"
+  #     "tgproto" = "HTTP"
+  #   }
+  # }
   tags = {
     CostCenter   = "chun"
     map-migrated = "d-server-12345"
@@ -91,7 +91,7 @@ module "ec2" {
     CostCenter   = "chun"
     map-migrated = "d-server-12345"
     Managedby    = "Terraform"
-    
+
   }
   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
   public_hosted_zone_id  = module.aws_route53_zone.public_zone_id
