@@ -35,8 +35,9 @@ variable "tags" {
 #   type    = number
 #   default = 30
 # }
-variable "aws_ec2_instance_id" {
-
+variable "instance_ids" {
+  type = list
+  description = "(optional) describe your variable"
 }
 
 variable "domain_name" {
@@ -60,8 +61,4 @@ variable "hosts" {
       "tgproto" = "HTTP"
     }
   }
-}
-variable "instance_ids" {
-  type = list
-  description = "(optional) describe your variable"
 }

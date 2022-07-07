@@ -63,7 +63,6 @@ resource "aws_lb_target_group" "lb_target_group" {
   name     = "${each.key}-lb-tg"
   port     = each.value.tgport
   protocol = each.value.tgproto
-  target_type = "ip"
   vpc_id   = var.vpc_id
 }
 resource "aws_lb_target_group_attachment" "lb_target_group_attachment" {
