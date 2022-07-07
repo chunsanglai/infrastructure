@@ -44,6 +44,23 @@ module "stg-alb" {
   ssl_policy                 = ""
   certificate_arn            = ""
   # deletion_window_in_days    = "7"
+  hosts = {
+    "default" = {
+      "tgport"  = "80"
+      "tgproto" = "HTTP"
+      "instance" = "${module.ec2.instance_id}"
+    }
+    "nginx" = {
+      "tgport"  = "443"
+      "tgproto" = "HTTPS"
+      "instance" = "${module.ec2-1.instance_id}"
+    },
+    "rabbit" = {
+      "tgport"  = "15672"
+      "tgproto" = "HTTP"
+      "instance" = "${module.ec2-1.instance_id}"
+    }
+  }
   tags = {
     CostCenter   = "chun"
     map-migrated = "d-server-12345"

@@ -68,7 +68,7 @@ resource "aws_lb_target_group" "lb_target_group" {
 resource "aws_lb_target_group_attachment" "lb_target_group_attachment" {
   for_each = aws_lb_target_group.lb_target_group
   target_group_arn = each.value.arn
-  target_id        = var.aws_ec2_instance_id
+  target_id        = each.value.instance
   port             = each.value.port
 }
 
