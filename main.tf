@@ -39,10 +39,17 @@ module "stg-alb" {
   load_balancer_type         = "application"
   subnet_ids                 = [module.vpc.subnet_public_subnet_ids[0], module.vpc.subnet_public_subnet_ids[1]]
   vpc_id                     = module.vpc.vpc_id
-  instance_ids               = [module.ec2.instance_id,module.ec2-1.instance_id] #currently supports 1 instance
+  instance_ids               = [module.ec2.instance_id,module.ec2-1.instance_id] 
   enable_deletion_protection = "false"
   ssl_policy                 = ""
   certificate_arn            = ""
+  hosts                      = ["*.chun.carenity.com"]
+  tenant_data = {
+    instance1 = {
+      port = 32876
+      listener_priority = 99
+    } 
+  }
   # deletion_window_in_days    = "7"
   tags = {
     CostCenter   = "chun"

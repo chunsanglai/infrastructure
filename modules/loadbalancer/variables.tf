@@ -39,3 +39,13 @@ variable "instance_ids" {
   type = list
   description = "(optional) describe your variable"
 }
+variable "hosts" {
+  type = list
+  description = "(optional) describe your variable"
+}
+variable "tenant_data" {
+  type = map(object({
+    port              = number
+    listener_priority = number
+  }))
+}

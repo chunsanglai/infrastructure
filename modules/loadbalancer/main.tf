@@ -44,23 +44,24 @@ resource "aws_lb_listener" "test" {
 }
 resource "aws_lb_listener_rule" "host_based_weighted_routing" {
   listener_arn = aws_lb_listener.test.arn
-  priority     = 99
+  priority     = each.value.listener_priority
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.lb_target_group.arn
+    target_group_arn = aws_lb_target_group.lb_target_group[each.key].arn
   }
 
   condition {
     host_header {
-      values = ["my-service.*.terraform.io"]
+      values = var.hosts
     }
   }
 }
 
 resource "aws_lb_target_group" "lb_target_group" {
-  name     = "${var.name}-lb-tg"
-  port     = "80"
+  for_each = var.tenant_data 
+  name     = "${each.key}-lb-tg"
+  port     = each.value.port
   protocol = "HTTP" 
   vpc_id   = var.vpc_id
 }
