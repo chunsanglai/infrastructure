@@ -42,14 +42,18 @@ variable "aws_ec2_instance_id" {
 variable "domain_name" {
   type = string
   description = "(optional) describe your variable"
-  default = "*.chunsanglai.com"
+  default = "chunsanglai.com"
 }
-variable "hosts2" {
+variable "hosts" {
   # type = "map"
   default = {
-    "nginx" = {
-      "tgport"  = "8080"
+    "default" = {
+      "tgport"  = "80"
       "tgproto" = "HTTP"
+    }
+    "nginx" = {
+      "tgport"  = "443"
+      "tgproto" = "HTTPS"
     },
     "rabbit" = {
       "tgport"  = "15672"

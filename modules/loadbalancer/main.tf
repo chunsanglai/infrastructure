@@ -39,7 +39,7 @@ resource "aws_lb_listener" "test" {
   certificate_arn   = var.certificate_arn
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.lb_target_group["nginx"].arn
+    target_group_arn = aws_lb_target_group.lb_target_group["default"].arn
   }
 }
 resource "aws_lb_listener_rule" "host_based_weighted_routing" {
@@ -59,7 +59,7 @@ resource "aws_lb_listener_rule" "host_based_weighted_routing" {
 }
 
 resource "aws_lb_target_group" "lb_target_group" {
-  for_each = var.hosts2 
+  for_each = var.hosts
   name     = "${each.key}-lb-tg"
   port     = each.value.tgport
   protocol = each.value.tgproto
