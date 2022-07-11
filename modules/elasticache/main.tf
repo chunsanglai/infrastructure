@@ -119,51 +119,51 @@ resource "aws_security_group" "internal-security-group" {
   }
 }
 
-# resource "aws_cloudwatch_metric_alarm" "elasticache-high-cpu-warning" {
-#   alarm_name          = "${var.domain_name}-high-cpu-warning"
-#   alarm_description   = "Average CPU of ElastiCache >= 70% during 1 minute"
-#   comparison_operator = "GreaterThanOrEqualToThreshold"
-#   evaluation_periods  = "1"
-#   metric_name         = "CPUUtilization"
-#   namespace           = "AWS/ElastiCache"
-#   period              = "60"
-#   statistic           = "Average"
-#   threshold           = 70
-#   alarm_actions       = [var.sns_alert_arn]
-#   treat_missing_data  = "breaching"
-#   dimensions = {
-#     CacheClusterId = aws_elasticache_cluster.redis.cluster_id
-#   }
-# }
+resource "aws_cloudwatch_metric_alarm" "elasticache-high-cpu-warning" {
+  alarm_name          = "${var.domain_name}-high-cpu-warning"
+  alarm_description   = "Average CPU of ElastiCache >= 70% during 1 minute"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/ElastiCache"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = 70
+  alarm_actions       = [var.sns_alert_arn]
+  treat_missing_data  = "breaching"
+  dimensions = {
+    CacheClusterId = aws_elasticache_replication_group.redis.CacheNodeId
+  }
+}
 
-# resource "aws_cloudwatch_metric_alarm" "elasticache-high-db-memory-warning" {
-#   alarm_name          = "${var.domain_name}-high-db-memory-warning"
-#   alarm_description   = "Average DB Memory on ElastiCache >= 60% during 1 minute"
-#   comparison_operator = "GreaterThanOrEqualToThreshold"
-#   evaluation_periods  = "1"
-#   metric_name         = "DatabaseMemoryUsagePercentage"
-#   namespace           = "AWS/ElastiCache"
-#   period              = "60"
-#   statistic           = "Average"
-#   threshold           = 60
-#   alarm_actions       = [var.sns_alert_arn]
-#   dimensions = {
-#     CacheClusterId = aws_elasticache_replication_group.redis.cluster_id  }
-# }
+resource "aws_cloudwatch_metric_alarm" "elasticache-high-db-memory-warning" {
+  alarm_name          = "${var.domain_name}-high-db-memory-warning"
+  alarm_description   = "Average DB Memory on ElastiCache >= 60% during 1 minute"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "DatabaseMemoryUsagePercentage"
+  namespace           = "AWS/ElastiCache"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = 60
+  alarm_actions       = [var.sns_alert_arn]
+  dimensions = {
+    CacheClusterId = aws_elasticache_replication_group.redis.CacheNodeId  }
+}
 
-# resource "aws_cloudwatch_metric_alarm" "elasticache-high-connection-warning" {
-#   alarm_name          = "${var.domain_name}-high-connection-warning"
-#   alarm_description   = "Average Number of Connections on ElastiCache >= 1000 connections during 1 minute"
-#   comparison_operator = "GreaterThanOrEqualToThreshold"
-#   evaluation_periods  = "1"
-#   metric_name         = "CurrConnections"
-#   namespace           = "AWS/ElastiCache"
-#   period              = "60"
-#   statistic           = "Average"
-#   threshold           = 1000
-#   alarm_actions       = [var.sns_alert_arn]
-#   dimensions = {
-#     CacheClusterId = aws_elasticache_replication_group.redis.cluster_id  }
-# }
+resource "aws_cloudwatch_metric_alarm" "elasticache-high-connection-warning" {
+  alarm_name          = "${var.domain_name}-high-connection-warning"
+  alarm_description   = "Average Number of Connections on ElastiCache >= 1000 connections during 1 minute"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "CurrConnections"
+  namespace           = "AWS/ElastiCache"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = 1000
+  alarm_actions       = [var.sns_alert_arn]
+  dimensions = {
+    CacheClusterId = aws_elasticache_replication_group.redis.CacheNodeId  }
+}
 resource "aws_kms_key" "this" {
 }
