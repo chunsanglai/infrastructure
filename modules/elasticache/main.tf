@@ -1,5 +1,42 @@
-resource "aws_elasticache_cluster" "redis" {
-  cluster_id           = var.domain_name
+#Create password
+resource "random_password" "password"{
+  length           = 16
+  special          = true
+  numeric          = true
+  upper            = true
+  lower            = true
+  min_lower = 2
+  min_numeric = 2
+  min_special = 2
+  min_upper = 2
+}
+
+resource "aws_secretsmanager_secret" "password" {
+  name = "${var.domain_name}-redis-password"
+}
+
+resource "aws_secretsmanager_secret_version" "password" {
+  secret_id     = aws_secretsmanager_secret.password.id
+  secret_string = <<EOF
+   {
+    "username": "root",
+    "password": "${random_password.password.result}"
+   }
+EOF
+}
+#Import password
+data "aws_secretsmanager_secret" "password" {
+  arn = aws_secretsmanager_secret.password.arn
+}
+data "aws_secretsmanager_secret_version" "credentials" {
+  secret_id = data.aws_secretsmanager_secret.password.arn
+}
+locals {
+  creds = jsondecode(data.aws_secretsmanager_secret_version.credentials.secret_string)
+}
+resource "aws_elasticache_replication_group" "redis" {
+  replication_group_id          = var.domain_name
+  replication_group_description = "redis cache cluster"
   engine               = var.engine
   node_type            = var.node_type
   num_cache_nodes      = var.num_cache_nodes 
@@ -9,6 +46,11 @@ resource "aws_elasticache_cluster" "redis" {
   apply_immediately = var.apply_immediately
   security_group_ids   = [aws_security_group.management-security-group.id, aws_security_group.internal-security-group.id]
   subnet_group_name = aws_elasticache_subnet_group.ec.name
+  at_rest_encryption_enabled    = true
+  transit_encryption_enabled    = true
+  auth_token                    = local.creds.password
+  snapshot_retention_limit      = 5
+  kms_key_id                    = aws_kms_key.this.arn
   tags = var.tags
   log_delivery_configuration {
     destination      = aws_cloudwatch_log_group.redis_slow.name
@@ -23,6 +65,7 @@ resource "aws_elasticache_cluster" "redis" {
     log_type         = "engine-log"
   }
 }
+
 resource "aws_elasticache_subnet_group" "ec" {
   name       = "${var.domain_name}-subnet"
   subnet_ids = var.subnet_ids
@@ -121,4 +164,6 @@ resource "aws_cloudwatch_metric_alarm" "elasticache-high-connection-warning" {
   alarm_actions       = [var.sns_alert_arn]
   dimensions = {
     CacheClusterId = aws_elasticache_cluster.redis.cluster_id  }
+}
+resource "aws_kms_key" "this" {
 }
