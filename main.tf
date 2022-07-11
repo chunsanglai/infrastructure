@@ -7,9 +7,9 @@ module "aws_route53_zone" {
 # # module "tags-factory" {
 # #   source = "./modules/tags-factory"
 # # }
-# module "sns" {
-#   source = "./modules/sns"
-# }
+module "sns" {
+  source = "./modules/sns"
+}
 module "vpc" {
   source                  = "./modules/vpc"
   name                    = "chun"
@@ -44,6 +44,7 @@ module "stg-redis" {
   auto_minor_version_upgrade = "true"
   subnet_ids                 = [module.vpc.subnet_database_subnet_ids[0], module.vpc.subnet_database_subnet_ids[1], module.vpc.subnet_database_subnet_ids[2]]
   vpc_id                     = module.vpc.vpc_id
+  sns_alert_arn              = module.sns.sns
   management_ingress_rules = [
     # {
     #   from_port   = 6379
