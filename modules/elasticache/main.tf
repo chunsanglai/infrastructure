@@ -132,7 +132,7 @@ resource "aws_cloudwatch_metric_alarm" "elasticache-high-cpu-warning" {
   alarm_actions       = [var.sns_alert_arn]
   treat_missing_data  = "breaching"
   dimensions = {
-    CacheClusterId = aws_elasticache_replication_group.redis.CacheNodeId
+    CacheClusterId = aws_elasticache_replication_group.redis.id
   }
 }
 
@@ -148,7 +148,7 @@ resource "aws_cloudwatch_metric_alarm" "elasticache-high-db-memory-warning" {
   threshold           = 60
   alarm_actions       = [var.sns_alert_arn]
   dimensions = {
-    CacheClusterId = aws_elasticache_replication_group.redis.CacheNodeId  }
+    CacheClusterId = aws_elasticache_replication_group.redis.id  }
 }
 
 resource "aws_cloudwatch_metric_alarm" "elasticache-high-connection-warning" {
@@ -163,7 +163,7 @@ resource "aws_cloudwatch_metric_alarm" "elasticache-high-connection-warning" {
   threshold           = 1000
   alarm_actions       = [var.sns_alert_arn]
   dimensions = {
-    CacheClusterId = aws_elasticache_replication_group.redis.CacheNodeId  }
+    CacheClusterId = aws_elasticache_replication_group.redis.id  }
 }
 resource "aws_kms_key" "this" {
 }
