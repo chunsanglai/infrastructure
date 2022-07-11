@@ -31,7 +31,40 @@ module "vpc" {
     Managedby    = "Terraform"
   }
 }
-
+module "stg-redis" {
+  source                     = "./modules/elasticache"
+  domain_name                = "chun-carenity-ec"
+  engine                     = "redis"
+  node_type                  = "cache.t3.small"
+  num_cache_nodes            = 1
+  parameter_group_name       = "default.redis6.x"
+  engine_version             = "6.2"
+  port                       = 6379
+  apply_immediately          = "true"
+  auto_minor_version_upgrade = "true"
+  sns_alert_arn              = module.sns.sns
+  subnet_ids                 = [module.vpc.subnet_database_subnet_ids[0], module.vpc.subnet_database_subnet_ids[1],module.vpc.subnet_database_subnet_ids[2]]
+  vpc_id                     = module.vpc.vpc_id
+  management_ingress_rules = [
+    # {
+    #   from_port   = 6379
+    #   to_port     = 6379
+    #   protocol    = "tcp"
+    #   cidr_block  = "10.60.0.0/16"
+    #   description = "redis"
+    # },
+  ]
+  internal_ingress_rules = [
+    {
+      from_port       = 6379
+      to_port         = 6379
+      protocol        = "tcp"
+      security_groups = []#[module.staging-1-carenity.instance_sg, module.staging-2-carenity.instance_sg, module.staging-3-carenity.instance_sg]
+      description     = "redis"
+    },
+  ]
+  tags = module.tags-factory.tags
+}
 module "stg-alb" {
   source                     = "./modules/loadbalancer"
   aws_region                 = var.aws_region

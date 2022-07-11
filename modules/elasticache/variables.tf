@@ -1,4 +1,4 @@
-variable "name" {
+variable "domain_name" {
     type = string
     description = "name of elasticache cluster"
 }
@@ -39,4 +39,29 @@ variable "sns_alert_arn" {
 }
 variable "tags" {
   type = map(any)
+}
+variable "management_ingress_rules" {
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_block  = string
+    description = string
+  }))
+}
+variable "internal_ingress_rules" {
+  type = list(object({
+    from_port       = number
+    to_port         = number
+    protocol        = string
+    security_groups = list(string)
+    description     = string
+  }))
+}
+variable "vpc_id" {
+  description = "vpc id"
+}
+variable "subnet_ids" {
+  type = list
+  description = "(optional) describe your variable"
 }
