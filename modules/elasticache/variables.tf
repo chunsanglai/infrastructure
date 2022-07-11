@@ -36,6 +36,7 @@ variable "parameter_group_name" {
 }
 variable "sns_alert_arn" {
   type = string
+  default = null
 }
 variable "tags" {
   type = map(any)

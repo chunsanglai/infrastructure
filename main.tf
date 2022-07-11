@@ -42,8 +42,7 @@ module "stg-redis" {
   port                       = 6379
   apply_immediately          = "true"
   auto_minor_version_upgrade = "true"
-  sns_alert_arn              = module.sns.sns
-  subnet_ids                 = [module.vpc.subnet_database_subnet_ids[0], module.vpc.subnet_database_subnet_ids[1],module.vpc.subnet_database_subnet_ids[2]]
+  subnet_ids                 = [module.vpc.subnet_database_subnet_ids[0], module.vpc.subnet_database_subnet_ids[1], module.vpc.subnet_database_subnet_ids[2]]
   vpc_id                     = module.vpc.vpc_id
   management_ingress_rules = [
     # {
@@ -59,11 +58,15 @@ module "stg-redis" {
       from_port       = 6379
       to_port         = 6379
       protocol        = "tcp"
-      security_groups = []#[module.staging-1-carenity.instance_sg, module.staging-2-carenity.instance_sg, module.staging-3-carenity.instance_sg]
+      security_groups = [] #[module.staging-1-carenity.instance_sg, module.staging-2-carenity.instance_sg, module.staging-3-carenity.instance_sg]
       description     = "redis"
     },
   ]
-  tags = module.tags-factory.tags
+  tags = {
+    CostCenter   = "chun"
+    map-migrated = "d-server-12345"
+    Managedby    = "Terraform"
+  }
 }
 module "stg-alb" {
   source                     = "./modules/loadbalancer"
