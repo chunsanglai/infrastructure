@@ -31,150 +31,150 @@ module "vpc" {
     Managedby    = "Terraform"
   }
 }
-module "stg-redis" {
-  source                     = "./modules/elasticache"
-  domain_name                = "chun-carenity-ec"
-  engine                     = "redis"
-  node_type                  = "cache.t3.small"
-  num_cache_nodes            = 1
-  parameter_group_name       = "default.redis6.x"
-  engine_version             = "6.2"
-  port                       = 6379
-  apply_immediately          = "true"
-  auto_minor_version_upgrade = "true"
-  subnet_ids                 = [module.vpc.subnet_database_subnet_ids[0], module.vpc.subnet_database_subnet_ids[1], module.vpc.subnet_database_subnet_ids[2]]
-  vpc_id                     = module.vpc.vpc_id
-  sns_alert_arn              = module.sns.sns
-  management_ingress_rules = [
-    # {
-    #   from_port   = 6379
-    #   to_port     = 6379
-    #   protocol    = "tcp"
-    #   cidr_block  = "10.60.0.0/16"
-    #   description = "redis"
-    # },
-  ]
-  internal_ingress_rules = [
-    {
-      from_port       = 6379
-      to_port         = 6379
-      protocol        = "tcp"
-      security_groups = [] #[module.staging-1-carenity.instance_sg, module.staging-2-carenity.instance_sg, module.staging-3-carenity.instance_sg]
-      description     = "redis"
-    },
-  ]
-  tags = {
-    CostCenter   = "chun"
-    map-migrated = "d-server-12345"
-    Managedby    = "Terraform"
-  }
-}
-module "stg-alb" {
-  source                     = "./modules/loadbalancer"
-  aws_region                 = var.aws_region
-  name                       = "chun-alb"
-  load_balancer_type         = "application"
-  subnet_ids                 = [module.vpc.subnet_public_subnet_ids[0], module.vpc.subnet_public_subnet_ids[1]]
-  vpc_id                     = module.vpc.vpc_id
-  instance_id                = module.ec2.instance_id
-  enable_deletion_protection = "false"
-  ssl_policy                 = ""
-  certificate_arn            = ""
-  # deletion_window_in_days    = "7"
-  hosts = {
-    "default" = {
-      "tgport"  = "80"
-      "tgproto" = "HTTP"
-    }
-    "nginx" = {
-      "tgport"  = "443"
-      "tgproto" = "HTTPS"
-    },
-    "rabbit" = {
-      "tgport"  = "15672"
-      "tgproto" = "HTTP"
-    }
-  }
-  tags = {
-    CostCenter   = "chun"
-    map-migrated = "d-server-12345"
-    Managedby    = "Terraform"
-  }
-}
+# module "stg-redis" {
+#   source                     = "./modules/elasticache"
+#   domain_name                = "chun-carenity-ec"
+#   engine                     = "redis"
+#   node_type                  = "cache.t3.small"
+#   num_cache_nodes            = 1
+#   parameter_group_name       = "default.redis6.x"
+#   engine_version             = "6.2"
+#   port                       = 6379
+#   apply_immediately          = "true"
+#   auto_minor_version_upgrade = "true"
+#   subnet_ids                 = [module.vpc.subnet_database_subnet_ids[0], module.vpc.subnet_database_subnet_ids[1], module.vpc.subnet_database_subnet_ids[2]]
+#   vpc_id                     = module.vpc.vpc_id
+#   sns_alert_arn              = module.sns.sns
+#   management_ingress_rules = [
+#     {
+#       from_port   = 6379
+#       to_port     = 6379
+#       protocol    = "tcp"
+#       cidr_block  = "10.60.0.0/16"
+#       description = "redis"
+#     },
+#   ]
+#   internal_ingress_rules = [
+#     {
+#       from_port       = 6379
+#       to_port         = 6379
+#       protocol        = "tcp"
+#       security_groups = [] #[module.staging-1-carenity.instance_sg, module.staging-2-carenity.instance_sg, module.staging-3-carenity.instance_sg]
+#       description     = "redis"
+#     },
+#   ]
+#   tags = {
+#     CostCenter   = "chun"
+#     map-migrated = "d-server-12345"
+#     Managedby    = "Terraform"
+#   }
+# }
+# module "stg-alb" {
+#   source                     = "./modules/loadbalancer"
+#   aws_region                 = var.aws_region
+#   name                       = "chun-alb"
+#   load_balancer_type         = "application"
+#   subnet_ids                 = [module.vpc.subnet_public_subnet_ids[0], module.vpc.subnet_public_subnet_ids[1]]
+#   vpc_id                     = module.vpc.vpc_id
+#   instance_id                = module.ec2.instance_id
+#   enable_deletion_protection = "false"
+#   ssl_policy                 = ""
+#   certificate_arn            = ""
+#   deletion_window_in_days    = "7"
+#   hosts = {
+#     "default" = {
+#       "tgport"  = "80"
+#       "tgproto" = "HTTP"
+#     }
+#     "nginx" = {
+#       "tgport"  = "443"
+#       "tgproto" = "HTTPS"
+#     },
+#     "rabbit" = {
+#       "tgport"  = "15672"
+#       "tgproto" = "HTTP"
+#     }
+#   }
+#   tags = {
+#     CostCenter   = "chun"
+#     map-migrated = "d-server-12345"
+#     Managedby    = "Terraform"
+#   }
+# }
 
-module "acm" {
-  source                  = "./modules/acm"
-  zone_id                 = module.aws_route53_zone.public_zone_id
-  domain_name             = "test1.chunsang.lai.com"
-  custom_sub_domain_names = []
-}
+# module "acm" {
+#   source                  = "./modules/acm"
+#   zone_id                 = module.aws_route53_zone.public_zone_id
+#   domain_name             = "test1.chunsang.lai.com"
+#   custom_sub_domain_names = []
+# }
 
 
-module "ec2" {
-  source            = "./modules/ec2"
-  aws_region        = var.aws_region
-  name              = "chun-1"
-  ami               = "ami-0a5b5c0ea66ec560d"
-  vpc_id            = module.vpc.vpc_id
-  instance_type     = "t2.micro"
-  key_name          = "infra-ec2"
-  availability_zone = element(module.vpc.azs, 0)
-  subnet_id         = element(module.vpc.subnet_public_subnet_ids, 0)
-  public_ports      = ["80", "443"]
-  eip               = true
-  volume_size       = 50
-  data_volume_size  = 50
-  tags = {
-    CostCenter   = "chun"
-    map-migrated = "d-server-12345"
-    Managedby    = "Terraform"
+# module "ec2" {
+#   source            = "./modules/ec2"
+#   aws_region        = var.aws_region
+#   name              = "chun-1"
+#   ami               = "ami-0a5b5c0ea66ec560d"
+#   vpc_id            = module.vpc.vpc_id
+#   instance_type     = "t2.micro"
+#   key_name          = "infra-ec2"
+#   availability_zone = element(module.vpc.azs, 0)
+#   subnet_id         = element(module.vpc.subnet_public_subnet_ids, 0)
+#   public_ports      = ["80", "443"]
+#   eip               = true
+#   volume_size       = 50
+#   data_volume_size  = 50
+#   tags = {
+#     CostCenter   = "chun"
+#     map-migrated = "d-server-12345"
+#     Managedby    = "Terraform"
 
-  }
-  private_hosted_zone_id = module.aws_route53_zone.private_zone_id
-  public_hosted_zone_id  = module.aws_route53_zone.public_zone_id
-  management_ingress_rules = [
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_block  = "10.60.0.0/16"
-      description = "ssh"
-    },
-  ]
-  internal_ingress_rules = []
-}
-module "ec2-1" {
-  source            = "./modules/ec2"
-  aws_region        = var.aws_region
-  name              = "chun-2"
-  ami               = "ami-0a5b5c0ea66ec560d"
-  vpc_id            = module.vpc.vpc_id
-  instance_type     = "t2.micro"
-  key_name          = "infra-ec2"
-  availability_zone = element(module.vpc.azs, 0)
-  subnet_id         = element(module.vpc.subnet_public_subnet_ids, 0)
-  public_ports      = ["80", "443"]
-  eip               = true
-  volume_size       = 50
-  data_volume_size  = 50
-  tags = {
-    CostCenter   = "chun"
-    map-migrated = "d-server-12345"
-    Managedby    = "Terraform"
-  }
-  private_hosted_zone_id = module.aws_route53_zone.private_zone_id
-  public_hosted_zone_id  = module.aws_route53_zone.public_zone_id
-  management_ingress_rules = [
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_block  = "10.60.0.0/16"
-      description = "ssh"
-    },
-  ]
-  internal_ingress_rules = []
-}
+#   }
+#   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
+#   public_hosted_zone_id  = module.aws_route53_zone.public_zone_id
+#   management_ingress_rules = [
+#     {
+#       from_port   = 22
+#       to_port     = 22
+#       protocol    = "tcp"
+#       cidr_block  = "10.60.0.0/16"
+#       description = "ssh"
+#     },
+#   ]
+#   internal_ingress_rules = []
+# }
+# module "ec2-1" {
+#   source            = "./modules/ec2"
+#   aws_region        = var.aws_region
+#   name              = "chun-2"
+#   ami               = "ami-0a5b5c0ea66ec560d"
+#   vpc_id            = module.vpc.vpc_id
+#   instance_type     = "t2.micro"
+#   key_name          = "infra-ec2"
+#   availability_zone = element(module.vpc.azs, 0)
+#   subnet_id         = element(module.vpc.subnet_public_subnet_ids, 0)
+#   public_ports      = ["80", "443"]
+#   eip               = true
+#   volume_size       = 50
+#   data_volume_size  = 50
+#   tags = {
+#     CostCenter   = "chun"
+#     map-migrated = "d-server-12345"
+#     Managedby    = "Terraform"
+#   }
+#   private_hosted_zone_id = module.aws_route53_zone.private_zone_id
+#   public_hosted_zone_id  = module.aws_route53_zone.public_zone_id
+#   management_ingress_rules = [
+#     {
+#       from_port   = 22
+#       to_port     = 22
+#       protocol    = "tcp"
+#       cidr_block  = "10.60.0.0/16"
+#       description = "ssh"
+#     },
+#   ]
+#   internal_ingress_rules = []
+# }
 # module "os" {
 #   source                         = "./modules/opensearch"
 #   vpc_id                         = module.vpc.vpc_id
